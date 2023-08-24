@@ -9,11 +9,32 @@ const moment = require("moment")
 
 // ### - Test:Encoding images in Base64
 
+
+
+
+
 const fs = require('fs');
-// const imageBuffer = fs.readFileSync('G:\MyImage.png');
+
+
+
+
+// const JSON = {
+//   name: 'Jenny william',
+//   age: 21,
+//   image: base64Image
+// };
+// db.student.insertOne(JSON);
+
+
+
 
 
 // ### - Test:
+
+
+
+
+
 
 // img storage path
 const imgconfig = multer.diskStorage({
@@ -55,45 +76,27 @@ router.post("/register",upload.single("photo"),async(req,res)=>{
 
     const {image} = req.body;
     console.log("line:300", req.body);
+    console.log("line:301", req.body.image);
+    console.log("line:302", image);
+
+    // const imageBuffer = fs.readFileSync(image);
+    // const base64Image = imageBuffer.toString('base64');
+    // console.log("line:303", base64Image);
+
+
+     
+
 
     if(!fname || !filename){
         res.status(401).json({status:401,message:"fill all the data"})
     }
+    
 
-    // function getImage(image) {
-    //     const options = {
-    //        url: `${image}&&s=100`,
-    //        encoding: 'base64'
-    //     };
-       
-    //    return new Promise(function (resolve, reject)      {
-    //          request.get(options, function (err, resp, body) {
-    //              if (err) {
-    //                   reject(err);
-    //                } else {
-    //       const userDetails = {
-    //              contentType: resp.headers['content-type'],
-    //              image: {
-    //               imageFormat: resp.headers['content-type'].split('/')[1],
-    //               base64: resp.body
-    //              }
-    //          }
-    //            resolve(userDetails);
-    //            console.log("line:400", userDetails);
-    //        }
-    //      })
-    //   })
-    // }
+   
 
     try {
 
      
-
-     
-
-
-
-
         const date = moment(new Date()).format("YYYY-MM-DD");
 
         const userdata = new users1({
