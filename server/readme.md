@@ -8,7 +8,9 @@
 
 - https://stackoverflow.com/questions/18264346/how-to-load-an-image-from-url-into-buffer-in-nodejs
 
--https://www.youtube.com/watch?v=pfxd7L1kzio
+- https://www.youtube.com/watch?v=pfxd7L1kzio
+
+- https://github.com/akashyap2013/ImageToBase64
 
 ## New Package:
 - nodemon
@@ -18,3 +20,4 @@
 # Keywords:
 - storage engine images
 - Using Base64 Encoding 
+- 

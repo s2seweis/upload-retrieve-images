@@ -10,10 +10,10 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    image:{
-        base64: String,
-        imageFormat: String
-    },
+    // image:{
+    //     base64: String,
+        
+    // },
     date:{
         type:Date
     }

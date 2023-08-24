@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import axios from "axios"
-import { useNavigate } from "react-router-dom"
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+
 
 import image100 from '../assets/3.png'
 
@@ -18,8 +20,10 @@ const Register = () => {
   const [image, setImage] = useState("");
   console.log("line:2", image);
 
-  const [test, setTest] = useState("");
-  console.log("line:3", test);
+  const [postImage, setPostImage] = useState( { myFile : ""})
+
+  // const [test, setTest] = useState("");
+  // console.log("line:3", test);
 
 
   const history = useNavigate();
@@ -29,15 +33,26 @@ const Register = () => {
     setFName(value);
   }
 
-  const setimgfile = (e) => {
+  const setimgfile = async (e) => {
 
     console.log("line:100", e);
     console.log("line:101", e.target.files[0]);
     setFile(e.target.files[0])
 
-    // setImage(URL.createObjectURL(file))
+    const test = e.target.files[0];
+    console.log("line:4", test);
+    const base64 = await convertToBase64(test);
+    console.log("line:5",base64);
+  
+    setPostImage({ ...postImage, myFile : base64 })
+
+    // ### - display image preview
     setImage(URL.createObjectURL(e.target.files[0]))
+
+
+
   }
+
 
 
 
@@ -116,6 +131,7 @@ const Register = () => {
 
         <img src={image}></img>
         {/* <img src={image100}></img> */}
+        <img src={postImage.myFile} alt="test" />
 
       </div>
     </>
@@ -123,3 +139,18 @@ const Register = () => {
 }
 
 export default Register
+
+
+
+function convertToBase64(file){
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+    fileReader.onload = () => {
+      resolve(fileReader.result)
+    };
+    fileReader.onerror = (error) => {
+      reject(error)
+    }
+  })
+}
