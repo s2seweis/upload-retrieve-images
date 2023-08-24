@@ -9,7 +9,8 @@ import Alert from 'react-bootstrap/Alert';
 const Home = () => {
 
     const [data, setData] = useState([]);
-    // console.log(data)
+    console.log("line:1", data)
+    console.log("line:2", data)
 
     const [show, setShow] = useState(false);
 

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = new express.Router();
 const multer = require("multer");
-const users = require("../model/usersSchema");
+const users1 = require("../model/usersSchema");
 const moment = require("moment")
 
 // img storage path
@@ -45,7 +45,7 @@ router.post("/register",upload.single("photo"),async(req,res)=>{
 
         const date = moment(new Date()).format("YYYY-MM-DD");
 
-        const userdata = new users({
+        const userdata = new users1({
             fname:fname,
             imgpath:filename,
             date:date
@@ -64,7 +64,7 @@ router.post("/register",upload.single("photo"),async(req,res)=>{
 // user data get
 router.get("/getdata",async(req,res)=>{
     try {
-        const getUser = await users.find();
+        const getUser = await users1.find();
 
         res.status(201).json({status:201,getUser})
     } catch (error) {
@@ -79,7 +79,7 @@ router.delete("/:id",async(req,res)=>{
     try {
         const {id} = req.params;
 
-        const dltUser = await users.findByIdAndDelete({_id:id});
+        const dltUser = await users1.findByIdAndDelete({_id:id});
 
         res.status(201).json({status:201,dltUser});
 
