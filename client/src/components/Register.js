@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom"
 
 import image100 from '../assets/3.png'
 
+
 const Register = () => {
 
   const [fname, setFName] = useState("");
@@ -52,6 +53,7 @@ const Register = () => {
     var formData = new FormData();
     formData.append("photo", file);
     formData.append("fname", fname);
+    formData.append("image", image);
 
     const config = {
       headers: {
@@ -62,6 +64,7 @@ const Register = () => {
     const res = await axios.post("/register", formData, config);
 
     console.log("line:3", formData);
+    console.log("line:4", config);
 
 
 
@@ -72,6 +75,11 @@ const Register = () => {
       console.log("line:400, !success!");
     }
   }
+
+  
+
+
+
 
   // ###
 

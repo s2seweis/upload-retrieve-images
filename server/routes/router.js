@@ -4,6 +4,17 @@ const multer = require("multer");
 const users1 = require("../model/usersSchema");
 const moment = require("moment")
 
+// const image = require("../uploads/imgae-1692866245252. 1.png")
+// console.log("line:1000", image);
+
+// ### - Test:Encoding images in Base64
+
+const fs = require('fs');
+// const imageBuffer = fs.readFileSync('G:\MyImage.png');
+
+
+// ### - Test:
+
 // img storage path
 const imgconfig = multer.diskStorage({
     destination:(req,file,callback)=>{
@@ -33,15 +44,55 @@ const upload = multer({
 // user register
 router.post("/register",upload.single("photo"),async(req,res)=>{
 
-    const {filename} = req.file;
+    const {filename, path} = req.file;
+    console.log("line:100", req.file);
+    console.log("line:101", req.file.path);
+    console.log("line:103", filename);
+    console.log("line:104", path);
 
     const {fname} = req.body;
+    console.log("line:200", req.body);
+
+    const {image} = req.body;
+    console.log("line:300", req.body);
 
     if(!fname || !filename){
         res.status(401).json({status:401,message:"fill all the data"})
     }
 
+    // function getImage(image) {
+    //     const options = {
+    //        url: `${image}&&s=100`,
+    //        encoding: 'base64'
+    //     };
+       
+    //    return new Promise(function (resolve, reject)      {
+    //          request.get(options, function (err, resp, body) {
+    //              if (err) {
+    //                   reject(err);
+    //                } else {
+    //       const userDetails = {
+    //              contentType: resp.headers['content-type'],
+    //              image: {
+    //               imageFormat: resp.headers['content-type'].split('/')[1],
+    //               base64: resp.body
+    //              }
+    //          }
+    //            resolve(userDetails);
+    //            console.log("line:400", userDetails);
+    //        }
+    //      })
+    //   })
+    // }
+
     try {
+
+     
+
+     
+
+
+
 
         const date = moment(new Date()).format("YYYY-MM-DD");
 
