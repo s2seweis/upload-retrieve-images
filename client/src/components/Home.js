@@ -68,6 +68,8 @@ const Home = () => {
                                 <>
                                     <Card style={{ width: '22rem', height: "18rem", margin:"auto" }} className="mb-3">
                                         <Card.Img variant="top" style={{ width: "100px", textAlign: "center", margin: "auto" }} src={`/uploads/${el.imgpath}`} className='mt-2' />
+                                        <Card.Img variant="top" style={{ width: "100px", textAlign: "center", margin: "auto" }} src={el.imgpath} alt='where?' className='mt-2' />
+                                        <img src={el.image} ></img>
                                         <Card.Body className='text-center'>
                                             <Card.Title>User Name : {el.fname}</Card.Title>
                                             <Card.Text>

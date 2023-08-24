@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 
 
-import image100 from '../assets/3.png'
+// import image100 from '../assets/3.png'
 
 
 const Register = () => {
@@ -21,6 +21,11 @@ const Register = () => {
   console.log("line:2", image);
 
   const [postImage, setPostImage] = useState( { myFile : ""})
+  console.log("line:2.1", postImage.myFile);
+  console.log("line:2.2", postImage);
+
+  const imagenew = postImage.myFile;
+  console.log("line:2.3", imagenew);
 
   // const [test, setTest] = useState("");
   // console.log("line:3", test);
@@ -43,7 +48,6 @@ const Register = () => {
     console.log("line:4", test);
     const base64 = await convertToBase64(test);
     console.log("line:5",base64);
-  
     setPostImage({ ...postImage, myFile : base64 })
 
     // ### - display image preview
@@ -68,7 +72,7 @@ const Register = () => {
     var formData = new FormData();
     formData.append("photo", file);
     formData.append("fname", fname);
-    formData.append("image", image);
+    formData.append("image", imagenew);
 
     const config = {
       headers: {
@@ -129,8 +133,7 @@ const Register = () => {
         </Form>
         {/* <button style={{marginTop:"20px"}} onClick={(e) => setImage(URL.createObjectURL(test))}>Image?</button> */}
 
-        <img src={image}></img>
-        {/* <img src={image100}></img> */}
+{/* \        <img src={image100}></img> */}
         <img src={postImage.myFile} alt="test" />
 
       </div>
