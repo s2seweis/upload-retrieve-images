@@ -95,7 +95,7 @@ const Home = () => {
                                             <h4>{el._id}</h4>
                                             <div style={{ display: "flex", justifyContent: "space-around" }}>
                                                 <Button variant="danger" className='col-lg-6 text-center' onClick={() => dltUser(el._id)}>Delete</Button>
-                                                {/* <Button variant="danger" className='col-lg-6 text-center' onClick={() => dltUser(el._id)}>Edit</Button> */}
+                                                {/* <Button variant="danger" classNamecol-lg-6 text-center' onClick={() => dltUser(el._id)}>Edit</Button> */}
                                                 {/* <Button variant="danger" className="col-lg-6 text-center">Edit */}
 
                                                     <Link

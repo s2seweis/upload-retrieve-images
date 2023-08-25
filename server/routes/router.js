@@ -90,15 +90,15 @@ router.get ('/getdata', async (req, res) => {
   }
 });
 
-router.get ('/getdata', async (req, res) => {
-  try {
-    const getUser = await users1.find ();
+// router.get ('/getdata', async (req, res) => {
+//   try {
+//     const getUser = await users1.find ();
 
-    res.status (201).json ({status: 201, getUser});
-  } catch (error) {
-    res.status (401).json ({status: 401, error});
-  }
-});
+//     res.status (201).json ({status: 201, getUser});
+//   } catch (error) {
+//     res.status (401).json ({status: 401, error});
+//   }
+// });
 
 // delete user data
 router.delete ('/:id', async (req, res) => {
@@ -114,12 +114,26 @@ router.delete ('/:id', async (req, res) => {
 });
 
 router.post ('/edituser', async (req, res) => {
+  const {userid} = req.body;
+  const {id} = req.body;
+  console.log("line:209", id);
+  console.log("line:203", id);
+  console.log("line:204", req.params);
+  console.log("line:201", userid);
+  console.log("line:202", req.body);
+  console.log("line:208", req.body.userid);
   try {
-    const {id} = req.params;
+    // ### - its running but the data is not arriving
+   
+    
 
-    const dltUser = await users1.findByIdAndDelete ({_id: id});
+    const dltUser = await users1.findOne ({_id: userid});
+    console.log("line:210", dltUser);
+    return res.json (dltUser)
+    // res.status (201).json ({status: 201, dltUser});
 
-    res.status (201).json ({status: 201, dltUser});
+    // console.log("###- Data where?");
+    // res.status (200).json ("really?");
   } catch (error) {
     res.status (401).json ({status: 401, error});
   }
