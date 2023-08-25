@@ -5,6 +5,9 @@ import Register from './components/Register';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Routes,Route} from "react-router-dom"
 
+import EditUser from './components/EditUser';
+
+
 function App() {
   return (
     <>
@@ -13,6 +16,9 @@ function App() {
       <Routes>
         <Route path='/' element={ <Home />} />
         <Route path='/register' element={ <Register />} />
+        <Route path='/register' element={ <Register />} />
+        <Route element={<EditUser />} path="/edituser/:userid" />
+
       </Routes>
      
     </>

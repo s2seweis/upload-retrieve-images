@@ -90,6 +90,16 @@ router.get ('/getdata', async (req, res) => {
   }
 });
 
+router.get ('/getdata', async (req, res) => {
+  try {
+    const getUser = await users1.find ();
+
+    res.status (201).json ({status: 201, getUser});
+  } catch (error) {
+    res.status (401).json ({status: 401, error});
+  }
+});
+
 // delete user data
 router.delete ('/:id', async (req, res) => {
   try {
@@ -102,5 +112,19 @@ router.delete ('/:id', async (req, res) => {
     res.status (401).json ({status: 401, error});
   }
 });
+
+router.post ('/edituser', async (req, res) => {
+  try {
+    const {id} = req.params;
+
+    const dltUser = await users1.findByIdAndDelete ({_id: id});
+
+    res.status (201).json ({status: 201, dltUser});
+  } catch (error) {
+    res.status (401).json ({status: 401, error});
+  }
+});
+
+
 
 module.exports = router;

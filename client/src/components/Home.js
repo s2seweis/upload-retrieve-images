@@ -5,12 +5,20 @@ import { NavLink } from "react-router-dom"
 import axios from "axios"
 import moment from "moment"
 import Alert from 'react-bootstrap/Alert';
+import { Link } from 'react-router-dom';
+
 
 const Home = () => {
+
+    // # need get the user id state - here with redux store
+    // const { settings1 } = useSelector(state => state.settingsReducer);
 
     const [data, setData] = useState([]);
     console.log("line:1", data)
     console.log("line:2", data)
+
+    // const[totalusers, setTotalUsers] = useState([]);
+    // console.log("line:3", totalusers);
 
     const [show, setShow] = useState(false);
 
@@ -47,6 +55,11 @@ const Home = () => {
     useEffect(() => {
         getUserData()
     }, [])
+
+    // useEffect(() => {
+    //     setTotalUsers(data)
+    // }, [data])
+
     return (
         <>
             {
@@ -55,7 +68,7 @@ const Home = () => {
                 </Alert> : ""
             }
             <div className='container mt-2'>
-                <h1 className='text-center mt-2'>MERN Image Upload Projects</h1>
+                <h3 className='text-center mt-2'>MERN(Mango,Express,React,Node) Image Upload Project</h3>
                 <div className='text-end'>
                     <Button variant="primary"><NavLink to="/register" className="text-decoration-none text-light">Add User</NavLink></Button>
                 </div>
@@ -66,16 +79,32 @@ const Home = () => {
                         data.length > 0 ? data.map((el, i) => {
                             return (
                                 <>
-                                    <Card style={{ width: '22rem', height: "18rem", margin:"auto" }} className="mb-3">
-                                        <Card.Img variant="top" style={{ width: "100px", textAlign: "center", margin: "auto" }} src={`/uploads/${el.imgpath}`} className='mt-2' />
-                                        <Card.Img variant="top" style={{ width: "100px", textAlign: "center", margin: "auto" }} src={el.imgpath} alt='where?' className='mt-2' />
-                                        <img src={el.image} ></img>
+                                    <Card style={{ width: '22rem', height: "auto", margin: "20px auto" }} className="mb-3">
+                                        <div style={{ margin: "auto" }}>
+                                            {/* <Card.Img variant="top" style={{ width: "100px", textAlign: "center", margin: "auto" }} src={`/uploads/${el.imgpath}`} className='mt-2' /> */}
+                                            <img style={{ width: "100px", margin: "20px auto" }} src={`/uploads/${el.imgpath}`} ></img>
+                                            <img style={{ width: "100px", margin: "20px auto" }} src={el.image} ></img>
+                                        </div>
+                                        <h5 style={{ fontSize: "10px", textAlign: "center" }}>Right - Image:convertToBase64</h5>
+                                        {/* <img style={{width:"100px", margin:"20px auto"}} src={el.image} ></img> */}
                                         <Card.Body className='text-center'>
                                             <Card.Title>User Name : {el.fname}</Card.Title>
                                             <Card.Text>
                                                 Date Added :{moment(el.date).format("L")}
                                             </Card.Text>
-                                            <Button variant="danger" className='col-lg-6 text-center' onClick={() => dltUser(el._id)}>Delete</Button>
+                                            <h4>{el._id}</h4>
+                                            <div style={{ display: "flex", justifyContent: "space-around" }}>
+                                                <Button variant="danger" className='col-lg-6 text-center' onClick={() => dltUser(el._id)}>Delete</Button>
+                                                {/* <Button variant="danger" className='col-lg-6 text-center' onClick={() => dltUser(el._id)}>Edit</Button> */}
+                                                {/* <Button variant="danger" className="col-lg-6 text-center">Edit */}
+
+                                                    <Link
+                                                   to={`/edituser/${el._id}`}
+                                                    // to={`/edituser/${el._id}`}
+                                                    >Edit</Link>
+
+                                                {/* </Button> */}
+                                            </div>
                                         </Card.Body>
                                     </Card>
                                 </>
