@@ -4,18 +4,18 @@ const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema({
     fname:{
         type:String,
-        required:true
+        // required:true
     },
     imgpath:{
         type:String,
-        required:true
+        // required:true
     },
     image:{
         type: String,
         
     },
     date:{
-        type:Date
+        type: String
     }
 });
 
