@@ -152,15 +152,16 @@ router.post ('/edituser', async (req, res) => {
 
     dltUser.fname = req.body.name;
     console.log("211", dltUser.fname);
+
     dltUser.image = req.body.image;
     console.log("212", dltUser.image);
-    users1.imgpath = "justatest",
-    users1.date = date
-    console.log("213", users1.date);
 
+    dltUser.imgpath = req.body.imgpath;
+    console.log("213", dltUser.imgpath);
 
+    dltUser.date = req.body.date;
+    console.log("214", dltUser.date);
 
- 
 
     const star = await dltUser.save ();
     // res.send ('User details updated successfully');

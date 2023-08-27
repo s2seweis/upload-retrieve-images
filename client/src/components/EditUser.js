@@ -8,45 +8,64 @@ import {useParams} from 'react-router-dom';
 import FormGroup from 'react-bootstrap/esm/FormGroup';
 
 import { UserContext } from '../App';
+import moment from 'moment';
+
 
 const EditUser = ({match}) => {
   const user = useContext(UserContext);
-  console.log("line:0", user);
+  // console.log("line:0", user);
 
   const [totalusers, settotalusers] = useState([]);
-  console.log("line:55", totalusers);
+  // console.log("line:55", totalusers);
 
   const [user1, setuser1] = useState();
-  console.log('line:302', user1);
+  // console.log('line:302', user1);
+  // console.log('line:303', user1?.imgpath);
+  // console.log('line:304', user1?.fname);
+  // console.log('line:305', user1?.image);
+  // console.log('line:306', user1?.date);
+
+
+  const olddate = user1?.date;
+  // console.log("line:307", olddate);
+
+  const img1 = user1?.image;
+  // console.log("line:308", img1);
+  const img = user1?.imgpath;
+  // console.log("line:309", img);
+  const nme = user1?.fname;
+  // console.log("line:310", nme);
+
+
+
 
   // ### Hooks
   const [data, setData] = useState ([]);
-  console.log ('line:1', data);
-  console.log ('line:2', data.image);
+  // console.log ('line:1', data);
+  // console.log ('line:2', data.image);
   // ###
   const [file, setFile] = useState ('');
-  console.log ('line:3', file);
+  // console.log ('line:3', file);
   // ###
   const [postImage, setPostImage] = useState ({myFile: ''});
-  console.log ('line:4', postImage.myFile);
+  // console.log ('line:4', postImage.myFile);
   console.log ('line:5', postImage);
   // ###  
   const [image, setImage] = useState (data.image);
   console.log ('line:6', image);
   // ###    
+
+  
  
   const imagenew = postImage.myFile
-  console.log("line:6.1", imagenew);
+  // console.log("line:6.1", imagenew);
 
   const setimgfile = async e => {
-    // console.log ('line:7', e);
-    // console.log ('line:8', e.target.files[0]);
+  
     setFile (e.target.files[0]);
 
     const test = e.target.files[0];
-    // console.log ('line:9', test);
     const base64 = await convertToBase64 (test);
-    // console.log ('line:10', base64);
     setPostImage ({...postImage, myFile: base64});
 
     // ### - display image preview
@@ -55,16 +74,22 @@ const EditUser = ({match}) => {
 
   // ###
   const userid = useParams ();
-  // console.log ('line:11', userid);
-  // console.log ('line:12', userid.userid);
-  // ###
+
   const id = userid.userid;
   
   const [fname, setFName] = useState ('');
-  console.log("line:200", fname);
+  // console.log("line:200", fname);
+
+  const name = fname || nme
+  console.log("line:201", name);
+
+  const imgnew = imagenew || img1;
+  console.log("line:202", imgnew);
+
+
   
-  const tree =  {id: id, name: fname, image: imagenew}
-  console.log("201", tree);
+  const tree =  {id: id, name: name, image: imgnew, imgpath: img, date: olddate }
+  console.log("203", tree);
 
   // ###
   const editUser = async (tree) => {
@@ -72,22 +97,18 @@ const EditUser = ({match}) => {
     var formData = new FormData ();
   // formData.append ('userid', userid);
   formData.append ('tree', tree);
-  console.log ('line:12', formData);
+  // console.log ('line:12', formData);
 
   const config = {
     headers: {
       'Content-Type': 'application/json',
     },
   };
-    // const id = userid.userid;
-    // console.log ('line:13', id);
-
-    // console.log ('line:14', userid.userid);
+ 
 
     const res = await axios.post ('/edituser', tree);
     console.log ('line:15', res);
-    // console.log ('line:16', res.data);
-    // console.log ('line:17', userid);
+    
 
     if (res.data.status === 401 || !res.data) {
       console.log ('errror');
@@ -109,50 +130,10 @@ const EditUser = ({match}) => {
     editUser (tree);
   };
 
-  
-
-
-
-  // ###
-  // const editUserSubmit = async (e, userid) => {
-  //   console.log("line444", e);
-  //   e.preventDefault ();
-
-  //   var formData = new FormData ();
-  //   // formData.append ('photo', file);
-  //   formData.append ('fname', fname);
-  //   formData.append ('image', imagenew);
-  //   console.log("5555", formData);
-
-  //   const config = {
-  //     headers: {
-  //       'Content-Type': 'multipart/form-data',
-  //     },
-  //   };
-
-  //   console.log("line:14", userid);
-  //   const res = await axios.post ('/edituser-submit', formData, config);
-  //   console.log("line:1000", res);
-  //   console.log ('line:33', formData);
-  //   console.log ('line:44', config);
-
-  //   if (res.data.status === 401 || !res.data) {
-  //     console.log ('errror');
-  //   } else {
-  //     // history("/")
-  //     console.log ('line:400, !success!');
-  //   }
-  // };
-  // ###
-
- 
-
-
-  // ###
-  // useEffect (() => {
-  //   editUser (tree);
-  // }, []);
-  // ###
+  const setImageUrl = (e) => {
+    // const {value} = e.target;
+    setPostImage ("");
+  };
 
   useEffect(
     () => {
@@ -167,13 +148,28 @@ const EditUser = ({match}) => {
     [user]
   );
 
+  let today = new Date (); // get the date
+    let day = ('0' + today.getDate ()).slice (-2); //get day with slice to have double digit day
+    let month = ('0' + (today.getMonth () + 1)).slice (-2); //get your zero in front of single month digits so you have 2 digit months
+    // let date = month + '-' + day + '-' + today.getFullYear ();
+    let date = today.getFullYear () + '-' + month + '-' + day;
+    console.log ('line:11', date);
+
+
+
+    const time1 = moment (user1?.date).format ('L');
+    // console.log("line:12", time1);
+   
+    const time2 = moment (user?.date).format ('L');
+    // console.log("line:12", time2);
+
+
+    const [imageUrl1, setImageUrl1] = useState();
+    console.log("line:7", imageUrl1);
   
 
   return (
     <div className="container mt-3">
-
-   
-
       <Form value={data} className="mt-3">
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>UserName</Form.Label>
@@ -188,7 +184,13 @@ const EditUser = ({match}) => {
 
         <FormGroup>
           <Form.Label>Date:</Form.Label>
-          <Form.Control type="date" name="date" value={user1?.date} />
+          <Form.Control 
+          type="date" 
+          name="date" 
+          value={user1?.date} 
+          // value= {moment (user1?.date).format ('L')}
+         
+          />
         </FormGroup>
 
         <FormGroup>
@@ -210,25 +212,30 @@ const EditUser = ({match}) => {
           />
         </Form.Group>
 
+        <div style={{display:"flex"}}>
         <Form.Group>
-          <img 
+          <img style={{height:"170px"}} 
           src={image || user1?.image}
-           alt="test" />
+          alt="test1" />
+        <Button 
+        onClick={setImageUrl} 
+        style={{display:"block", margin:"auto"}} >Delete</Button>
         </Form.Group>
 
-        {/* <Button
-          variant="primary"
-          // type="submit"
-          style={{marginTop: '20px'}}
-          // onClick={editUser(tree)}
-        >
-          Submit
-        </Button> */}
+        <Form.Group>
+          <img style={{height:"170px"}} 
+          src={`/uploads/${user1?.imgpath}`}
+          alt="test2" />
+        <Button style={{display:"block", margin:"auto"}} >Delete</Button>
+        </Form.Group>
+          </div>
+
+    
 
         <Button
           variant="primary"
           // type="submit"
-          style={{marginTop: '20px'}}
+          style={{marginTop: '100px'}}
           onClick={setdata1}
         >
           Submit1
