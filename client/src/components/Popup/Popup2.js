@@ -19,6 +19,10 @@ const Popup2 = () => {
             <Form className="mt-3">
 
                 <h1>Popup:2</h1>
+                <button 
+                // onClick={toggle}
+                >Delete Image</button>
+
 
             </Form>
 

@@ -16,16 +16,21 @@ import { UserContext } from '../App';
 const Playground = () => {
 
      // ### useContext
-//   const users = useContext(UserContext);
+  const users = useContext(UserContext);
 
 
     const [isOpen, setIsOpen] = useState(false);
+    
 
-    function toggle() {
-        setIsOpen((isOpen) => !isOpen);
-    }
+    // function toggle() {
+    //     setIsOpen(true);
+    // }
 
 
+    const setData2 = (e) => {
+        // const {value} = e.target;
+        setIsOpen(true);
+      };
 
 
 
@@ -41,7 +46,8 @@ const Playground = () => {
 
 
                     {isOpen ? <Popup1/> : <Popup2/>}
-                    <button onClick={toggle}>Toggle show</button>
+                    
+                    <button onClick={setData2}>Toggle show</button>
 
 
                 </div>

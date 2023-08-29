@@ -7,6 +7,9 @@ import FormGroup from 'react-bootstrap/esm/FormGroup';
 import { UserContext } from '../App';
 import moment from 'moment';
 
+import Popup1 from './Popup/Popup1';
+import Popup2 from './Popup/Popup2';
+
 const EditUser = ({ match }) => {
 
 
@@ -124,6 +127,24 @@ const EditUser = ({ match }) => {
 
   // ### - Test
 
+  const [isOpen, setIsOpen] = useState(false);
+    
+
+  // function toggle() {
+  //     setIsOpen(true);
+  // }
+
+
+  const setData4 = (e) => {
+      // const {value} = e.target;
+      setIsOpen(false);
+
+    };
+  const setData5 = (e) => {
+      // const {value} = e.target;
+      setIsOpen(true);
+    };
+
 
 
   return (
@@ -210,7 +231,22 @@ const EditUser = ({ match }) => {
 
       </Form>
 
-     
+
+      <h1>Playground</h1>
+
+      <div className="Playground">
+
+        {/* {isOpen && <Popup1 />} */}
+
+
+        {isOpen ?   <div><h1>test</h1><button onClick={setData4}>Add Image</button></div> : <button onClick={setData5}>Delete</button>}
+        
+        
+
+
+      </div>
+
+
 
     </div>
   );
