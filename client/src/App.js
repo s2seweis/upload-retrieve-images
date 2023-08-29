@@ -11,6 +11,7 @@ import {Routes,Route} from "react-router-dom"
 import EditUser from './components/EditUser';
 
 import axios from 'axios';
+import Playground from './components/Playground';
 
 export const UserContext = createContext();
 
@@ -51,6 +52,8 @@ function App() {
         <Route path='/register' element={ <Register />} />
         {/* <Route path='/register' element={ <Register />} /> */}
         <Route element={<EditUser />} path="/edituser/:userid" />
+        {/* ### Playground */}
+        <Route element={<Playground />} path="/playground" />
 
       </Routes>
      
