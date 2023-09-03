@@ -8,3 +8,5 @@
 - read: hot to avoid that some state will be rendered again
 - try to finish the single image component
 - go to the image collection component
+
+- useEffect Hook for dispach the state to the useState hook

@@ -32,6 +32,11 @@ const EditUser = ({match}) => {
   const [user, setUser] = useState ([]);
   console.log ('line:1.1', user);
   console.log ('line:1', user.image);
+  console.log ('line:1.5', user.fname);
+
+
+  const newUser = {_id: user._id, __v: user.__v, imgpath: user.imgpath, image: "", date: user.date, fname: user.fname}
+  console.log("line:1.2", newUser);
 
   const [testState1, setTestState1] = useState ();
   console.log ('line1.9', testState1);
@@ -88,7 +93,6 @@ const EditUser = ({match}) => {
   console.log ('line:101', image1);
 
   const imagePreview2 = imagenew2;
-  console.log ('line:101', image1);
   // ###
 
   // e = short var reference for event object which will be passed to event handlers
@@ -139,7 +143,8 @@ const EditUser = ({match}) => {
   };
   const setData4 = e => {
     // const {value} = e.target;
-    setTestState1 ("");
+    setUser ({_id: user._id, __v: user.__v, imgpath: user.imgpath, image: "", date: user.date, fname: user.fname});
+    setPostImage1({myFile: ''});
   };
 
   // ### Function for the POST request
@@ -179,6 +184,14 @@ const EditUser = ({match}) => {
   );
 
   //  ### with Skeleton Component: Alternative!!!
+
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setData3();
+  //     // setTestState1 (user.image)
+  //   }, 5000);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
   // useEffect(() => {
   //   setLoading(true);
@@ -257,10 +270,10 @@ const EditUser = ({match}) => {
                 />
 
                 <Button
-                  // onClick={setData3}
+                  onClick={setData4}
                   style={{display: 'block', margin: 'auto'}}
                 >
-                  Delete
+                  Delete1
                 </Button>
 
               </Form.Group>
@@ -290,7 +303,7 @@ const EditUser = ({match}) => {
                   // onClick={}
                   style={{display: 'block', margin: 'auto'}}
                 >
-                  Delete
+                  Delete2
                 </Button>
 
               </Form.Group>
@@ -310,7 +323,7 @@ const EditUser = ({match}) => {
               // onClick={}
               style={{display: 'block', margin: 'auto'}}
             >
-              Delete
+              Delete3
             </Button>
 
           </Form.Group>
