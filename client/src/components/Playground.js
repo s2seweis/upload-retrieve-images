@@ -6,8 +6,8 @@ import { useParams } from 'react-router-dom';
 import FormGroup from 'react-bootstrap/esm/FormGroup';
 import moment from 'moment';
 
-import Popup1 from './Popup/Popup1';
-import Popup2 from './Popup/Popup2';
+import Popup1 from './popup/Popup1';
+import Popup2 from './popup/Popup2';
 
 import { UserContext } from '../App';
 

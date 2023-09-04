@@ -7,6 +7,10 @@ import FormGroup from 'react-bootstrap/esm/FormGroup';
 import {UserContext} from '../App';
 import moment from 'moment';
 
+// ### Test: Image Collection
+
+import ImageCollection from './imageCollection';
+
 // import Popup1 from './Popup/Popup1';
 // import Popup2 from './Popup/Popup2';
 
@@ -34,9 +38,15 @@ const EditUser = ({match}) => {
   console.log ('line:1', user.image);
   console.log ('line:1.5', user.fname);
 
-
-  const newUser = {_id: user._id, __v: user.__v, imgpath: user.imgpath, image: "", date: user.date, fname: user.fname}
-  console.log("line:1.2", newUser);
+  const newUser = {
+    _id: user._id,
+    __v: user.__v,
+    imgpath: user.imgpath,
+    image: '',
+    date: user.date,
+    fname: user.fname,
+  };
+  console.log ('line:1.2', newUser);
 
   const [testState1, setTestState1] = useState ();
   console.log ('line1.9', testState1);
@@ -143,8 +153,15 @@ const EditUser = ({match}) => {
   };
   const setData4 = e => {
     // const {value} = e.target;
-    setUser ({_id: user._id, __v: user.__v, imgpath: user.imgpath, image: "", date: user.date, fname: user.fname});
-    setPostImage1({myFile: ''});
+    setUser ({
+      _id: user._id,
+      __v: user.__v,
+      imgpath: user.imgpath,
+      image: '',
+      date: user.date,
+      fname: user.fname,
+    });
+    setPostImage1 ({myFile: ''});
   };
 
   // ### Function for the POST request
@@ -372,6 +389,8 @@ const EditUser = ({match}) => {
             />
 
           </div>
+
+          <ImageCollection />
 
         </Form>
 
