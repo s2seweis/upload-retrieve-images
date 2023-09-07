@@ -10,4 +10,4 @@
 - go to the image collection component
 - for components & and pages with much state, makes the inline style the code messier 
 
-- useEffect Hook for dispach the state to the useState hook
+- useEffect Hook for dispach the state to the useState hook?
