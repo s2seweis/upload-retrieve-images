@@ -147,7 +147,13 @@ router.post ('/edituser', async (req, res) => {
     let month = ('0' + (today.getMonth () + 1)).slice (-2); //get your zero in front of single month digits so you have 2 digit months
     // let date = month + '-' + day + '-' + today.getFullYear ();
     let date = today.getFullYear () + '-' + month + '-' + day;
+
+
+
     console.log ('line:11', date);
+
+    userData = req.body;
+    console.log("line:211.5", userData);
 
 
     dltUser.fname = req.body.name;
@@ -155,6 +161,9 @@ router.post ('/edituser', async (req, res) => {
 
     dltUser.image = req.body.image;
     console.log("212", dltUser.image);
+
+    dltUser.image2 = req.body.image2;
+    console.log("212.1", dltUser.image2);
 
     dltUser.imgpath = req.body.imgpath;
     console.log("213", dltUser.imgpath);
@@ -166,7 +175,7 @@ router.post ('/edituser', async (req, res) => {
     const star = await dltUser.save ();
     // res.send ('User details updated successfully');
 
-    res.status (201).json ("star");
+    res.status (201).json (star);
 
   } catch (error) {
     res.status (401).json ({status: 401, error});

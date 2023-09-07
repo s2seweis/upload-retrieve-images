@@ -14,6 +14,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         
     },
+    image2:{
+        type: String,
+        
+    },
     date:{
         type: String
     }
