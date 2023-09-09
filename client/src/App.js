@@ -53,7 +53,7 @@ function App() {
         {/* <Route path='/register' element={ <Register />} /> */}
         <Route element={<EditUser />} path="/edituser/:userid" />
         {/* ### Playground */}
-        <Route element={<Playground />} path="/playground" />
+        {/* <Route element={<Playground />} path="/playground" /> */}
 
       </Routes>
      

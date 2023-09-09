@@ -2,61 +2,114 @@ import React from 'react';
 import {useState, useEffect, useContext} from 'react';
 import Button from 'react-bootstrap/Button';
 
-import data from "../../assets/json/images.json"
+import data from '../../assets/json/images.json';
 
-// was used as a custom hook - .filter method 
+import '../../../src/App.css';
 
-// const removeImage = ({ id, name }) => {
-//     const items = imageFile[name].filter((item) => item.id !== id);
-
-//     setImageFile({
-//       ...imageFile,
-//       [name]: items
-//     });
-//   };
-
+import {v4 as uuidv4} from 'uuid';
 
 const ImageCollection = () => {
+  const [state, setState] = useState (data);
+  console.log ('line:100', state);
 
+  // ###
+  const [file3, setFile3] = useState ('');
+  const [file4, setFile4] = useState ('');
+  console.log ('line:1.1', file4);
+  console.log ('line:1.2', file4.myFile);
 
-    const [state, setState] = useState(data)
-    console.log("line:100", state);
+  const numbersOne = [1, 2, 3];
+  const numbersTwo = [{id: uuidv4 (), img: file4.myFile}];
+  const combined = [...numbersTwo];
+  console.log ('line:1.3', combined);
+  console.log ('line:2', file3);
 
-    // const deleteById = id => {
-    //   setFruits(oldValues => {
-    //     return oldValues.filter(fruit => fruit.id !== id)
-    //   })
-    // }
+  // ###
 
+  const setimgfilecollection = async e => {
+    // console.log("line:200", e);
 
-    const deleteById = id => {
-      console.log("line:200", id);
-      setState(oldValues => {
-        return oldValues.filter(fruit => fruit.id !== id)
-      })
-    }
+    setFile3 (e.target.files[0]);
 
+    const testNewFile = e.target.files[0];
+    const base64NewFile = await convertToBase64 (testNewFile);
+    console.log ('line:4', base64NewFile);
+    setFile4 ({myFile: base64NewFile});
+
+    // ### - display image preview
+    // setImage2 (URL.createObjectURL (e.target.files[0]));
+  };
+
+  const deleteById = id => {
+    console.log ('line:200', id);
+    setState (oldValues => {
+      return oldValues.filter (fruit => fruit.id !== id);
+    });
+  };
+
+  // ###
+
+  const combinedImageArray = [...numbersTwo, ...state];
+  console.log ('line:201', combinedImageArray);
+
+  // ###
 
   return (
-    <div style={{display:"flex", marginBottom:"100px"}} className="level_1">
+    <div>
 
-      <div style={{display:"flex", margin:"auto", gap:"30px"}} className="level_2">
-        {state.map (fruit => (
-          <li key={fruit.id}>
-            <span>{fruit.title}</span>
-            <div className="level_3">
-              <img style={{height:"150px", width:"auto"}} src={fruit.img + '.jpg'} alt={fruit.title} />
+      <div style={{display: 'flex', marginBottom: '100px'}} className="level_1">
+
+        <div className="level_2">
+          {state.map (fruit => (
+            <div>
+              <div className="level_3">
+                <img
+                  className="img_Collection"
+                  style={{height: '150px', width: 'auto'}}
+                  src={fruit.img + '.jpg'}
+                  alt={fruit.title}
+                />
+              </div>
+              {/* <a href={link}>Link</a> */}
+
+              <div
+                style={{display: 'flex', justifyContent: 'space-around'}}
+                className="button_ImageCollection"
+              >
+
+                <Button onClick={() => deleteById (fruit.id)}>Add</Button>
+                <Button onClick={() => deleteById (fruit.id)}>Delete</Button>
+
+              </div>
+
             </div>
-            {/* <a href={link}>Link</a> */}
-            <Button
-            onClick={() => deleteById(fruit.id)}
-            >Delete</Button>
-          </li>
-        ))}
-      </div>
+          ))}
+        </div>
 
+      </div>
+      <input
+        style={{}}
+        // ref={ref}
+        onChange={setimgfilecollection}
+        multiple
+        type="file"
+      />
     </div>
   );
 };
 
 export default ImageCollection;
+
+function convertToBase64 (file1, file2) {
+  return new Promise ((resolve, reject) => {
+    const fileReader = new FileReader ();
+    fileReader.readAsDataURL (file1, file2);
+    fileReader.onload = () => {
+      resolve (fileReader.result);
+    };
+    // console.log("line:2000", fileReader.result);
+    fileReader.onerror = error => {
+      reject (error);
+    };
+  });
+}

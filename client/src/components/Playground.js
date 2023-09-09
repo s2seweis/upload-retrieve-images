@@ -1,68 +1,68 @@
-import { useState, useEffect, useContext } from 'react';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import FormGroup from 'react-bootstrap/esm/FormGroup';
-import moment from 'moment';
+// import { useState, useEffect, useContext } from 'react';
+// import Button from 'react-bootstrap/Button';
+// import Form from 'react-bootstrap/Form';
+// import axios from 'axios';
+// import { useParams } from 'react-router-dom';
+// import FormGroup from 'react-bootstrap/esm/FormGroup';
+// import moment from 'moment';
 
 
 
-import Popup1 from './Popup/Popup1';
-import Popup2 from './Popup/Popup2';
+// import Popup1 from './Popup/Popup1';
+// import Popup2 from './Popup/Popup2';
 
 
 
-import { UserContext } from '../App';
+// import { UserContext } from '../App';
 
 
 
-const Playground = () => {
+// const Playground = () => {
 
-     // ### useContext
-  const users = useContext(UserContext);
+//      // ### useContext
+//   const users = useContext(UserContext);
 
 
-    const [isOpen, setIsOpen] = useState(false);
+//     const [isOpen, setIsOpen] = useState(false);
     
 
-    // function toggle() {
-    //     setIsOpen(true);
-    // }
+//     // function toggle() {
+//     //     setIsOpen(true);
+//     // }
 
 
-    const setData2 = (e) => {
-        // const {value} = e.target;
-        setIsOpen(true);
-      };
+//     const setData2 = (e) => {
+//         // const {value} = e.target;
+//         setIsOpen(true);
+//       };
 
 
 
-    return (
-        <div className="container mt-3">
-            <Form className="mt-3">
+//     return (
+//         <div className="container mt-3">
+//             <Form className="mt-3">
 
-                <h1>Playground</h1>
+//                 <h1>Playground</h1>
 
-                <div className="Playground">
+//                 <div className="Playground">
                     
-                    {/* {isOpen && <Popup1 />} */}
+//                     {/* {isOpen && <Popup1 />} */}
 
 
-                    {isOpen ? <Popup1/> : <Popup2/>}
+//                     {isOpen ? <Popup1/> : <Popup2/>}
                     
-                    <button onClick={setData2}>Toggle show</button>
+//                     <button onClick={setData2}>Toggle show</button>
 
 
-                </div>
+//                 </div>
 
 
-            </Form>
+//             </Form>
 
-        </div>
-    );
-};
+//         </div>
+//     );
+// };
 
-export default Playground;
+// export default Playground;
 
 

@@ -36,3 +36,52 @@
     transform: rotate(360deg);
   }
 }
+
+@media screen and (min-width: 992px) {
+  .about-center {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    align-items: center;
+    column-gap: 4rem;
+  }
+  .about-img,
+  .about-img-svg {
+    grid-column: 1 / span 5;
+    margin-bottom: 0;
+  }
+  .about-text {
+    grid-column: 6 / -1;
+  }
+}
+
+/* ### Media Querry  */
+
+.images-copy {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+}
+
+@media screen and (max-width: 622px) {
+  .images-copy {
+    display: grid;
+  }
+}
+
+.level_2{
+  display: flex;
+  margin: auto;
+  gap: 30px;
+}
+
+@media screen and (max-width: 800px) {
+  .level_2 {
+    display: grid;
+  }
+
+  .img_Collection{
+    height: 220px !important;
+  }
+
+
+}
