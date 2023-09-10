@@ -13,7 +13,8 @@ const ImageCollection = () => {
   console.log ('line:100', state);
 
   // ###
-  const [file3, setFile3] = useState ('');
+  const [file3, setFile3] = useState ([]);
+  console.log("line:0.9", file3);
   const [file4, setFile4] = useState ('');
   console.log ('line:1.1', file4);
   console.log ('line:1.2', file4.myFile);
@@ -27,11 +28,16 @@ const ImageCollection = () => {
   // ###
 
   const setimgfilecollection = async e => {
-    // console.log("line:200", e);
+    console.log("line:200", e);
 
-    setFile3 (e.target.files[0]);
+    setFile3 (e.target.files);
 
-    const testNewFile = e.target.files[0];
+    const testNewFile = e.target.files;
+    console.log("line:3.9", testNewFile);
+    
+
+
+
     const base64NewFile = await convertToBase64 (testNewFile);
     console.log ('line:4', base64NewFile);
     setFile4 ({myFile: base64NewFile});
@@ -86,6 +92,8 @@ const ImageCollection = () => {
           ))}
         </div>
 
+      
+
       </div>
       <input
         style={{}}
@@ -94,6 +102,9 @@ const ImageCollection = () => {
         multiple
         type="file"
       />
+
+      {/* <input type="file" name="filefield" multiple="multiple" /> */}
+
     </div>
   );
 };
