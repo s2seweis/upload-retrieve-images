@@ -8,23 +8,13 @@ import {UserContext} from '../App';
 import moment from 'moment';
 
 import '../../src/App.css';
-
-// ### Test: Image Collection
-
 import ImageCollection from './imageCollection';
+import useFileHandler from './hooks/useFileHandler';
+import ImageLoader from './ImageLoader';
 
-import { v4 as uuidv4 } from 'uuid';
-
-// import Popup1 from './Popup/Popup1';
-// import Popup2 from './Popup/Popup2';
-
-// Skeleton Component
-// import Skeleton from 'react-loading-skeleton';
-// import 'react-loading-skeleton/dist/skeleton.css'
-// import SkeletonCard from "./skeleton/SkeletonCard";
+import {v4 as uuidv4} from 'uuid';
 
 const EditUser = ({match}) => {
-
   const ref = useRef ();
   // console.log("line:5000", ref);
   const handleClick = e => {
@@ -45,10 +35,25 @@ const EditUser = ({match}) => {
 
   // ### A dynamic parameter is a parameter to an SQL statement for which the value is not specified when the statement is created, initital state:[] no more need for question marks
   const [user, setUser] = useState ([]);
-  // console.log ('line:1.1', user);
-  // console.log ('line:1', user.image);
-  // console.log ('line:1.4', user.image2);
-  // console.log ('line:1.5', user.fname);
+  console.log ('line:1.1', user);
+  console.log ('line:1.2', user.imageCollection);
+
+  const {
+    imageFile,
+    isFileLoading,
+    onFileChange,
+    removeImage,
+    setImageFile,
+  } = useFileHandler ({imageCollection: user.imageCollection || []});
+
+  console.log ('line:233', imageFile);
+  console.log ('line:234', imageFile.imageCollection);
+
+  // const newImageCollection =
+  // imageFile
+  // ||
+  // user.imageCollection;
+  // console.log("line555", newImageCollection);
 
   const newUser = {
     _id: user._id,
@@ -65,19 +70,6 @@ const EditUser = ({match}) => {
 
   const [file1, setFile1] = useState ('');
   const [file2, setFile2] = useState ('');
-  // // ###
-  // const [file3, setFile3] = useState ('');
-  // const [file4, setFile4] = useState('');
-  // console.log("line:1.1", file4);
-  // console.log("line:1.2", file4.myFile);
-
-  // const numbersOne = [1, 2, 3];
-  // const numbersTwo = [ {id: uuidv4(), img: file4.myFile } ];
-  // const combined = [...numbersTwo];
-  // console.log("line:1.3", combined);
-
-  // console.log("line:2", file3);
-  // // ###
 
   const [postImage1, setPostImage1] = useState ({myFile: ''});
   // console.log ('line:2', postImage1.myFile);
@@ -124,6 +116,8 @@ const EditUser = ({match}) => {
     image2: imagePreview2,
     imgpath: img,
     date: olddate,
+    imageCollection: imageFile.imageCollection,
+    // imageCollection: imageFile
   };
   // console.log ('line:100', tree);
   // ###
@@ -172,20 +166,6 @@ const EditUser = ({match}) => {
     // ### - display image preview
     setImage2 (URL.createObjectURL (e.target.files[0]));
   };
-  // ### Add File to the ImageCollection Array
-  // const setimgfilecollection = async e => {
-  //   // console.log("line:200", e);
-
-  //   setFile3 (e.target.files[0]);
-
-  //   const testNewFile = e.target.files[0];
-  //   const base64NewFile = await convertToBase64 (testNewFile);
-  //   console.log("line:4", base64NewFile);
-  //   setFile4 ({myFile: base64NewFile});
-
-  //   // ### - display image preview
-  //   // setImage2 (URL.createObjectURL (e.target.files[0]));
-  // };
 
   // ###
   const setData1 = e => {
@@ -198,10 +178,13 @@ const EditUser = ({match}) => {
     editUser (tree);
   };
 
+  // ### replace the button by a useEffect Hook
+
   const setData3 = e => {
     // const {value} = e.target;
-    setTestState1 (user.image);
+    setImageFile ({imageCollection: user.imageCollection});
   };
+
   const setData4 = e => {
     // const {value} = e.target;
     setUser ({
@@ -244,6 +227,8 @@ const EditUser = ({match}) => {
 
   // ### Function for the POST request
   const editUser = async tree => {
+    console.log ('line:888', tree);
+
     var formData = new FormData ();
     formData.append ('tree', tree);
     const config = {
@@ -259,7 +244,7 @@ const EditUser = ({match}) => {
       console.log ('errror');
     } else {
       // history("/")
-      // console.log ('line:400, !success!');
+      console.log ('line:400, !success!', res);
     }
   };
 
@@ -278,33 +263,12 @@ const EditUser = ({match}) => {
     [users]
   );
 
-  //  ### with Skeleton Component: Alternative!!!
-
-  // useEffect(() => {
+  //  useEffect(() => {
   //   const timer = setTimeout(() => {
-  //     setData3();
-  //     // setTestState1 (user.image)
+  //     setImageFile ({imageCollection: user.imageCollection});
   //   }, 5000);
   //   return () => clearTimeout(timer);
   // }, []);
-
-  // useEffect(() => {
-  //   setLoading(true);
-  //   const timer = setTimeout(() => {
-  //     setTotalUsers(users);
-  //     setUser(users.find(o => o._id == userid.userid));
-  //     setLoading(false);
-  //   }, 5000);
-  //   return () => clearTimeout(timer);
-  // }, [users]);
-
-  // ### - Test
-
-  // document.getElementById ('buttonid').addEventListener ('click', openDialog);
-
-  function openDialog () {
-    document.getElementById ('fileid').click ();
-  }
 
   return (
     <div>
@@ -387,12 +351,7 @@ const EditUser = ({match}) => {
                     >
                       Delete1
                     </Button>
-                    <Button
-                      // onClick={setData4}
-                      style={{display: 'block', margin: 'auto'}}
-                    >
-                      Add1
-                    </Button>
+
                   </div>
 
                 </Form.Group>
@@ -510,33 +469,89 @@ const EditUser = ({match}) => {
             Submit1
           </Button>
 
-          <br></br>
-
-          {/* <button onClick={handleClick}> */}
-          {/* <input
-          style={{marginBottom:"50px"}} 
-          // ref={ref}
-          onChange={setimgfilecollection} 
-          multiple
-          type="file" 
-          /> */}
-
-          {/* <Form.Control
-                type="file"
-                onChange={setimgfile2}
-                name="photo"
-                // value={user.image}
-                defaultValue={imagePreview2}
-                placeholder=""
-              /> */}
-          {/* </button> */}
-
-          <ImageCollection />
+          {/* <ImageCollection /> */}
 
         </Form>
 
+        {/* ###################################################################### */}
+
+        <div style={{marginTop: '50px'}}>
+
+          <div
+            className="image-collection-top"
+            style={{background: 'aliceblue'}}
+          >
+
+            <div className="product-form-field">
+              <span className="d-block padding-s">Image Collection</span>
+              {!isFileLoading &&
+                <label
+                  style={{
+                    background: 'red',
+                    padding: '5px',
+                    borderRadius: '15px',
+                  }}
+                  htmlFor="product-input-file-collection"
+                >
+                  <input
+                    hidden
+                    id="product-input-file-collection"
+                    multiple
+                    onChange={e =>
+                      onFileChange (e, {
+                        name: 'imageCollection',
+                        type: 'multiple',
+                      })}
+                    type="file"
+                  />
+                  Choose Images1
+                </label>}
+            </div>
+
+            <div className="image-collection">
+
+              {/* {imageFile.length >= 1 &&
+                imageFile.map (image => ( */}
+
+              {imageFile.imageCollection?.length >= 1 &&
+                imageFile.imageCollection.map (image => (
+                  <div
+                    className="product-form-collection-image"
+                    style={{marginBottom: '20px'}}
+                    key={image.id}
+                  >
+                    <ImageLoader alt="" src={image.url} />
+
+                    <button
+                      className="product-form-delete-image"
+                      onClick={() =>
+                        removeImage ({id: image.id, name: 'imageCollection'})}
+                      title="Delete Image"
+                      type="button"
+                    >
+                      Delete
+                      <i className="fa fa-times-circle" />
+                    </button>
+
+                  </div>
+                ))}
+
+            </div>
+
+          </div>
+
+          <Button
+            variant="primary"
+            // type="submit"
+            style={{marginTop: '100px', marginBottom: '100px'}}
+            onClick={setData3}
+          >
+            Add Array to State
+          </Button>
+
+        </div>
+
       </div>
-      {/* } */}
 
     </div>
   );
