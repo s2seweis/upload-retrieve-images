@@ -85,3 +85,28 @@
 
 
 }
+
+.image-collection{
+  display: flex;
+  margin-top: 25px;
+  justify-content: center;
+  align-items: center;
+}
+
+.collection-images{
+  width: 100px;
+}
+
+@media screen and (max-width: 800px) {
+  .image-collection {
+    display: grid;
+  }
+
+  .collection-images {
+    width: 150px;
+  }
+
+  
+
+
+}
