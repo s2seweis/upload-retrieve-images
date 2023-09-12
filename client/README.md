@@ -11,3 +11,12 @@
 - for components & and pages with much state, makes the inline style the code messier 
 
 - useEffect Hook for dispach the state to the useState hook?
+
+
+#### Next: Lifting up the state to maintain data consistency
+
+1. lift up the useEffect hook to an extra layer that is higer in the hierarchy so that i can pass down the user state as props to the EditUSer component
+
+2. Passing down the User State |user.imageCollection| as initial state to the imageFile hook
+
+3. Should fix that the imageFile hook get an empty initial state

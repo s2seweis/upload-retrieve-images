@@ -8,9 +8,9 @@ import {UserContext} from '../App';
 import moment from 'moment';
 
 import '../../src/App.css';
-import ImageCollection from './imageCollection';
-import useFileHandler from './hooks/useFileHandler';
-import ImageLoader from './ImageLoader';
+import ImageCollection from '../components/imageCollection';
+import useFileHandler from '../components/hooks/useFileHandler';
+import ImageLoader from '../components/ImageLoader';
 
 import {v4 as uuidv4} from 'uuid';
 
@@ -27,6 +27,24 @@ const EditUser = ({match}) => {
   // ### useContext
   const users = useContext (UserContext);
 
+
+  // #### this hook cause the props
+  useEffect (
+    () => {
+      if (users.length == 0) {
+        console.log ('no users found');
+      } else {
+        // setTotalUsers (users);
+        setUser (users.find (o => o._id == userid.userid));
+        // console.log('line:500', user);
+      }
+    },
+    [users]
+    // [users]
+  );
+
+  
+
   // ### useParams
   const userid = useParams ();
   const id = userid.userid;
@@ -38,16 +56,18 @@ const EditUser = ({match}) => {
   console.log ('line:1.1', user);
   console.log ('line:1.2', user.imageCollection);
 
+
   const {
     imageFile,
     isFileLoading,
     onFileChange,
     removeImage,
     setImageFile,
-  } = useFileHandler ({imageCollection: user.imageCollection || []});
+  } = useFileHandler ({imageCollection: user?.imageCollection || []});
+  // } = useFileHandler ({imageCollection: user?.imageCollection || []});
 
-  console.log ('line:233', imageFile);
-  console.log ('line:234', imageFile.imageCollection);
+
+  // console.log ('line:234', imageFile?.imageCollection);
 
   // const newImageCollection =
   // imageFile
@@ -108,6 +128,8 @@ const EditUser = ({match}) => {
 
   const imagePreview2 = imagenew2 || img2;
 
+  
+
   // ### Data for update the MongoDB
   const tree = {
     id: id,
@@ -116,7 +138,7 @@ const EditUser = ({match}) => {
     image2: imagePreview2,
     imgpath: img,
     date: olddate,
-    imageCollection: imageFile.imageCollection,
+    imageCollection: imageFile?.imageCollection,
     // imageCollection: imageFile
   };
   // console.log ('line:100', tree);
@@ -182,6 +204,7 @@ const EditUser = ({match}) => {
 
   const setData3 = e => {
     // const {value} = e.target;
+    console.log("line:777", e);
     setImageFile ({imageCollection: user.imageCollection});
   };
 
@@ -250,25 +273,28 @@ const EditUser = ({match}) => {
 
   // ### UseEffect Call - for set the totalUsers & user
 
-  useEffect (
-    () => {
-      if (users.length == 0) {
-        console.log ('no users found');
-      } else {
-        // setTotalUsers (users);
-        setUser (users.find (o => o._id == userid.userid));
-        // console.log('line:500', user);
-      }
-    },
-    [users]
-  );
+  // useEffect (
+  //   () => {
+  //     if (users.length == 0) {
+  //       console.log ('no users found');
+  //     } else {
+  //       // setTotalUsers (users);
+  //       setUser (users.find (o => o._id == userid.userid));
+  //       // console.log('line:500', user);
+  //     }
+  //   },
+  //   [users]
+  // );
 
-  //  useEffect(() => {
+  //  useEffect((e) => {
   //   const timer = setTimeout(() => {
   //     setImageFile ({imageCollection: user.imageCollection});
   //   }, 5000);
   //   return () => clearTimeout(timer);
-  // }, []);
+  // }, [imageFile]);
+
+ 
+
 
   return (
     <div>
@@ -513,8 +539,8 @@ const EditUser = ({match}) => {
               {/* {imageFile.length >= 1 &&
                 imageFile.map (image => ( */}
 
-              {imageFile.imageCollection?.length >= 1 &&
-                imageFile.imageCollection.map (image => (
+              {imageFile?.imageCollection?.length >= 1 &&
+                imageFile?.imageCollection?.map (image => (
                   <div
                     className="product-form-collection-image"
                     style={{marginBottom: '20px'}}

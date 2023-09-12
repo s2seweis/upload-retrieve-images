@@ -4,11 +4,11 @@ import React, {useEffect, useState, useContext, createContext} from 'react';
 
 import Header from './components/Header';
 import Home from './components/Home';
-import Register from './components/Register';
+import Register from './User/Register';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Routes,Route} from "react-router-dom"
 
-import EditUser from './components/EditUser';
+import EditUser from './User/EditUser';
 
 import axios from 'axios';
 import Playground from './components/Playground';
