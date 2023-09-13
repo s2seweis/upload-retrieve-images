@@ -23,6 +23,7 @@ const useProduct = (id) => {
   // const storeProduct = useSelector((state) => state.products.items.find((item) => item.id === id));
 
   const [product, setProduct] = useState(storeProduct);
+  console.log("line:24", product);
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   // const didMount = useDidMount(true);
@@ -54,17 +55,17 @@ const useProduct = (id) => {
   //   })();
   // }, [id]);
 
-  const userid = useParams ();
-  console.log("line:50", userid);
-  const id1 = userid.userid
+  // const userid = useParams ();
+  // console.log("line:50", userid);
+  // const id1 = userid.userid
 
   useEffect (
     () => {
-      if (product.length == 0) {
+      if (storeProduct.length == 0) {
         console.log ('no products found');
       } else {
         // setTotalUsers (users);
-        setProduct (product.find (o => o._id == userid.userid || id1));
+        setProduct (storeProduct.find (o => o._id == id));
         // console.log('line:500', user);
       }
     },

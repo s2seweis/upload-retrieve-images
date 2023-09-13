@@ -7,9 +7,14 @@ import moment from 'moment';
 import Alert from 'react-bootstrap/Alert';
 import {Link} from 'react-router-dom';
 
+import { useNavigate, withRouter } from 'react-router-dom';
+
+
 import { UserContext } from '../App';
 
 const Home = () => {
+
+  const history = useNavigate();
 
   const users = useContext (UserContext);
   console.log("line22", users);
@@ -48,6 +53,21 @@ const Home = () => {
         'Content-Type': 'application/json',
       },
     });
+    // ###
+
+
+  
+
+
+  //   <Link
+  //   // to={`/editusernew/${el._id}`}
+  //   to={`/edituser/${el._id}`}
+  // >
+  //   Edit
+  // </Link>
+
+
+    // ###
 
     if (res.data.status === 401 || !res.data) {
       console.log ('errror');
@@ -55,6 +75,12 @@ const Home = () => {
       getUserData ();
       setShow (true);
     }
+  };
+
+
+  const onClickEdit = (id) => {
+    // history.push(`${ADMIN_PRODUCT_OVERVIEW}/${product.id}`);
+    history(`/editusernew/${id}`);
   };
 
   useEffect (() => {
@@ -128,10 +154,19 @@ const Home = () => {
                           <Button
                             variant="danger"
                             className="col-lg-6 text-center"
-                            // onClick={() => dltUser (el._id)}
+                            onClick={() => dltUser (el._id)}
                           >
                             Delete1
                           </Button>
+                          {/* ### */}
+                          <Button
+                            variant="danger"
+                            className="col-lg-6 text-center"
+                            onClick={() => onClickEdit (el._id)}
+                            >
+                            EditNew
+                          </Button>
+                            {/* ### */}
                           {/* <Button variant="danger" classNamecol-lg-6 text-center' onClick={() => dltUser(el._id)}>Edit</Button> */}
                           {/* <Button variant="danger" className="col-lg-6 text-center">Edit */}
 

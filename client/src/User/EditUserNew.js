@@ -7,6 +7,8 @@ import FormGroup from 'react-bootstrap/esm/FormGroup';
 import {UserContext} from '../App';
 import moment from 'moment';
 
+
+
 import '../../src/App.css';
 // import ImageCollection from '../components/imageCollection';
 import useFileHandler from '../components/hooks/useFileHandler';
@@ -15,6 +17,7 @@ import ImageLoader from '../components/ImageLoader';
 import {v4 as uuidv4} from 'uuid';
 
 const EditUserNew = ({product,  isLoading}) => {
+  console.log("line:60", product);
   const ref = useRef ();
   // console.log("line:5000", ref);
   const handleClick = e => {
@@ -54,7 +57,7 @@ const EditUserNew = ({product,  isLoading}) => {
   // ### Hooks - call it to add some state to the functional component/ [currentState, functionToUpdate]
 
   // ### A dynamic parameter is a parameter to an SQL statement for which the value is not specified when the statement is created, initital state:[] no more need for question marks
-  const [user, setUser] = useState ([]);
+  const [user, setUser] = useState (product);
   console.log ('line:1.1', user);
   console.log ('line:1.2', user.imageCollection);
 
@@ -536,10 +539,9 @@ const EditUserNew = ({product,  isLoading}) => {
                 </label>}
             </div>
 
-            <div className="image-collection">
+            {/* <div className="image-collection">
 
-              {/* {imageFile.length >= 1 &&
-                imageFile.map (image => ( */}
+            
 
               {imageFile?.imageCollection?.length >= 1 &&
                 imageFile?.imageCollection?.map (image => (
@@ -564,7 +566,7 @@ const EditUserNew = ({product,  isLoading}) => {
                   </div>
                 ))}
 
-            </div>
+            </div> */}
 
           </div>
 

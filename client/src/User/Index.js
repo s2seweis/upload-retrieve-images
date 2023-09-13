@@ -5,16 +5,26 @@ import React, { lazy, Suspense } from 'react';
 // import { Redirect, withRouter } from 'react-router-dom';
 // import { editProduct } from 'redux/actions/productActions';
 
+import {useParams} from 'react-router-dom';
+
+
 const EditForm = lazy(() => import('../User/EditUserNew'));
 
 const EditUserTop = ({ match }) => {
-  console.log("line:40", match);
+
+  const userid = useParams ();
+  console.log("line:50", userid.userid);
+  const id = userid.userid;
+
+  // console.log("line:40", match);
   // useDocumentTitle('Edit Product | Dign');
   // useScrollTop();
 
 //   the useProduct hook goes and check if the user exists in the store
 // ### - pass down the user id already ?
-  const { product, error, isLoading } = useProduct(match.params.id);
+  // const { product, error, isLoading } = useProduct(match.params.id);
+  const { product, error, isLoading } = useProduct(userid.userid);
+  console.log("line51", product);
   // const dispatch = useDispatch();
 
 

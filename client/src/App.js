@@ -57,6 +57,9 @@ function App() {
         {/* <Route path='/register' element={ <Register />} /> */}
         <Route element={<EditUser />} path="/edituser/:userid" />
         <Route element={<EditUserTop />} path="/editusernew/:userid" />
+
+        {/* path={`${ROUTES.EDIT_PRODUCT}/:id`} */}
+
         {/* ### Playground */}
         {/* <Route element={<Playground />} path="/playground" /> */}
 
