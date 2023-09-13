@@ -8,14 +8,13 @@ import {UserContext} from '../App';
 import moment from 'moment';
 
 import '../../src/App.css';
-import ImageCollection from '../components/imageCollection';
+// import ImageCollection from '../components/imageCollection';
 import useFileHandler from '../components/hooks/useFileHandler';
 import ImageLoader from '../components/ImageLoader';
 
 import {v4 as uuidv4} from 'uuid';
 
-const EditUser = ({match}) => {
-  console.log("line:31", match);
+const EditUserNew = ({product,  isLoading}) => {
   const ref = useRef ();
   // console.log("line:5000", ref);
   const handleClick = e => {
@@ -32,25 +31,25 @@ const EditUser = ({match}) => {
 
 
   // #### this hook cause the props
-  useEffect (
-    () => {
-      if (users.length == 0) {
-        console.log ('no users found');
-      } else {
-        // setTotalUsers (users);
-        setUser (users.find (o => o._id == userid.userid));
-        // console.log('line:500', user);
-      }
-    },
-    [users]
-    // [users]
-  );
+//   useEffect (
+//     () => {
+//       if (users.length == 0) {
+//         console.log ('no users found');
+//       } else {
+//         // setTotalUsers (users);
+//         setUser (users.find (o => o._id == userid.userid));
+//         // console.log('line:500', user);
+//       }
+//     },
+//     [users]
+//     // [users]
+//   );
 
   
 
   // ### useParams
-  const userid = useParams ();
-  const id = userid.userid;
+//   const userid = useParams ();
+//   const id = userid.userid;
 
   // ### Hooks - call it to add some state to the functional component/ [currentState, functionToUpdate]
 
@@ -135,7 +134,7 @@ const EditUser = ({match}) => {
 
   // ### Data for update the MongoDB
   const tree = {
-    id: id,
+    // id: id,
     name: name,
     image: imgnew,
     image2: imagePreview2,
@@ -586,7 +585,7 @@ const EditUser = ({match}) => {
   );
 };
 
-export default EditUser;
+export default EditUserNew;
 
 function convertToBase64 (file1, file2) {
   return new Promise ((resolve, reject) => {

@@ -10,16 +10,20 @@ import {Routes,Route} from "react-router-dom"
 
 import EditUser from './User/EditUser';
 
+// import EditUserNew from './User/EditUserNew';
+
+import EditUserTop from './User/Index';
+
 import axios from 'axios';
 import Playground from './components/Playground';
 
+
+
 export const UserContext = createContext();
-
-
 function App() {
 
   const [data, setData] = useState ([]);
-  console.log ('line:1', data);
+  console.log ('line:10', data);
 
   const getUserData = async () => {
     const res = await axios.get ('/getdata', {
@@ -48,10 +52,11 @@ function App() {
 
       <Header />
       <Routes>
-        <Route path='/' element={ <Home />} />
+        <Route path='/' element={ <Home  />} />
         <Route path='/register' element={ <Register />} />
         {/* <Route path='/register' element={ <Register />} /> */}
         <Route element={<EditUser />} path="/edituser/:userid" />
+        <Route element={<EditUserTop />} path="/editusernew/:userid" />
         {/* ### Playground */}
         {/* <Route element={<Playground />} path="/playground" /> */}
 

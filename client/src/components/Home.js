@@ -7,16 +7,21 @@ import moment from 'moment';
 import Alert from 'react-bootstrap/Alert';
 import {Link} from 'react-router-dom';
 
+import { UserContext } from '../App';
+
 const Home = () => {
+
+  const users = useContext (UserContext);
+  console.log("line22", users);
+  
   // # need get the user id state - here with redux store
   // const { settings1 } = useSelector(state => state.settingsReducer);
 
   const [data, setData] = useState ([]);
-  console.log ('line:1', data);
-  console.log ('line:2', data);
+  console.log ('line:20', data);
 
   const context = useContext (data);
-  console.log("line:00", context);
+  console.log("line:21", context);
 
   // const[totalusers, setTotalUsers] = useState([]);
   // console.log("line:3", totalusers);
@@ -123,16 +128,16 @@ const Home = () => {
                           <Button
                             variant="danger"
                             className="col-lg-6 text-center"
-                            onClick={() => dltUser (el._id)}
+                            // onClick={() => dltUser (el._id)}
                           >
-                            Delete
+                            Delete1
                           </Button>
                           {/* <Button variant="danger" classNamecol-lg-6 text-center' onClick={() => dltUser(el._id)}>Edit</Button> */}
                           {/* <Button variant="danger" className="col-lg-6 text-center">Edit */}
 
                           <Link
+                            // to={`/editusernew/${el._id}`}
                             to={`/edituser/${el._id}`}
-                            // to={`/edituser/${el._id}`}
                           >
                             Edit
                           </Link>
