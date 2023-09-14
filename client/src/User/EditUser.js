@@ -66,7 +66,7 @@ const EditUser = ({match}) => {
     onFileChange,
     removeImage,
     setImageFile,
-  } = useFileHandler ({imageCollection: user?.imageCollection || []});
+  } = useFileHandler ({imageCollection: user.imageCollection || []});
   // } = useFileHandler ({imageCollection: user?.imageCollection || []});
 
 

@@ -14,10 +14,16 @@ import { UserContext } from '../App';
 
 const Home = () => {
 
+  
+
   const history = useNavigate();
 
   const users = useContext (UserContext);
   console.log("line22", users);
+
+  useEffect(() => {
+    localStorage.setItem('users', JSON.stringify(users));
+  }, [users]);
   
   // # need get the user id state - here with redux store
   // const { settings1 } = useSelector(state => state.settingsReducer);

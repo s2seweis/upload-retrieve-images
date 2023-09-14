@@ -20,3 +20,6 @@
 2. Passing down the User State |user.imageCollection| as initial state to the imageFile hook
 
 3. Should fix that the imageFile hook get an empty initial state
+
+
+### Problem: The initial state of the useState Hook not wait for the parameter passed down  
