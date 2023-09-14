@@ -22,4 +22,5 @@
 3. Should fix that the imageFile hook get an empty initial state
 
 
-### Problem: The initial state of the useState Hook not wait for the parameter passed down  
+### Problem: The initial state of the useState Hook not wait for the parameter passed down 
+- useState async behaviour, made it difficult to get the correct initial state, the updates are not refelected immediately
