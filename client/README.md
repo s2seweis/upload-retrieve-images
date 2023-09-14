@@ -24,3 +24,4 @@
 
 ### Problem: The initial state of the useState Hook not wait for the parameter passed down 
 - useState async behaviour, made it difficult to get the correct initial state, the updates are not refelected immediately
+- instead of using redux store and get the state with useSelect/ just added it to the local store and fetched it from there 
