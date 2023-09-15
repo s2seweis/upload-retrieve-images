@@ -17,23 +17,23 @@ const useProduct = (storeProduct, id) => {
 
 
   const storedArrayOfObjects = JSON.parse(localStorage.getItem('users'));
-  console.log("line:1 - Where???", storedArrayOfObjects);
+  // console.log("line:1 - Where???", storedArrayOfObjects);
 
 
   const [product, setProduct] = useState(storedArrayOfObjects);
-  console.log("line:2", product);
-  console.log("line:3", product.find (o => o._id == id));
+  // console.log("line:2", product);
+  // console.log("line:3", product.find (o => o._id == id));
 
   const newBuildProductInstance = product.find (o => o._id == id);
-  console.log("line:3.1", newBuildProductInstance);
+  // console.log("line:3.1", newBuildProductInstance);
 
 
   // console.log("line:20", id);
-  console.log("line:4", storeProduct);
-  console.log("line:5", id);
-  console.log("line:6", storeProduct.find (o => o._id == id));
+  // console.log("line:4", storeProduct);
+  // console.log("line:5", id);
+  // console.log("line:6", storeProduct.find (o => o._id == id));
   const storeProduct1 = storeProduct.find (o => o._id == id)
-  console.log("line:7", storeProduct1);
+  // console.log("line:7", storeProduct1);
 // #
 
   // get and check if product exists in store
@@ -59,11 +59,11 @@ const useProduct = (storeProduct, id) => {
         if (!product || product._id !== id) {
           setLoading(true);
           const doc = await storeProduct.find (o => o._id == id);
-          console.log("line:8 ???", doc);
+          // console.log("line:8 ???", doc);
 
           if (doc.exists) {
             // const data = { ...doc.data(), id: doc.ref.id };
-            console.log("line:9 ???" );
+            // console.log("line:9 ???" );
 
             if (didMount) {
               setProduct(storeProduct1);

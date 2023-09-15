@@ -1,27 +1,20 @@
-### Next:
+### File Handler for React with Node and MongoDB
+
+Covered Topics:
+
+1. Lifting State to the next ancestor component in the state tree for avoiding async behaviour
+2. Using local storage instead of a redux store & useSelector
+3. Use of Custom Hooks like (useUser, useDidMount, useFileHandler)
+4. Applying Suspense to let your component wait before it can render
+5. Add Loader from Ant Design
+
+### Result:
+- File Handler for add images, image collections, pdf & videos to the database or the server
+
+
+## Additional for the project:
 1. Customize the file upload button
-- https://medium.com/web-dev-survey-from-kyoto/how-to-customize-the-file-upload-button-in-react-b3866a5973d8
 
 
-02/09/2023 (2 h)
-- check if I can cut the component into smaller chunks
-- read: how to avoid that some state will be rendered again
-- try to finish the single image component
-- go to the image collection component
-- for components & and pages with much state, makes the inline style the code messier 
-
-- useEffect Hook for dispach the state to the useState hook?
-
-
-#### Next: Lifting up the state to maintain data consistency
-
-1. lift up the useEffect hook to an extra layer that is higer in the hierarchy so that i can pass down the user state as props to the EditUSer component
-
-2. Passing down the User State |user.imageCollection| as initial state to the imageFile hook
-
-3. Should fix that the imageFile hook get an empty initial state
-
-
-### Problem: The initial state of the useState Hook not wait for the parameter passed down 
-- useState async behaviour, made it difficult to get the correct initial state, the updates are not refelected immediately
-- instead of using redux store and get the state with useSelect/ just added it to the local store and fetched it from there 
+# Problems Encountered:
+1. Async behaviour of the use state hook, not reflect state changes directly 

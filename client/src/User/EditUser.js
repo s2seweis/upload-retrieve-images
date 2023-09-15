@@ -333,6 +333,8 @@ const EditUser = ({match}) => {
             <Form.Control type="text" name="id" value={user._id} />
           </FormGroup>
 
+
+          {/* ### */}
           <div className="images-copy">
 
             <div
@@ -476,7 +478,7 @@ const EditUser = ({match}) => {
                     onClick={setData6}
                     style={{display: 'block', margin: 'auto'}}
                   >
-                    Delete2
+                    Delete3
                   </Button>
 
                 </Form.Group>

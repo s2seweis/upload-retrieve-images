@@ -17,12 +17,12 @@ const EditFormDummy = lazy(() => import('../User/EditUserNewDummy'));
 const EditUserTop = ({ match }) => {
 
   const storeProduct = useContext (UserContext);
-  console.log("line:20", storeProduct);
+  // console.log("line:20", storeProduct);
 
   
   
   const userid = useParams ();
-  console.log("line:21", userid.userid);
+  // console.log("line:21", userid.userid);
   const id = userid.userid;
 
   // const storeProduct1 = storeProduct.find(o => o._id == id)
@@ -36,9 +36,9 @@ const EditUserTop = ({ match }) => {
 // ### - pass down the user id already ?
   // const { product, error, isLoading } = useProduct(match.params.id);
   const { product, error, isLoading, newBuildProductInstance } = useProduct(storeProduct, id);
-  console.log("line:22", product);
-  console.log("line:23 - Where?", product);
-  console.log("line:23.1", newBuildProductInstance);
+  // console.log("line:22", product);
+  // console.log("line:23 - Where?", product);
+  // console.log("line:23.1", newBuildProductInstance);
   // const dispatch = useDispatch();
 
 
