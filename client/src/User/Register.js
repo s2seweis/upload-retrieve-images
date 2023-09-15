@@ -9,20 +9,20 @@ import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const [fname, setFName] = useState('');
-  console.log("line:0", fname);
+  console.log("line:1", fname);
 
   const [file, setFile] = useState('');
-  console.log('line:1', file);
+  console.log('line:2', file);
 
   const [image, setImage] = useState('');
-  console.log('line:2', image);
+  console.log('line:3', image);
 
   const [postImage, setPostImage] = useState({ myFile: '' });
-  console.log('line:2.1', postImage.myFile);
-  console.log('line:2.2', postImage);
+  console.log('line:4', postImage.myFile);
+  console.log('line:5', postImage);
 
   const imagenew = postImage.myFile;
-  console.log('line:2.3', imagenew);
+  console.log('line:6', imagenew);
 
   // const [test, setTest] = useState("");
   // console.log("line:3", test);
@@ -35,14 +35,14 @@ const Register = () => {
   };
 
   const setimgfile = async e => {
-    console.log('line:100', e);
-    console.log('line:101', e.target.files[0]);
+    console.log('line:7', e);
+    console.log('line:8', e.target.files[0]);
     setFile(e.target.files[0]);
 
     const test = e.target.files[0];
-    console.log('line:4', test);
+    console.log('line:9', test);
     const base64 = await convertToBase64(test);
-    console.log('line:5', base64);
+    console.log('line:10', base64);
     setPostImage({ ...postImage, myFile: base64 });
 
     // ### - display image preview
@@ -51,14 +51,20 @@ const Register = () => {
 
   // adduser data
 
+  const test = {id:"john"}
+  console.log("line:10.1", test);
+
   const addUserData = async e => {
-    console.log("line:111", e);
+    console.log("line:11", e);
     e.preventDefault();
 
     var formData = new FormData();
     formData.append('photo', file);
     formData.append('fname', fname);
     formData.append('image', imagenew);
+    formData.append('add', test);
+
+    console.log("line:11.1", file);
 
     const config = {
       headers: {
@@ -68,15 +74,15 @@ const Register = () => {
 
     const res = await axios.post('/register', formData, config);
 
-    console.log("555", res);
-    console.log('line:3', formData);
-    console.log('line:4', config);
+    console.log("line:12", res);
+    console.log('line:13', formData);
+    console.log('line:14', config);
 
     if (res.data.status === 401 || !res.data) {
       console.log('errror');
     } else {
       // history("/")
-      console.log('line:400, !success!');
+      console.log('line:15, !success!');
     }
   };
 
@@ -129,7 +135,7 @@ const Register = () => {
         {/* <button style={{marginTop:"20px"}} onClick={(e) => setImage(URL.createObjectURL(test))}>Image?</button> */}
 
         {/* \        <img src={image100}></img> */}
-        <img src={postImage.myFile} alt="test" />
+        <img style={{width:"300px", marginTop:"50px"}} src={postImage.myFile} alt="test" />
 
       </div>
     </div>

@@ -33,13 +33,15 @@ const upload = multer ({
 // user register
 router.post ('/register', upload.single ('photo'), async (req, res) => {
   const {filename, path} = req.file;
-  console.log ('line:100', req.file);
+  console.log("line:1", filename);
+  console.log ('line:2', req.file);
   // console.log ('line:101', req.file.path);
   // console.log ('line:103', filename);
   // console.log ('line:104', path);
 
   const {fname} = req.body;
-  console.log ('line:200', req.body);
+  console.log ('line:3', req.body);
+  console.log ('line:4', req.body.add);
   // console.log ('line:201', fname);
 
   // const {newImage} = req.body;
@@ -57,7 +59,7 @@ router.post ('/register', upload.single ('photo'), async (req, res) => {
   // console.log("line:301", req.body.fname);
 
   const test10 = req.body.image;
-  console.log ('line:301', test10);
+  console.log ('line:4', test10);
 
   if (!fname || !filename) {
     res.status (401).json ({status: 401, message: 'fill all the data'});
@@ -72,7 +74,7 @@ router.post ('/register', upload.single ('photo'), async (req, res) => {
     let month = ('0' + (today.getMonth () + 1)).slice (-2); //get your zero in front of single month digits so you have 2 digit months
     // let date = month + '-' + day + '-' + today.getFullYear ();
     let date = today.getFullYear () + '-' + month + '-' + day;
-    console.log ('line:11', date);
+    console.log ('line:5', date);
 
     ('2023-08-25');
 
@@ -125,21 +127,26 @@ router.delete ('/:id', async (req, res) => {
   }
 });
 
+
+
+
 router.post ('/edituser', async (req, res) => {
   const {userid} = req.body;
   const {id} = req.body;
+  const {file} = req.body;
   // console.log ('line:209', id);
-  console.log ('line:200', id);
+  console.log ('line:0', file);
+  console.log ('line:1', id);
   // console.log ('line:204', req.params);
-  console.log ('line:201', userid);
-  console.log ('line:202', req.body);
+  console.log ('line:2', userid);
+  console.log ('line:3', req.body);
   // console.log ('line:203', req);
   // console.log ('line:208', req.body.userid);
   try {
     // ### - its running but the data is not arriving
 
     const dltUser = await users1.findOne ({_id: id});
-    console.log ('line:210', dltUser);
+    // console.log ('line:4', dltUser);
     // return res.json (dltUser);
 
     let today = new Date (); // get the date
@@ -150,29 +157,29 @@ router.post ('/edituser', async (req, res) => {
 
 
 
-    console.log ('line:11', date);
+    // console.log ('line:5', date);
 
     userData = req.body;
-    console.log("line:211.5", userData);
+    // console.log("line:6", userData);
 
 
     dltUser.fname = req.body.name;
-    console.log("211", dltUser.fname);
+    // console.log("line:7", dltUser.fname);
 
     dltUser.image = req.body.image;
-    console.log("212", dltUser.image);
+    // console.log("line:8", dltUser.image);
 
     dltUser.image2 = req.body.image2;
-    console.log("212.1", dltUser.image2);
+    // console.log("line:9", dltUser.image2);
 
     dltUser.imgpath = req.body.imgpath;
-    console.log("213", dltUser.imgpath);
+    // console.log("line:10", dltUser.imgpath);
 
     dltUser.date = req.body.date;
-    console.log("214", dltUser.date);
+    // console.log("line:11", dltUser.date);
 
     dltUser.imageCollection= req.body.imageCollection;
-    console.log("215", dltUser.imageCollection);
+    // console.log("line:12", dltUser.imageCollection);
 
 
     const star = await dltUser.save ();
@@ -188,12 +195,12 @@ router.post ('/edituser', async (req, res) => {
 
 router.post ('/edituser-submit', async (req, res) => {
  
-  console.log("line:1001", req.body.data);
+  console.log("line:", req.body.data);
 
   const {fname} = req.body;
-  console.log ('line:1002', req.body);
+  console.log ('line:', req.body);
   const {userid} = req.body;
-  console.log("1003", userid);
+  console.log("line:", userid);
 
 
 
