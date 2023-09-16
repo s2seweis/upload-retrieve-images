@@ -74,7 +74,7 @@ const Playground = () => {
       },
     };
 
-    const res = await axios.post('/playground', formData, config);
+    const res = await axios.post('/playgroundregister', formData, config);
 
     console.log("line:12", res);
     console.log('line:13', formData);

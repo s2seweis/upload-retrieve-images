@@ -45,6 +45,8 @@ const EditUserNew = ({ product, isLoading }) => {
   };
   // ###
 
+// ### - Possible Solution: Append each value to the formData object
+
   const tree = {
     id: user._id,
     name: name,
@@ -63,12 +65,19 @@ const EditUserNew = ({ product, isLoading }) => {
   console.log('line:12', file);
 
 
-  const editUser = async tree => {
-    console.log('line:6', tree);
+  const editUser = async e => {
+    console.log("line:11", e);
+    e.preventDefault();
 
     var formData = new FormData();
-    formData.append('tree', tree);
+    // formData.append('tree', tree);
     formData.append('photo', file);
+    // formData.append('data', tree);
+    formData.append('id', user._id);
+    formData.append('name', name);
+    formData.append('image', user.image);
+    formData.append('image2', user.image2);
+    formData.append('imgpath', user.imgpath);
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -76,7 +85,14 @@ const EditUserNew = ({ product, isLoading }) => {
       },
     };
 
-    const res = await axios.post('/edituser', tree, config, formData);
+    console.log("line:300", tree);
+
+    const res = await axios.post('/playgroundedituser2', 
+    formData, 
+    // ### - not all will be dispatched to the backend
+    config,
+    // tree,
+    );
     // console.log ('line:15', res);
 
     if (res.data.status === 401 || !res.data) {
@@ -215,6 +231,7 @@ const EditUserNew = ({ product, isLoading }) => {
 
       {/* {!loading &&  */}
       <div className="container mt-3">
+        <h3>PlaygroundEditUser2</h3>
         <Form className="mt-3">
 
           <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -481,7 +498,7 @@ const EditUserNew = ({ product, isLoading }) => {
             variant="primary"
             // type="submit"
             style={{ marginTop: '100px', marginBottom: '100px' }}
-            onClick={setData2}
+            onClick={editUser}
           >
             Submit1
           </Button>

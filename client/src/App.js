@@ -5,11 +5,11 @@ import Home from './components/Home';
 import Register from './User/Register';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Routes,Route} from "react-router-dom"
-import EditUser from './User/EditUser';
+import EditUser from './User/EditUser1';
 import EditUserTop from './User/Index';
 import axios from 'axios';
 
-import Playground from './User/Playground';
+import Playground from './User/PlaygroundRegister';
 
 
 

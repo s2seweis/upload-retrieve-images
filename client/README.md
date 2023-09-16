@@ -34,5 +34,13 @@
 
 ### Need making the test for the file upload with Content-Type': 'application/json' and 'Content-Type': 'multipart/form-data'
 
+# Info: 
+- You can place multiple defined objects in the body of an Axios POST request. 
+- To do this, you can create an object that contains these two objects and then send that wrapper object in the request body. 
+
+Code Example: 
+
+![Alt text](<Screen Shot 2023-09-16 at 9.16.15 PM.png>)
+
 6. Next: 
 - Build Playground & Add Route

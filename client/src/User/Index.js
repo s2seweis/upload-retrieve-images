@@ -11,7 +11,8 @@ import { UserContext } from '../App';
 import {useParams} from 'react-router-dom';
 
 
-const EditForm = lazy(() => import('../User/EditUserNew'));
+const EditForm1 = lazy(() => import('./EditUser2'));
+const EditForm2 = lazy(() => import('./PlaygroundEditUser2'));
 
 const EditUserTop = ({ match }) => {
 
@@ -60,7 +61,8 @@ const EditUserTop = ({ match }) => {
         >
 
             {/* ### possible to pass down functions? */}
-          <EditForm
+          {/* <EditForm1 */}
+          <EditForm2
             isLoading={isLoading}
             // onSubmit={onSubmitForm}
             product={newBuildProductInstance}
