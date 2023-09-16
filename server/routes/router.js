@@ -99,9 +99,9 @@ router.post ('/register', upload.single ('photo'), async (req, res) => {
 
 
 
-// ### Playground -Start-: testing different Headers, dispatch and receive data #############################################################
+// ### PlaygroundRegister -Start-: testing different Headers, dispatch and receive data #############################################################
 
-router.post ('/playground', upload.single ('photo'), async (req, res) => {
+router.post ('/playgroundregister', upload.single ('photo'), async (req, res) => {
   const {filename, path} = req.file;
   console.log("line:11", filename);
   console.log("line:11.1 ", path);
@@ -214,63 +214,38 @@ router.post ('/edituser', async (req, res) => {
   
   const {userid} = req.body;
   const {id} = req.body;
-  const {file} = req.body;
-  // console.log ('line:209', id);
-  console.log ('line:0', file);
-  console.log ('line:1', id);
-  // console.log ('line:204', req.params);
-  console.log ('line:2', userid);
-  console.log ('line:3', req.body);
   const {fname} = req.body;
-  console.log ('line:3.3', req.body);
-  console.log ('line:3.4', req.body.tree);
-  console.log ('line:3.5', req.body.photo);
-  // console.log ('line:203', req);
-  // console.log ('line:208', req.body.userid);
+  console.log("line:1", req.body);
+ 
+
   try {
-    // ### - its running but the data is not arriving
 
     const dltUser = await users1.findOne ({_id: id});
-    // console.log ('line:4', dltUser);
-    // return res.json (dltUser);
-
+   
     let today = new Date (); // get the date
     let day = ('0' + today.getDate ()).slice (-2); //get day with slice to have double digit day
     let month = ('0' + (today.getMonth () + 1)).slice (-2); //get your zero in front of single month digits so you have 2 digit months
-    // let date = month + '-' + day + '-' + today.getFullYear ();
     let date = today.getFullYear () + '-' + month + '-' + day;
 
 
 
-    // console.log ('line:5', date);
 
-    userData = req.body;
-    // console.log("line:6", userData);
+   
 
 
     dltUser.fname = req.body.name;
-    // console.log("line:7", dltUser.fname);
-
     dltUser.image = req.body.image;
-    // console.log("line:8", dltUser.image);
-
     dltUser.image2 = req.body.image2;
-    // console.log("line:9", dltUser.image2);
-
     dltUser.imgpath = req.body.imgpath;
-    // console.log("line:10", dltUser.imgpath);
-
     dltUser.date = req.body.date;
-    // console.log("line:11", dltUser.date);
-
     dltUser.imageCollection= req.body.imageCollection;
     console.log("line:12", dltUser.imageCollection);
 
 
     const star = await dltUser.save ();
-    // res.send ('User details updated successfully');
 
     res.status (201).json (star);
+    // res.status (201).json ("star");
 
   } catch (error) {
     res.status (401).json ({status: 401, error});
@@ -278,24 +253,56 @@ router.post ('/edituser', async (req, res) => {
   }
 });
 
-router.post ('/edituser-submit', async (req, res) => {
+// ### PlaygroundEditUser2 -Start-: testing different Headers, dispatch and receive data #############################################################
+
+
+
+router.post ('/playgroundedituser2', upload.single ('photo'), async (req, res) => {
  
-  console.log("line:", req.body.data);
+// Commen:!!! The reason you are getting [object Object] is because you are trying to add a Javascript object to the screen (shown in the console).
+//  #for the file
+  const {filename, path} = req.file;
+  console.log("line:1", filename);
+  console.log("line:1.1 ", path);
+  console.log ('line:2', req.file);
+  console.log ('line:3', req.body);
 
-  const {fname} = req.body;
-  console.log ('line:', req.body);
-  const {userid} = req.body;
-  console.log("line:", userid);
+// #for the tree data
+  // const {userid} = req.body;
+  // const {id} = req.body;
+  // const {fname} = req.body;
+  // console.log("line:1", req.body);
+
+  const userAgent = req.headers;
+  console.log("line:5", req.headers);
 
 
+  
+  
+ 
 
   try {
-    // const dltUser = await users1.findOne ({_id: userid});
-    // return res.json (dltUser);
-    console.log("500 Where? ");
+
+    // const dltUser = await users1.findOne ({_id: id});
+   
+    // dltUser.fname = req.body.name;
+    // const star = await dltUser.save ();
+
+    // res.status (201).json (star);
+    res.status (201).json ("star");
+
   } catch (error) {
     res.status (401).json ({status: 401, error});
+
   }
 });
+
+
+
+// ### PlaygroundEditUser2 -End-: testing different Headers, dispatch and receive data #############################################################
+
+
+
+
 
 module.exports = router;
