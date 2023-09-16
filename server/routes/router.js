@@ -2,6 +2,7 @@ const express = require ('express');
 const router = new express.Router ();
 const multer = require ('multer');
 const users1 = require ('../model/usersSchema');
+const users2 = require ('../model/usersSchema2');
 const moment = require ('moment');
 
 
@@ -34,6 +35,7 @@ const upload = multer ({
 router.post ('/register', upload.single ('photo'), async (req, res) => {
   const {filename, path} = req.file;
   console.log("line:1", filename);
+  console.log("line:1.1 ", path);
   console.log ('line:2', req.file);
   // console.log ('line:101', req.file.path);
   // console.log ('line:103', filename);
@@ -59,7 +61,7 @@ router.post ('/register', upload.single ('photo'), async (req, res) => {
   // console.log("line:301", req.body.fname);
 
   const test10 = req.body.image;
-  console.log ('line:4', test10);
+  console.log ('line:5', test10);
 
   if (!fname || !filename) {
     res.status (401).json ({status: 401, message: 'fill all the data'});
@@ -74,7 +76,7 @@ router.post ('/register', upload.single ('photo'), async (req, res) => {
     let month = ('0' + (today.getMonth () + 1)).slice (-2); //get your zero in front of single month digits so you have 2 digit months
     // let date = month + '-' + day + '-' + today.getFullYear ();
     let date = today.getFullYear () + '-' + month + '-' + day;
-    console.log ('line:5', date);
+    console.log ('line:9', date);
 
     ('2023-08-25');
 
@@ -85,6 +87,8 @@ router.post ('/register', upload.single ('photo'), async (req, res) => {
       image: test10,
     });
 
+    console.log("line:10", userdata);
+
     const finaldata = await userdata.save ();
 
     res.status (201).json ({status: 201, finaldata});
@@ -92,6 +96,81 @@ router.post ('/register', upload.single ('photo'), async (req, res) => {
     res.status (401).json ({status: 401, error});
   }
 });
+
+
+
+// ### Playground -Start-: testing different Headers, dispatch and receive data #############################################################
+
+router.post ('/playground', upload.single ('photo'), async (req, res) => {
+  const {filename, path} = req.file;
+  console.log("line:11", filename);
+  console.log("line:11.1 ", path);
+  console.log ('line:12', req.file);
+  // console.log ('line:101', req.file.path);
+  // console.log ('line:103', filename);
+  // console.log ('line:104', path);
+
+  const {fname} = req.body;
+  console.log ('line:13', req.body);
+  console.log ('line:14', req.body.add);
+  // console.log ('line:201', fname);
+
+  // const {newImage} = req.body;
+  // console.log("line298", newImage);
+  // console.log("line:299", req.body);
+  // // console.log("line:300", req.body.image);
+  // // console.log("line:301", req.body.fname);
+
+  const {imagenew} = req.body;
+  // console.log ('line:297', imagenew);
+  // console.log ('line298', req.file);
+  // console.log ('line:299', req.body.image);
+  // console.log ('line:300', req.imagenew);
+  // console.log("line:300", req.body.image);
+  // console.log("line:301", req.body.fname);
+
+  const test10 = req.body.image;
+  console.log ('line:15', test10);
+
+  if (!fname || !filename) {
+    res.status (401).json ({status: 401, message: 'fill all the data'});
+  }
+
+  try {
+    // const date = moment (new Date ()).format ('YYYY-MM-DD');
+    // console.log ('line:333', date);
+
+    let today = new Date (); // get the date
+    let day = ('0' + today.getDate ()).slice (-2); //get day with slice to have double digit day
+    let month = ('0' + (today.getMonth () + 1)).slice (-2); //get your zero in front of single month digits so you have 2 digit months
+    // let date = month + '-' + day + '-' + today.getFullYear ();
+    let date = today.getFullYear () + '-' + month + '-' + day;
+    console.log ('line:16', date);
+
+    ('2023-08-25');
+
+    const userdata = new users2 ({
+      fname: fname,
+      imgpath: filename,
+      date: date,
+      image: test10,
+    });
+
+    console.log("line:17", userdata);
+
+    console.log("line:18", userdata);
+
+    const finaldata = await userdata.save ();
+
+    res.status (201).json ({status: 201, finaldata});
+  } catch (error) {
+    res.status (401).json ({status: 401, error});
+  }
+});
+
+// ### Playground -Start-: testing different Headers, dispatch and receive data #############################################################
+
+
 
 // user data get
 router.get ('/getdata', async (req, res) => {
@@ -131,6 +210,8 @@ router.delete ('/:id', async (req, res) => {
 
 
 router.post ('/edituser', async (req, res) => {
+  
+  
   const {userid} = req.body;
   const {id} = req.body;
   const {file} = req.body;
@@ -140,6 +221,10 @@ router.post ('/edituser', async (req, res) => {
   // console.log ('line:204', req.params);
   console.log ('line:2', userid);
   console.log ('line:3', req.body);
+  const {fname} = req.body;
+  console.log ('line:3.3', req.body);
+  console.log ('line:3.4', req.body.tree);
+  console.log ('line:3.5', req.body.photo);
   // console.log ('line:203', req);
   // console.log ('line:208', req.body.userid);
   try {
@@ -179,7 +264,7 @@ router.post ('/edituser', async (req, res) => {
     // console.log("line:11", dltUser.date);
 
     dltUser.imageCollection= req.body.imageCollection;
-    // console.log("line:12", dltUser.imageCollection);
+    console.log("line:12", dltUser.imageCollection);
 
 
     const star = await dltUser.save ();

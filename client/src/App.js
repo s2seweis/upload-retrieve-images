@@ -1,21 +1,16 @@
 import './App.css';
-
 import React, {useEffect, useState, useContext, createContext} from 'react';
-
 import Header from './components/Header';
 import Home from './components/Home';
 import Register from './User/Register';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Routes,Route} from "react-router-dom"
-
 import EditUser from './User/EditUser';
-
-// import EditUserNew from './User/EditUserNew';
-
 import EditUserTop from './User/Index';
-
 import axios from 'axios';
-import Playground from './components/Playground';
+
+import Playground from './User/Playground';
+
 
 
 
@@ -54,14 +49,11 @@ function App() {
       <Routes>
         <Route path='/' element={ <Home  />} />
         <Route path='/register' element={ <Register />} />
-        {/* <Route path='/register' element={ <Register />} /> */}
+        <Route path='/playground' element={ <Playground />} />
         <Route element={<EditUser />} path="/edituser/:userid" />
         <Route element={<EditUserTop />} path="/editusernew/:userid" />
 
-        {/* path={`${ROUTES.EDIT_PRODUCT}/:id`} */}
-
-        {/* ### Playground */}
-        {/* <Route element={<Playground />} path="/playground" /> */}
+    
 
       </Routes>
      

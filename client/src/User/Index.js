@@ -12,7 +12,6 @@ import {useParams} from 'react-router-dom';
 
 
 const EditForm = lazy(() => import('../User/EditUserNew'));
-const EditFormDummy = lazy(() => import('../User/EditUserNewDummy'));
 
 const EditUserTop = ({ match }) => {
 

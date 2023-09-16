@@ -59,19 +59,24 @@ const EditUserNew = ({ product, isLoading }) => {
 
   console.log("line:5", tree);
 
+  const [file, setFile] = useState('');
+  console.log('line:12', file);
+
 
   const editUser = async tree => {
     console.log('line:6', tree);
 
     var formData = new FormData();
     formData.append('tree', tree);
+    formData.append('photo', file);
     const config = {
       headers: {
         'Content-Type': 'application/json',
+        // 'Content-Type': 'multipart/form-data',
       },
     };
 
-    const res = await axios.post('/edituser', tree);
+    const res = await axios.post('/edituser', tree, config, formData);
     // console.log ('line:15', res);
 
     if (res.data.status === 401 || !res.data) {
@@ -158,8 +163,7 @@ const EditUserNew = ({ product, isLoading }) => {
     // setPostImage1({ myFile: '' });
   };
 
-  const [file, setFile] = useState('');
-  console.log('line:12', file);
+  
 
   const [postImage, setPostImage] = useState({ myFile: '' });
   console.log('line:13', postImage.myFile);

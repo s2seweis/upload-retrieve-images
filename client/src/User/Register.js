@@ -51,7 +51,7 @@ const Register = () => {
 
   // adduser data
 
-  const test = {id:"john"}
+  const test = "john"
   console.log("line:10.1", test);
 
   const addUserData = async e => {
@@ -65,6 +65,7 @@ const Register = () => {
     formData.append('add', test);
 
     console.log("line:11.1", file);
+    console.log("line:11.2", formData);
 
     const config = {
       headers: {
