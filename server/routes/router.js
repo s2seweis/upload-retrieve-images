@@ -261,11 +261,30 @@ router.post ('/playgroundedituser2', upload.single ('photo'), async (req, res) =
  
 // Commen:!!! The reason you are getting [object Object] is because you are trying to add a Javascript object to the screen (shown in the console).
 //  #for the file
-  const {filename, path} = req.file;
-  console.log("line:1", filename);
-  console.log("line:1.1 ", path);
+
+// 1. goes an check for Undefined Values
+  // if (req.body && req.file?.size) {
+  //   console.log("line:1", req.file?.fieldname);
+  // }
+  // else {
+  //   console.log("line:1.1, Just an error!!!");
+  // }
+
+
+
+  // const {filename, path} = req.file;
+  // console.log("line:1", filename);
+  // console.log("line:1.1 ", path);
+
+  // 2. also possible to use Optional Chaining
   console.log ('line:2', req.file);
-  console.log ('line:3', req.body);
+  console.log ('line:3', req.file?.filename);
+  // console.log("line:3", req.file?.fieldname);
+  // console.log("line:4", req.file?.size);
+  // console.log ('line:5', req.body);
+  // console.log ('line:5.1', req.body.id);
+  // console.log ('line:5.2', req.body.date);
+  // console.log ('line:5.3', req.body.imageCollection);
 
 // #for the tree data
   // const {userid} = req.body;
@@ -274,7 +293,7 @@ router.post ('/playgroundedituser2', upload.single ('photo'), async (req, res) =
   // console.log("line:1", req.body);
 
   const userAgent = req.headers;
-  console.log("line:5", req.headers);
+  // console.log("line:6", req.headers);
 
 
   
@@ -283,13 +302,38 @@ router.post ('/playgroundedituser2', upload.single ('photo'), async (req, res) =
 
   try {
 
-    // const dltUser = await users1.findOne ({_id: id});
-   
-    // dltUser.fname = req.body.name;
-    // const star = await dltUser.save ();
+    const dltUser = await users1.findOne ({_id: req.body.id});
+    // console.log("line:7", dltUser);
 
-    // res.status (201).json (star);
-    res.status (201).json ("star");
+    // let today = new Date (); // get the date
+    // let day = ('0' + today.getDate ()).slice (-2); //get day with slice to have double digit day
+    // let month = ('0' + (today.getMonth () + 1)).slice (-2); //get your zero in front of single month digits so you have 2 digit months
+    // let date = today.getFullYear () + '-' + month + '-' + day;
+   
+    dltUser.fname = req.body.name;
+    // console.log("line:8", req.body.name);
+
+    dltUser.image = req.body.image;
+    // console.log("line:9", req.body.image);
+
+    dltUser.image2 = req.body.image2;
+    // console.log("line:10", req.body.image2);
+
+    dltUser.imgpath = req.file?.filename;
+    console.log("line:11", req.file?.filename);
+
+    dltUser.date = req.body.date;
+    // console.log("line:12", req.body.date);
+
+    // not working so far
+    dltUser.imageCollection= req.body.imageCollection;
+    // console.log("line:13", req.body.imageCollection);
+
+    const star = await dltUser.save ();
+    // console.log("line:14", star);
+
+    res.status (201).json (star);
+    // res.status (201).json ("star");
 
   } catch (error) {
     res.status (401).json ({status: 401, error});

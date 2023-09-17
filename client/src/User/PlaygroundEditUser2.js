@@ -33,6 +33,8 @@ const EditUserNew = ({ product, isLoading }) => {
     setImageFile,
   } = useFileHandler({ imageCollection: user?.imageCollection || [] });
 
+  console.log("line:500", imageFile.imageCollection);
+
   // ###
   const [fname, setFName] = useState('');
   console.log("line:4", fname);
@@ -55,15 +57,20 @@ const EditUserNew = ({ product, isLoading }) => {
     image2: user.image2,
     imgpath: user.imgpath,
     date: user.date,
-    imageCollection: imageFile?.imageCollection,
-    // imageCollection: imageFile
+    // imageCollection: imageFile?.imageCollection,
+    imageCollection: imageFile
   };
 
   console.log("line:5", tree);
 
-  const [file, setFile] = useState('');
+ 
+
+  const [file, setFile] = useState();
   console.log('line:12', file);
 
+ 
+
+ 
 
   const editUser = async e => {
     console.log("line:11", e);
@@ -78,6 +85,19 @@ const EditUserNew = ({ product, isLoading }) => {
     formData.append('image', user.image);
     formData.append('image2', user.image2);
     formData.append('imgpath', user.imgpath);
+    formData.append('date', user.date);
+    // formData.append('imageCollection', imageFile?.imageCollection);
+
+    imageFile?.imageCollection.forEach((collection, index) => {
+      const { id, url } = collection; // Destructure the object properties
+      formData.append(`imageCollection[${index}][id]`, id);
+      formData.append(`imageCollection[${index}][url]`, url);
+    });
+
+    
+
+
+
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -368,45 +388,7 @@ const EditUserNew = ({ product, isLoading }) => {
 
             
 
-            <div
-              style={{
-                background: 'red',
-                height: '300px',
-                marginTop: '20px',
-                width: '300px',
-                borderRadius: '20px',
-              }}
-              className="element_2"
-            >
-
-              <Form.Label style={{ margin: '0px 15px' }}>
-                Image3
-              </Form.Label>
-
-              {/* 2. Image Preview */}
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <Form.Group style={{ marginTop: '20px' }}>
-                  <img
-                    style={{ height: '170px' }}
-                    src={`/uploads/${user.imgpath}`}
-                    alt="image2"
-                  />
-                  <Button
-                    onClick={setData6}
-                    style={{ display: 'block', margin: 'auto' }}
-                  >
-                    Delete3
-                  </Button>
-
-                </Form.Group>
-              </div>
-            </div>
+            
 
             {/* ### */}
 
