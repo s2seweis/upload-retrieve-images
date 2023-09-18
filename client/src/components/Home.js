@@ -151,6 +151,7 @@ const Home = () => {
                           Date Added :{moment (el.date).format ('L')}
                         </Card.Text>
                         <h4>{el._id}</h4>
+                        <h4>{el.imgpath}</h4>
                         <div
                           style={{
                             display: 'flex',

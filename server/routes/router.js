@@ -3,6 +3,7 @@ const router = new express.Router ();
 const multer = require ('multer');
 const users1 = require ('../model/usersSchema');
 const users2 = require ('../model/usersSchema2');
+const video = require ('../model/videoSchema');
 const moment = require ('moment');
 
 const fs = require("fs");
@@ -186,6 +187,16 @@ router.get ('/getdata', async (req, res) => {
   }
 });
 
+router.get ('/getvideo', async (req, res) => {
+  try {
+    const getVideo = await video.find ();
+
+    res.status (201).json ({status: 201, getVideo});
+  } catch (error) {
+    res.status (401).json ({status: 401, error});
+  }
+});
+
 // router.get ('/getdata', async (req, res) => {
 //   try {
 //     const getUser = await users1.find ();
@@ -344,64 +355,56 @@ router.post ('/playgroundedituser2', upload.single ('photo'), async (req, res) =
   }
 });
 
-router.get('/init-video', function (req, res) {
- 
-    const db = client.db('videos');
-    const bucket = new mongodb.GridFSBucket(db);
-    const videoUploadStream = bucket.openUploadStream('bigbuck');
-    const videoReadStream = fs.createReadStream('./bigbuck.mp4');
-    videoReadStream.pipe(videoUploadStream);
-    res.status(200).send("Done...");
-  
-});
-
-router.get("/mongo-video", function (req, res) {
-  
-
-    const range = req.headers.range;
-    if (!range) {
-      res.status(400).send("Requires Range header");
-    }
-
-    const db = client.db('videos');
-    // GridFS Collection
-    db.collection('fs.files').findOne({}, (err, video) => {
-      if (!video) {
-        res.status(404).send("No video uploaded!");
-        return;
-      }
-
-      // Create response headers
-      const videoSize = video.length;
-      const start = Number(range.replace(/\D/g, ""));
-      const end = videoSize - 1;
-
-      const contentLength = end - start + 1;
-      const headers = {
-        "Content-Range": `bytes ${start}-${end}/${videoSize}`,
-        "Accept-Ranges": "bytes",
-        "Content-Length": contentLength,
-        "Content-Type": "video/mp4",
-      };
-
-      // HTTP Status 206 for Partial Content
-      res.writeHead(206, headers);
-
-      const bucket = new mongodb.GridFSBucket(db);
-      const downloadStream = bucket.openDownloadStreamByName('bigbuck', {
-        start
-      });
-
-      // Finally pipe video to response
-      downloadStream.pipe(res);
-    });
-  
-});
-
 
 
 // ### PlaygroundEditUser2 -End-: testing different Headers, dispatch and receive data #############################################################
 
+// const storage = multer.memoryStorage(); // Store the file in memory
+
+const storage = multer.diskStorage ({
+  destination: (req, file, callback) => {
+    callback (null, './videos');
+  },
+  filename: (req, file, callback) => {
+    callback (null, `video-${Date.now ()}. ${file.originalname}`);
+  },
+});
+
+const upload1 = multer({ storage: storage });
+
+router.post('/api/upload', upload1.single('video'), async (req, res) => {
+  const videoData = req.file; // Uploaded video file
+  console.log("line:1", req.file);
+  console.log("line:2", videoData);
+
+  if (!videoData) {
+    return res.status(400).json({ message: 'No video file provided' });
+  }
+  
+
+  // You can now process the videoData (e.g., save it to disk or perform any other operations)
+  // In this example, we're just sending a success message back to the client.
+  
+  
+  // return res.json({ message: 'Video uploaded successfully' });
+  try {
+   
+
+
+    const userdata = new video ({
+      imgpath: req.file.filename,
+    });
+
+    console.log("line:10", userdata);
+
+    const finaldata = await userdata.save ();
+
+    res.status (201).json ({status: 201, finaldata});
+  } catch (error) {
+    res.status (401).json ({status: 401, error});
+  }
+
+});
 
 
 

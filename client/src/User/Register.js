@@ -1,71 +1,71 @@
-import { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 // import image100 from '../assets/3.png'
 
 const Register = () => {
-  const [fname, setFName] = useState('');
-  console.log("line:1", fname);
+  const [fname, setFName] = useState ('');
+  console.log ('line:1', fname);
 
-  const [file, setFile] = useState('');
-  console.log('line:2', file);
+  const [file, setFile] = useState ('');
+  console.log ('line:2', file);
 
-  const [image, setImage] = useState('');
-  console.log('line:3', image);
+  const [image, setImage] = useState ('');
+  console.log ('line:3', image);
 
-  const [postImage, setPostImage] = useState({ myFile: '' });
-  console.log('line:4', postImage.myFile);
-  console.log('line:5', postImage);
+  const [postImage, setPostImage] = useState ({myFile: ''});
+  console.log ('line:4', postImage.myFile);
+  console.log ('line:5', postImage);
 
   const imagenew = postImage.myFile;
-  console.log('line:6', imagenew);
+  console.log ('line:6', imagenew);
 
   // const [test, setTest] = useState("");
   // console.log("line:3", test);
 
-  const history = useNavigate();
+  const history = useNavigate ();
 
   const setdata = e => {
-    const { value } = e.target;
-    setFName(value);
+    const {value} = e.target;
+    setFName (value);
   };
 
   const setimgfile = async e => {
-    console.log('line:7', e);
-    console.log('line:8', e.target.files[0]);
-    setFile(e.target.files[0]);
+    console.log ('line:7', e);
+    console.log ('line:8', e.target.files[0]);
+    setFile (e.target.files[0]);
 
     const test = e.target.files[0];
-    console.log('line:9', test);
-    const base64 = await convertToBase64(test);
-    console.log('line:10', base64);
-    setPostImage({ ...postImage, myFile: base64 });
+    console.log ('line:9', test);
+    const base64 = await convertToBase64 (test);
+    console.log ('line:10', base64);
+    setPostImage ({...postImage, myFile: base64});
 
     // ### - display image preview
-    setImage(URL.createObjectURL(e.target.files[0]));
+    setImage (URL.createObjectURL (e.target.files[0]));
   };
 
   // adduser data
 
-  const test = "john"
-  console.log("line:10.1", test);
+  const test = 'john';
+  console.log ('line:10.1', test);
 
   const addUserData = async e => {
-    console.log("line:11", e);
-    e.preventDefault();
+    console.log ('line:11', e);
+    e.preventDefault ();
 
-    var formData = new FormData();
-    formData.append('photo', file);
-    formData.append('fname', fname);
-    formData.append('image', imagenew);
-    formData.append('add', test);
+    var formData = new FormData ();
+    formData.append ('photo', file);
+    formData.append ('fname', fname);
+    formData.append ('image', imagenew);
+    formData.append ('add', test);
 
-    console.log("line:11.1", file);
-    console.log("line:11.2", formData);
+    console.log ('line:11.1', file);
+    console.log ('line:11.2', formData);
 
     const config = {
       headers: {
@@ -73,17 +73,17 @@ const Register = () => {
       },
     };
 
-    const res = await axios.post('/register', formData, config);
+    const res = await axios.post ('/register', formData, config);
 
-    console.log("line:12", res);
-    console.log('line:13', formData);
-    console.log('line:14', config);
+    console.log ('line:12', res);
+    console.log ('line:13', formData);
+    console.log ('line:14', config);
 
     if (res.data.status === 401 || !res.data) {
-      console.log('errror');
+      console.log ('errror');
     } else {
       // history("/")
-      console.log('line:15, !success!');
+      console.log ('line:15, !success!');
     }
   };
 
@@ -94,10 +94,9 @@ const Register = () => {
   // }, [file]); // <- add the count variable here
 
   return (
-
     <div>
 
-      <div style={{ margin: '15px 0px 0px 15px', display: 'flex' }}>
+      <div style={{margin: '15px 0px 0px 15px', display: 'flex'}}>
         <a href="/">Go Back</a>
       </div>
 
@@ -126,7 +125,11 @@ const Register = () => {
             {/* <Form.Control type="file" onChange={(e) => setFile(URL.createObjectURL(e.target.files[0]))} name='photo' placeholder="" /> */}
 
             {/* <Form.Control type="file" onChange={(e) => { setTest(e.target.files[0]) }} name='photo' placeholder="" /> */}
-            <h3>Test for getting the state</h3>
+
+            <hr />
+
+           
+
           </Form.Group>
 
           <Button variant="primary" type="submit" onClick={addUserData}>
@@ -136,25 +139,28 @@ const Register = () => {
         {/* <button style={{marginTop:"20px"}} onClick={(e) => setImage(URL.createObjectURL(test))}>Image?</button> */}
 
         {/* \        <img src={image100}></img> */}
-        <img style={{width:"300px", marginTop:"50px"}} src={postImage.myFile} alt="test" />
+        <img
+          style={{width: '300px', marginTop: '50px'}}
+          src={postImage.myFile}
+          alt="test"
+        />
 
       </div>
     </div>
-
   );
 };
 
 export default Register;
 
-function convertToBase64(file) {
-  return new Promise((resolve, reject) => {
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
+function convertToBase64 (file) {
+  return new Promise ((resolve, reject) => {
+    const fileReader = new FileReader ();
+    fileReader.readAsDataURL (file);
     fileReader.onload = () => {
-      resolve(fileReader.result);
+      resolve (fileReader.result);
     };
     fileReader.onerror = error => {
-      reject(error);
+      reject (error);
     };
   });
 }

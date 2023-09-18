@@ -15,6 +15,7 @@ app.use(cors())
 app.use(router);
 
 app.use("/uploads",express.static("./uploads"));
+app.use("/videos",express.static("./videos"));
 
 
 
