@@ -15,5 +15,6 @@
 
 #### New Snippet for VC 
 - Jump to line : strg/ctrl + g
+- inside visual studio console + touch[filename] = build a new file 
 
 

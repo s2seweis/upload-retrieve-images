@@ -17,6 +17,8 @@ app.use(router);
 app.use("/uploads",express.static("./uploads"));
 
 
+
+
 app.listen(port,()=>{
     console.log(`server start at port no ${port}`)
 })
