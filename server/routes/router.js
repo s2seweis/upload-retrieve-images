@@ -3,6 +3,8 @@ const router = new express.Router ();
 const multer = require ('multer');
 const users1 = require ('../model/usersSchema');
 const users2 = require ('../model/usersSchema2');
+
+const Video = require ('../model/videoSchema2');
 const video = require ('../model/videoSchema');
 const moment = require ('moment');
 
@@ -10,13 +12,17 @@ const fs = require("fs");
 const mongodb = require('mongodb');
 
 
-const getGFS = require('../gridfs');
+// const getGFS = require('../gridfs');
 
 const mongoose = require('mongoose');
 
+const url = 'mongodb+srv://weissenborn24seb:BMHxCDtYBSAYChJK@sw-mangodb.hltjnmb.mongodb.net/auth-protected-routes';
 
 
-const connection = mongoose.connection;
+
+
+
+// const connection = mongoose.connection;
 
 // img storage path
 const imgconfig = multer.diskStorage ({
@@ -340,7 +346,7 @@ router.post ('/playgroundedituser2', upload.single ('photo'), async (req, res) =
     dltUser.image2 = req.body.image2;
     // console.log("line:10", req.body.image2);
 
-    dltUser.imgpath = req.file?.filename;
+    dltUser.imgpath = req.file?.filename || req.body.imgpath;
     console.log("line:11", req.file?.filename);
 
     dltUser.date = req.body.date;
@@ -417,33 +423,82 @@ router.post('/api/upload', upload1.single('video'), async (req, res) => {
 
 // ################################################################################## New Route: Store image in the database with Grid FS
 
-const storageDb = multer.memoryStorage();
-const uploadnew = multer({ storageDb });
+// const storageDb = multer.memoryStorage();
+// const uploadnew = multer({ storageDb });
 
-router.post('/uploadvideodb', uploadnew.single('file'), (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ message: 'No file uploaded' });
+// router.post('/uploadvideodb', uploadnew.single('file'), (req, res) => {
+//   if (!req.file) {
+//     return res.status(400).json({ message: 'No file uploaded' });
+//   }
+
+//   const gfs = getGFS(); // Obtain the GridFS bucket
+
+//   if (!gfs) {
+//     return res.status(500).json({ message: 'GridFS bucket is not initialized' });
+//   }
+
+//   const writeStream = gfs.openUploadStream(req.file.originalname);
+
+//   writeStream.on('error', (err) => {
+//     console.error('Error uploading file:', err);
+//     res.status(500).json({ message: 'Error uploading file' });
+//   });
+
+//   writeStream.on('finish', (file) => {
+//     res.json({ fileId: file._id });
+//   });
+
+//   writeStream.write(req.file.buffer);
+//   writeStream.end();
+// });
+
+// ################################################################################## New Route: Store image in the database with Grid FS
+
+
+const storage3 = multer.memoryStorage();
+const upload3 = multer({ storage: storage3 });
+
+router.post('/uploadvideo', upload3.single('video'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'No video file uploaded' });
+    }
+
+    const video = new Video({
+      name: req.body.name,
+      data: req.file.buffer,
+    });
+
+    await video.save();
+
+    res.json({ message: 'Video uploaded successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'Error uploading video' });
   }
+});
 
-  const gfs = getGFS(); // Obtain the GridFS bucket
 
-  if (!gfs) {
-    return res.status(500).json({ message: 'GridFS bucket is not initialized' });
+// ######
+
+
+router.get('/api/videos/:id', async (req, res) => {
+  try {
+    const video1 = await Video.findById(req.params.id);
+    console.log("line:1", video1);
+
+    if (!video1) {
+      return res.status(404).json({ error: 'Video not found' });
+    }
+
+    // Assuming video1.data is your BinData field
+    const videoData = video1.data.buffer; // Convert BinData to Buffer
+
+    res.set('Content-Type', 'video/mp4'); // Set the content type to video/mp4
+    res.send(videoData); // Send the video data
+  } catch (error) {
+    console.error('Error retrieving video:', error);
+    res.status(500).json({ error: 'Error retrieving video' });
   }
-
-  const writeStream = gfs.openUploadStream(req.file.originalname);
-
-  writeStream.on('error', (err) => {
-    console.error('Error uploading file:', err);
-    res.status(500).json({ message: 'Error uploading file' });
-  });
-
-  writeStream.on('finish', (file) => {
-    res.json({ fileId: file._id });
-  });
-
-  writeStream.write(req.file.buffer);
-  writeStream.end();
 });
 
 

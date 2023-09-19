@@ -11,6 +11,8 @@ import RegisterVideo from './components/videos/RegisterVideo';
 
 import EditVideo from './components/videos/EditVideo';
 
+import EditVideoChild from './components/videos/EditVideoChild';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Routes,Route} from "react-router-dom"
 import EditUser from './User/EditUser1';
@@ -85,6 +87,7 @@ function App() {
         <Route element={<EditUser />} path="/edituser/:userid" />
         <Route element={<EditUserTop />} path="/editusernew/:userid" />
         <Route element={<EditVideo />} path="/editvideo/:userid" />
+        <Route element={<EditVideoChild />} path="/editvideo/child" />
 
     
 

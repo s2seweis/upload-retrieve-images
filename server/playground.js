@@ -1,22 +1,27 @@
-// // app.js
+// app.js
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const Video = require('./models/Video');
 
-// const express = require('express');
-// const cors = require('cors');
-// const conn = require('./conn');
-// const router = require('./router');
-// const app = express();
+const app = express();
+const PORT = process.env.PORT || 5000;
 
-// // Enable CORS (Cross-Origin Resource Sharing)
-// app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
-// // Parse JSON requests
-// app.use(express.json());
+mongoose.connect('mongodb://localhost:27017/videoApp', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
-// // Mount the router for file uploads
-// app.use('/api', router);
+mongoose.connection.on('connected', () => {
+  console.log('Connected to MongoDB');
+});
 
-// // Start the server
-// const port = process.env.PORT || 5000;
-// app.listen(port, () => {
-//   console.log(`Server is running on port ${port}`);
-// });
+app.use('/api/videos', require('./router'));
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

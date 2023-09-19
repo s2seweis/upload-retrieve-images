@@ -52,7 +52,7 @@ const RegisterVideo = () => {
   const [selectedVideoDb, setSelectedVideoDb] = useState (null);
   console.log ('line:3', selectedVideoDb);
   const [selectedVideoUrlDb, setSelectedVideoUrlDb] = useState (null);
-  console.log ('line:4', selectedVideoUrl);
+  console.log ('line:4', selectedVideoUrlDb);
 
 
   const handleVideoChangeDb = e => {
@@ -61,15 +61,18 @@ const RegisterVideo = () => {
     setSelectedVideoUrlDb (URL.createObjectURL (file));
   };
 
+  const video1 = "video1";
+
   const handleSubmitDb = async e => {
     e.preventDefault ();
     
     if (selectedVideoDb) {
       const formData = new FormData ();
-      formData.append ('file', selectedVideoDb);
+      formData.append ('video', selectedVideoDb);
+      formData.append ('name', video1);
       
       try {
-        const response = await axios.post ('/uploadvideodb', formData, {
+        const response = await axios.post ('/uploadvideo', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -97,7 +100,7 @@ const RegisterVideo = () => {
       </div>
 
       <div style={{backgroundColor: 'aliceblue'}} className="container mt-3">
-        <h3>Register Video & Stored on the Server</h3>
+        <h3>Register Video & Store it on the Server</h3>
 
         <Form className="mt-3">
 
@@ -162,7 +165,7 @@ const RegisterVideo = () => {
           <video
             controls // Add the controls attribute to display video controls (play, pause, volume, etc.)
             // width="400"
-            src={selectedVideoUrl}
+            src={selectedVideoUrlDb}
             // style={{height:"auto"}}
             className="video-container"
           />

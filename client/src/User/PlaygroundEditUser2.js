@@ -22,6 +22,7 @@ const EditUserNew = ({ product, isLoading }) => {
   // ### A dynamic parameter is a parameter to an SQL statement for which the value is not specified when the statement is created, initital state:[] no more need for question marks
   const [user, setUser] = useState(product);
   console.log('line:2', user);
+  console.log('line:2.1', user.imgpath);
   console.log('line:3', user.imageCollection);
 
 
