@@ -10,6 +10,13 @@ const fs = require("fs");
 const mongodb = require('mongodb');
 
 
+const getGFS = require('../gridfs');
+
+const mongoose = require('mongoose');
+
+
+
+const connection = mongoose.connection;
 
 // img storage path
 const imgconfig = multer.diskStorage ({
@@ -407,6 +414,37 @@ router.post('/api/upload', upload1.single('video'), async (req, res) => {
 });
 
 
+
+// ################################################################################## New Route: Store image in the database with Grid FS
+
+const storageDb = multer.memoryStorage();
+const uploadnew = multer({ storageDb });
+
+router.post('/uploadvideodb', uploadnew.single('file'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ message: 'No file uploaded' });
+  }
+
+  const gfs = getGFS(); // Obtain the GridFS bucket
+
+  if (!gfs) {
+    return res.status(500).json({ message: 'GridFS bucket is not initialized' });
+  }
+
+  const writeStream = gfs.openUploadStream(req.file.originalname);
+
+  writeStream.on('error', (err) => {
+    console.error('Error uploading file:', err);
+    res.status(500).json({ message: 'Error uploading file' });
+  });
+
+  writeStream.on('finish', (file) => {
+    res.json({ fileId: file._id });
+  });
+
+  writeStream.write(req.file.buffer);
+  writeStream.end();
+});
 
 
 module.exports = router;

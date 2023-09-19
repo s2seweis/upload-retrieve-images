@@ -1,6 +1,7 @@
 # Next:
 - Querry for nested objects passed down to the node server
 - Append objects 
+- Give me an example for store a video file with grid fs to mongodb and react
 
 ## New Package:
 - nodemon

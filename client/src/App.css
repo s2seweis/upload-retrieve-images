@@ -110,3 +110,20 @@
 
 
 }
+
+@media screen and (min-width: 400px) {
+  .video-container {
+    height: 150px;
+  }
+}
+@media screen and (min-width: 600px) {
+  .video-container {
+    height: 200px;
+  }
+}
+@media screen and (min-width: 800px) {
+  .video-container {
+    height: 300px;
+  }
+}
+
