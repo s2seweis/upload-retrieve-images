@@ -5,6 +5,10 @@ import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
 
+import placeholder from '../assets/images/Placeholder.png'
+
+
+
 // import image100 from '../assets/3.png'
 
 const Register = () => {
@@ -139,11 +143,18 @@ const Register = () => {
         {/* <button style={{marginTop:"20px"}} onClick={(e) => setImage(URL.createObjectURL(test))}>Image?</button> */}
 
         {/* \        <img src={image100}></img> */}
+        <div className='align-image' style={{display:"flex", justifyContent:"center"}}>
         <img
           style={{width: '300px', marginTop: '50px'}}
-          src={postImage.myFile}
+          src={postImage.myFile || placeholder}
           alt="test"
-        />
+          />
+          </div>
+        {/* <img
+          style={{width: '300px', marginTop: '50px'}}
+          src={placeholder}
+          alt="test"
+        /> */}
 
       </div>
     </div>

@@ -1,6 +1,13 @@
 import './App.css';
 import React, {useEffect, useState, useContext, createContext} from 'react';
+
+// ###
 import Header from './components/Header';
+
+import Offcanvas1 from './components/Offcanvas';
+// ###
+
+
 import Home from './components/Home';
 import Video from './components/videos/Video';
 
@@ -79,6 +86,8 @@ function App() {
       <VideoContext.Provider value={data2}>
 
       <Header />
+      <Offcanvas1/>
+
       <Routes>
         <Route path='/' element={ <Home  />} />
         <Route path='/adduser' element={ <Register />} />
