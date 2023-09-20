@@ -4,6 +4,8 @@
 - Give me an example for store a video file with grid fs to 
 mongodb and react
 - !!! Will make an extra server for the /init-video route
+- go check out the docs for GridFS
+# https://www.mongodb.com/docs/drivers/node/current/fundamentals/gridfs/
 
 ## New Package:
 - nodemon
