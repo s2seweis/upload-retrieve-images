@@ -69,10 +69,10 @@ const RegisterVideo = () => {
     if (selectedVideoDb) {
       const formData = new FormData ();
       formData.append ('video', selectedVideoDb);
-      formData.append ('name', video1);
+      // formData.append ('name', video1);
       
       try {
-        const response = await axios.post ('/uploadvideo', formData, {
+        const response = await axios.post ('/init-video', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },

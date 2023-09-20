@@ -10,13 +10,16 @@ const moment = require ('moment');
 
 const fs = require("fs");
 const mongodb = require('mongodb');
+const Grid = require('gridfs-stream');
 
+const url = 'mongodb+srv://weissenborn24seb:BMHxCDtYBSAYChJK@sw-mangodb.hltjnmb.mongodb.net/auth-protected-routes';
 
-// const getGFS = require('../gridfs');
 
 const mongoose = require('mongoose');
 
-const url = 'mongodb+srv://weissenborn24seb:BMHxCDtYBSAYChJK@sw-mangodb.hltjnmb.mongodb.net/auth-protected-routes';
+
+
+
 
 
 
@@ -501,5 +504,32 @@ router.get('/api/videos/:id', async (req, res) => {
   }
 });
 
+// ######
+
+// mongodb.MongoClient.connect makes the problem
+
+router.post('/init-video', function (req, res) {
+  mongodb.MongoClient.connect(url, function (error, client) {
+    if (error) {
+      res.json(error);
+      return;
+    }
+    const db = client.db('videos');
+    const bucket = new mongodb.GridFSBucket(db);
+    const videoUploadStream = bucket.openUploadStream('bigbuck');
+    console.log("line:800". videoUploadStream);
+    const videoReadStream = fs.createReadStream('./bigbuck.mp4');
+    videoReadStream.pipe(videoUploadStream);
+    res.status(200).send("Done...");
+  });
+});
+
+
+// #####
+
+
+
+
 
 module.exports = router;
+

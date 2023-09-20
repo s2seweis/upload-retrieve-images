@@ -1,27 +1,32 @@
-// app.js
 const express = require('express');
+const router = express.Router();
+const fs = require('fs');
 const mongoose = require('mongoose');
-const cors = require('cors');
-const Video = require('./models/Video');
+const Grid = require('gridfs-stream');
 
-const app = express();
-const PORT = process.env.PORT || 5000;
+const db = require('./db'); // Import the separated database connection
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+const connection = mongoose.connection; // Access the Mongoose connection object
 
-mongoose.connect('mongodb://localhost:27017/videoApp', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+Grid.mongo = mongoose.mongo; // Set GridFS to use the correct MongoDB driver
+
+// Initialize GridFS
+const gfs = Grid(connection.db);
+
+router.post('/init-video', function (req, res) {
+  const videoWriteStream = gfs.createWriteStream({
+    filename: 'bigbuck',
+    mode: 'w',
+    content_type: 'video/mp4',
+  });
+
+  const videoReadStream = fs.createReadStream('./bigbuck.mp4');
+
+  videoReadStream.pipe(videoWriteStream);
+
+  videoWriteStream.on('close', (file) => {
+    res.status(200).send('Done...');
+  });
 });
 
-mongoose.connection.on('connected', () => {
-  console.log('Connected to MongoDB');
-});
-
-app.use('/api/videos', require('./router'));
-
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+module.exports = router;
