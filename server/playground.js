@@ -1,62 +1,78 @@
 const express = require('express');
 const app = express();
-const port = 3000;
-const mongoose = require('mongoose');
-const Grid = require('gridfs-stream');
-const fs = require('fs');
 const multer = require('multer');
-const path = require('path');
+const fs = require('fs');
+const mongoose = require('mongoose');
+const { GridFSBucket } = require('mongoose');
+const Video = require('./videoModel'); // Import the Mongoose model for videos
+
+// Configure multer for file uploads
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 // Connect to MongoDB using Mongoose
-mongoose.connect('mongodb://localhost:27017/videos100', {
+mongoose.connect('mongodb://localhost/videos100', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-})
-  .then(() => {
-    console.log('Connected to MongoDB');
-  })
-  .catch((error) => {
-    console.error('Error connecting to MongoDB:', error);
-  });
+});
 
-// Create a connection to the GridFS stream
-const conn = mongoose.connection;
-Grid.mongo = mongoose.mongo;
-const gfs = Grid(conn.db);
+// Get the default connection
+const db = mongoose.connection;
 
-// Set up Multer for handling file uploads
-const storage = multer.memoryStorage();
-const upload = multer({ storage });
+// Event handlers for the database connection
+db.on('connected', () => {
+  console.log('Connected to MongoDB');
+});
 
-// Route for initializing the video
-app.post('/init-video', upload.single('video'), (req, res) => {
+db.on('error', (err) => {
+  console.error(`MongoDB connection error: ${err}`);
+});
+
+db.on('disconnected', () => {
+  console.log('Disconnected from MongoDB');
+});
+
+// Handle file uploads using the '/init-video' route
+app.post('/init-video', upload.single('video'), async (req, res) => {
   try {
-    if (!req.file) {
-      res.status(400).send('No video file uploaded.');
-      return;
-    }
+    const { originalname, mimetype, buffer } = req.file;
 
-    const writestream = gfs.createWriteStream({
-      filename: 'bigbuck',
-      mode: 'w',
+    // Specify the desired folder
+    const folderName = 'videos'; // Change to the desired folder name
+
+    // Create a new instance of the Video model with the 'folder' property
+    const newVideo = new Video({
+      filename: originalname,
+      contentType: mimetype,
+      folder: folderName, // Set the folder property here
     });
 
-    // Pipe the video data to the write stream
-    const videoBuffer = req.file.buffer;
-    const videoStream = new Readable();
-    videoStream.push(videoBuffer);
-    videoStream.push(null);
-    videoStream.pipe(writestream);
+    // Save the video information to MongoDB using Mongoose
+    const videoData = await newVideo.save();
 
-    writestream.on('close', () => {
-      res.status(200).send('Video initialization completed.');
+    // Create a new GridFSBucket instance associated with the specified collection (bucket)
+    const bucket = new GridFSBucket(mongoose.connection.db, {
+      bucketName: 'videos100', // Change to your desired bucket name
     });
+
+    // Create an upload stream with the desired file name and folder information in metadata
+    const videoUploadStream = bucket.openUploadStream(originalname, {
+      contentType: mimetype,
+      metadata: { folder: folderName }, // Store folder information in metadata
+    });
+
+    // Write the file buffer to the upload stream
+    videoUploadStream.end(buffer);
+
+    res.status(200).json({ message: 'Video information saved', videoData });
   } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json(error);
+    console.error('Error uploading video information:', error);
+    res.status(500).json({ error: 'Video information upload failed' });
   }
 });
 
+// Start the Express server
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

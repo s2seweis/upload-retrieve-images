@@ -4,7 +4,7 @@ const multer = require('multer');
 const users1 = require('../model/usersSchema');
 const users2 = require('../model/usersSchema2');
 
-// const Video = require('../model/videoSchema2');
+const Video = require('../model/videoSchema2');
 const video = require('../model/videoSchema');
 const moment = require('moment');
 
@@ -425,10 +425,23 @@ mongoose.connection.once('open', () => {
 
     try {
 
+      const folderName = "videos500"
+
+      const newVideo = new Video({
+        // filename: originalname,
+        // contentType: mimetype,
+        folder: folderName, // Set the folder property here
+      });
+
+      const videoData = await newVideo.save();
+
       // add video schema to it for define the folder
 
-      const bucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {bucketName:"videos100"});
-      const videoUploadStream = bucket.openUploadStream('bigbuck');
+      const bucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {bucketName:folderName});
+      const videoUploadStream = bucket.openUploadStream('bigbuck',{
+        // contentType: mimetype,
+        metadata: { folder: folderName }, // Store folder information in metadata
+      } );
 
       const videoReadStream = fs.createReadStream('./bigbuck.mp4');
 
@@ -454,48 +467,48 @@ mongoose.connection.once('open', () => {
 // ### Second Part for Streaming from Mongo DB !!!
 // #################################################################################################
 
-const Video = require('../model/videoSchema3'); // Import your video model
+// const Video = require('../model/videoSchema3'); // Import your video model
 
 
-router.get('/mongo-video', async (req, res) => {
-  try {
-    const range = req.headers.range;
-    console.log("line:1", range);
-    if (!range) {
-      res.status(400).send('Requires Range header');
-      return;
-    }
+// router.get('/mongo-video', async (req, res) => {
+//   try {
+//     const range = req.headers.range;
+//     console.log("line:1", range);
+//     if (!range) {
+//       res.status(400).send('Requires Range header');
+//       return;
+//     }
 
-    // Query the MongoDB collection to find your video
-    const video = await Video.findOne({});
-    if (!video) {
-      res.status(404).send('No video uploaded!');
-      return;
-    }
+//     // Query the MongoDB collection to find your video
+//     const video = await Video.findOne({});
+//     if (!video) {
+//       res.status(404).send('No video uploaded!');
+//       return;
+//     }
 
-    // Create response headers
-    const videoSize = video.length;
-    const start = Number(range.replace(/\D/g, ''));
-    const end = videoSize - 1;
-    const contentLength = end - start + 1;
-    const headers = {
-      'Content-Range': `bytes ${start}-${end}/${videoSize}`,
-      'Accept-Ranges': 'bytes',
-      'Content-Length': contentLength,
-      'Content-Type': 'video/mp4',
-    };
+//     // Create response headers
+//     const videoSize = video.length;
+//     const start = Number(range.replace(/\D/g, ''));
+//     const end = videoSize - 1;
+//     const contentLength = end - start + 1;
+//     const headers = {
+//       'Content-Range': `bytes ${start}-${end}/${videoSize}`,
+//       'Accept-Ranges': 'bytes',
+//       'Content-Length': contentLength,
+//       'Content-Type': 'video/mp4',
+//     };
 
-    // HTTP Status 206 for Partial Content
-    res.writeHead(206, headers);
+//     // HTTP Status 206 for Partial Content
+//     res.writeHead(206, headers);
 
-    // Stream the video data to the response
-    // You'll need to implement the logic to stream the video data here
+//     // Stream the video data to the response
+//     // You'll need to implement the logic to stream the video data here
 
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json(error);
-  }
-});
+//   } catch (error) {
+//     console.error('Error:', error);
+//     res.status(500).json(error);
+//   }
+// });
 
 
 module.exports = router;

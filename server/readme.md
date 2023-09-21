@@ -3,6 +3,8 @@
 - Need to add a schema for /init-video,for define the folder?
 - For streaming the video i need a specific folder structure in Mongo DB: 
 - like folder videos -> fs.chunks/fs.files
+- GridFS is a way to store and retrieve files in MongoDB, and each GridFSBucket is associated with a specific collection (bucket) where files are stored.
+- Use Grid FS with an open Connection is something you not do
 
 ![Alt text](<Secont Part.png>)
 
