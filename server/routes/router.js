@@ -14,20 +14,10 @@ const Grid = require('gridfs-stream');
 
 const url = 'mongodb+srv://weissenborn24seb:BMHxCDtYBSAYChJK@sw-mangodb.hltjnmb.mongodb.net/auth-protected-routes';
 
+// #################################################################################################
+// ### working!!! - Register User & Saves the Images, ImageCollection and Fields to Mongo DB & stores the file to uploads
+// #################################################################################################
 
-// const mongoose = require('mongoose');
-
-
-
-
-
-
-
-
-
-// const connection = mongoose.connection;
-
-// img storage path
 const imgconfig = multer.diskStorage({
   destination: (req, file, callback) => {
     callback(null, './uploads');
@@ -37,7 +27,6 @@ const imgconfig = multer.diskStorage({
   },
 });
 
-// img filter
 const isImage = (req, file, callback) => {
   if (file.mimetype.startsWith('image')) {
     callback(null, true);
@@ -117,82 +106,10 @@ router.post('/register', upload.single('photo'), async (req, res) => {
   }
 });
 
+// #################################################################################################
+// ### working!!! - Get User Data
+// #################################################################################################
 
-
-// ### PlaygroundRegister -Start-: testing different Headers, dispatch and receive data #############################################################
-
-router.post('/playgroundregister', upload.single('photo'), async (req, res) => {
-  const { filename, path } = req.file;
-  console.log("line:11", filename);
-  console.log("line:11.1 ", path);
-  console.log('line:12', req.file);
-  // console.log ('line:101', req.file.path);
-  // console.log ('line:103', filename);
-  // console.log ('line:104', path);
-
-  const { fname } = req.body;
-  console.log('line:13', req.body);
-  console.log('line:14', req.body.add);
-  // console.log ('line:201', fname);
-
-  // const {newImage} = req.body;
-  // console.log("line298", newImage);
-  // console.log("line:299", req.body);
-  // // console.log("line:300", req.body.image);
-  // // console.log("line:301", req.body.fname);
-
-  const { imagenew } = req.body;
-  // console.log ('line:297', imagenew);
-  // console.log ('line298', req.file);
-  // console.log ('line:299', req.body.image);
-  // console.log ('line:300', req.imagenew);
-  // console.log("line:300", req.body.image);
-  // console.log("line:301", req.body.fname);
-
-  const test10 = req.body.image;
-  console.log('line:15', test10);
-
-  if (!fname || !filename) {
-    res.status(401).json({ status: 401, message: 'fill all the data' });
-  }
-
-  try {
-    // const date = moment (new Date ()).format ('YYYY-MM-DD');
-    // console.log ('line:333', date);
-
-    let today = new Date(); // get the date
-    let day = ('0' + today.getDate()).slice(-2); //get day with slice to have double digit day
-    let month = ('0' + (today.getMonth() + 1)).slice(-2); //get your zero in front of single month digits so you have 2 digit months
-    // let date = month + '-' + day + '-' + today.getFullYear ();
-    let date = today.getFullYear() + '-' + month + '-' + day;
-    console.log('line:16', date);
-
-    ('2023-08-25');
-
-    const userdata = new users2({
-      fname: fname,
-      imgpath: filename,
-      date: date,
-      image: test10,
-    });
-
-    console.log("line:17", userdata);
-
-    console.log("line:18", userdata);
-
-    const finaldata = await userdata.save();
-
-    res.status(201).json({ status: 201, finaldata });
-  } catch (error) {
-    res.status(401).json({ status: 401, error });
-  }
-});
-
-// ### Playground -Start-: testing different Headers, dispatch and receive data #############################################################
-
-
-
-// user data get
 router.get('/getdata', async (req, res) => {
   try {
     const getUser = await users1.find();
@@ -202,6 +119,10 @@ router.get('/getdata', async (req, res) => {
     res.status(401).json({ status: 401, error });
   }
 });
+
+// #################################################################################################
+// ### working!!! - Get the Videos from Mong DB
+// #################################################################################################
 
 router.get('/getvideo', async (req, res) => {
   try {
@@ -213,17 +134,10 @@ router.get('/getvideo', async (req, res) => {
   }
 });
 
-// router.get ('/getdata', async (req, res) => {
-//   try {
-//     const getUser = await users1.find ();
+// #################################################################################################
+// ### working!!! - Delete the User Data
+// #################################################################################################
 
-//     res.status (201).json ({status: 201, getUser});
-//   } catch (error) {
-//     res.status (401).json ({status: 401, error});
-//   }
-// });
-
-// delete user data
 router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -236,17 +150,15 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-
-
+// #################################################################################################
+// ### working!!! - EditUser: Stores Images & Image Collections and Fields to Mongo DB use useState caused by its async behaviour, can be deleted, fixed the problem in playgroundedituser2  
+// #################################################################################################
 
 router.post('/edituser', async (req, res) => {
-
-
   const { userid } = req.body;
   const { id } = req.body;
   const { fname } = req.body;
   console.log("line:1", req.body);
-
 
   try {
 
@@ -256,12 +168,6 @@ router.post('/edituser', async (req, res) => {
     let day = ('0' + today.getDate()).slice(-2); //get day with slice to have double digit day
     let month = ('0' + (today.getMonth() + 1)).slice(-2); //get your zero in front of single month digits so you have 2 digit months
     let date = today.getFullYear() + '-' + month + '-' + day;
-
-
-
-
-
-
 
     dltUser.fname = req.body.name;
     dltUser.image = req.body.image;
@@ -283,9 +189,9 @@ router.post('/edituser', async (req, res) => {
   }
 });
 
-// ### PlaygroundEditUser2 -Start-: testing different Headers, dispatch and receive data #############################################################
-
-
+// #################################################################################################
+// ### working!!! - PlaygroundEditUser2: Stores Images & Image Collections and Fields to Mongo DB
+// #################################################################################################
 
 router.post('/playgroundedituser2', upload.single('photo'), async (req, res) => {
 
@@ -324,11 +230,6 @@ router.post('/playgroundedituser2', upload.single('photo'), async (req, res) => 
 
   const userAgent = req.headers;
   // console.log("line:6", req.headers);
-
-
-
-
-
 
   try {
 
@@ -371,11 +272,9 @@ router.post('/playgroundedituser2', upload.single('photo'), async (req, res) => 
   }
 });
 
-
-
-// ### PlaygroundEditUser2 -End-: testing different Headers, dispatch and receive data #############################################################
-
-// const storage = multer.memoryStorage(); // Store the file in memory
+// #################################################################################################
+// ### working!!! - Stores Video:1 on the Server, in the folder videos and saves the url to the video to Mongo DB
+// #################################################################################################
 
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
@@ -401,12 +300,9 @@ router.post('/api/upload', upload1.single('video'), async (req, res) => {
   // You can now process the videoData (e.g., save it to disk or perform any other operations)
   // In this example, we're just sending a success message back to the client.
 
-
   // return res.json({ message: 'Video uploaded successfully' });
+
   try {
-
-
-
     const userdata = new video({
       imgpath: req.file.filename,
     });
@@ -422,9 +318,9 @@ router.post('/api/upload', upload1.single('video'), async (req, res) => {
 
 });
 
-
-
-// ################################################################################## New Route: Store image in the database with Grid FS
+// #################################################################################################
+// ### currently not in use !!! - Store image in the database with Grid FS
+// #################################################################################################
 
 const storageDb = multer.memoryStorage();
 const uploadnew = multer({ storageDb });
@@ -455,9 +351,10 @@ router.post('/uploadvideodb', uploadnew.single('file'), (req, res) => {
   writeStream.end();
 });
 
-// ################################################################################## New Route: Store image in the database with Grid FS
+// #################################################################################################
+// ### currently not in use !!! - Store image in the database with Grid FS
+// #################################################################################################
 
-// working###
 const storage3 = multer.memoryStorage();
 const upload3 = multer({ storage: storage3 });
 
@@ -483,9 +380,9 @@ router.post('/uploadvideo', upload3.single('video'), async (req, res) => {
   }
 });
 
-
-// ######
-
+// #################################################################################################
+// ### currently not in use !!!
+// #################################################################################################
 
 router.get('/api/videos/:id', async (req, res) => {
   try {
@@ -507,89 +404,11 @@ router.get('/api/videos/:id', async (req, res) => {
   }
 });
 
-// ###### working almost!!!!
-
-// mongodb.MongoClient.connect makes the problem
-
-// const { mongoose1 } = require('../db/conn')
-
-// const videoSchema = new mongoose.Schema({
-//   filename: String,
-//   contentType: String,
-//   uploadDate: Date,
-// });
-
-// const Video1 = mongoose.model('Video1', videoSchema);
-
-// router.post('/init-video', async function (req, res) {
-//   try {
-//     const video = new Video1({
-//       filename: 'bigbuck.mp4',
-//       contentType: 'video/mp4', // Adjust the content type as needed
-//       uploadDate: new Date(),
-//     });
-
-//     const videoReadStream = fs.createReadStream('./bigbuck.mp4');
-
-//     // Save the video document to MongoDB
-//     await video.save();
-
-//     // Pipe the video data to the video document
-//     // ### - here is the error
-//     videoReadStream.pipe(video.openUploadStream());
-
-//     videoReadStream.on('end', () => {
-//       res.status(200).send('Done...');
-//     });
-//   } catch (error) {
-//     console.error('Error uploading video:', error);
-//     res.status(500).json({ error: 'Failed to upload video' });
-//   }
-// });
-
-// #### also working almost:2
-
-// const { mongoose1, gfs } = require('../db/conn');
-
-// const storage10 = multer.memoryStorage(); // Store the video file in memory
-// const upload10 = multer({ storage10 });
-
-// router.post('/init-video', upload10.single('video'), async (req, res) => {
-//   try {
-//     if (!req.file) {
-//       return res.status(400).json({ error: 'No file uploaded' });
-//     }
-
-//     const { originalname, buffer } = req.file;
-
-//     const writeStream = gfs.createWriteStream({
-//       filename: originalname,
-//     });
-
-//     writeStream.write(buffer);
-//     writeStream.end();
-
-//     writeStream.on('finish', () => {
-//       res.status(200).send('Video uploaded successfully');
-//     });
-//   } catch (error) {
-//     console.error('Error uploading video:', error);
-//     res.status(500).json({ error: 'Failed to upload video' });
-//   }
-// });
-
-// #####
+// #################################################################################################
+// ### Push the video to the database and slice the data into smaller chunks - working so far !!!
+// #################################################################################################
 
 const mongoose = require('../db/conn'); // Import the Mongoose connection
-
-// const port = process.env.PORT || 3000;
-
-
-// Connect to MongoDB using Mongoose
-// mongoose.connect('mongodb://localhost:27017/videos', {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
 
 mongoose.connection.on('error', (error) => {
   console.error('MongoDB connection error:', error);
@@ -626,17 +445,7 @@ mongoose.connection.once('open', () => {
       res.status(500).json(error);
     }
   });
-
-  
 });
-
-
-// app.listen(port, () => {
-//   console.log(`Server is running on port ${port}`);
-// });
-
-
-
 
 
 module.exports = router;

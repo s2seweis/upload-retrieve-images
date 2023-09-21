@@ -40,7 +40,7 @@ const Offcanvas1 = () => {
 
             <Offcanvas show={show} onHide={handleClose}>
                 <Offcanvas.Header closeButton>
-                    <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+                    <Offcanvas.Title>Menu</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
 

@@ -12,7 +12,7 @@ import '../../../src/App.css';
 const RegisterVideo = () => {
 
 
-  // ####################################################################### Stored on the Server, in the folder videos
+  // ####################################################################### Stores Video:1 on the Server, in the folder videos
   const [selectedVideo, setSelectedVideo] = useState (null);
   console.log ('line:1', selectedVideo);
   const [selectedVideoUrl, setSelectedVideoUrl] = useState (null);
