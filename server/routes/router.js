@@ -4,7 +4,7 @@ const multer = require('multer');
 const users1 = require('../model/usersSchema');
 const users2 = require('../model/usersSchema2');
 
-const Video = require('../model/videoSchema2');
+// const Video = require('../model/videoSchema2');
 const video = require('../model/videoSchema');
 const moment = require('moment');
 
@@ -355,54 +355,54 @@ router.post('/uploadvideodb', uploadnew.single('file'), (req, res) => {
 // ### currently not in use !!! - Store image in the database with Grid FS
 // #################################################################################################
 
-const storage3 = multer.memoryStorage();
-const upload3 = multer({ storage: storage3 });
+// const storage3 = multer.memoryStorage();
+// const upload3 = multer({ storage: storage3 });
 
-router.post('/uploadvideo', upload3.single('video'), async (req, res) => {
-  console.log("line:100", req.file);
-  try {
-    if (!req.file) {
-      return res.status(400).json({ error: 'No video file uploaded' });
-    }
+// router.post('/uploadvideo', upload3.single('video'), async (req, res) => {
+//   console.log("line:100", req.file);
+//   try {
+//     if (!req.file) {
+//       return res.status(400).json({ error: 'No video file uploaded' });
+//     }
 
-    const video = new Video({
-      name: req.body.name,
-      data: req.file.buffer,
-    });
+//     const video = new Video({
+//       name: req.body.name,
+//       data: req.file.buffer,
+//     });
 
-    // console.log("line:200", video);
+//     // console.log("line:200", video);
 
-    await video.save();
+//     await video.save();
 
-    res.json({ message: 'Video uploaded successfully' });
-  } catch (error) {
-    res.status(500).json({ error: 'Error uploading video' });
-  }
-});
+//     res.json({ message: 'Video uploaded successfully' });
+//   } catch (error) {
+//     res.status(500).json({ error: 'Error uploading video' });
+//   }
+// });
 
 // #################################################################################################
 // ### currently not in use !!!
 // #################################################################################################
 
-router.get('/api/videos/:id', async (req, res) => {
-  try {
-    const video1 = await Video.findById(req.params.id);
-    console.log("line:1", video1);
+// router.get('/api/videos/:id', async (req, res) => {
+//   try {
+//     const video1 = await Video.findById(req.params.id);
+//     console.log("line:1", video1);
 
-    if (!video1) {
-      return res.status(404).json({ error: 'Video not found' });
-    }
+//     if (!video1) {
+//       return res.status(404).json({ error: 'Video not found' });
+//     }
 
-    // Assuming video1.data is your BinData field
-    const videoData = video1.data.buffer; // Convert BinData to Buffer
+//     // Assuming video1.data is your BinData field
+//     const videoData = video1.data.buffer; // Convert BinData to Buffer
 
-    res.set('Content-Type', 'video/mp4'); // Set the content type to video/mp4
-    res.send(videoData); // Send the video data
-  } catch (error) {
-    console.error('Error retrieving video:', error);
-    res.status(500).json({ error: 'Error retrieving video' });
-  }
-});
+//     res.set('Content-Type', 'video/mp4'); // Set the content type to video/mp4
+//     res.send(videoData); // Send the video data
+//   } catch (error) {
+//     console.error('Error retrieving video:', error);
+//     res.status(500).json({ error: 'Error retrieving video' });
+//   }
+// });
 
 // #################################################################################################
 // ### Push the video to the database and slice the data into smaller chunks - working so far !!!
@@ -424,7 +424,10 @@ mongoose.connection.once('open', () => {
     console.log("line:100", req.file);
 
     try {
-      const bucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db);
+
+      // add video schema to it for define the folder
+
+      const bucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {bucketName:"videos100"});
       const videoUploadStream = bucket.openUploadStream('bigbuck');
 
       const videoReadStream = fs.createReadStream('./bigbuck.mp4');
@@ -450,6 +453,49 @@ mongoose.connection.once('open', () => {
 // #################################################################################################
 // ### Second Part for Streaming from Mongo DB !!!
 // #################################################################################################
+
+const Video = require('../model/videoSchema3'); // Import your video model
+
+
+router.get('/mongo-video', async (req, res) => {
+  try {
+    const range = req.headers.range;
+    console.log("line:1", range);
+    if (!range) {
+      res.status(400).send('Requires Range header');
+      return;
+    }
+
+    // Query the MongoDB collection to find your video
+    const video = await Video.findOne({});
+    if (!video) {
+      res.status(404).send('No video uploaded!');
+      return;
+    }
+
+    // Create response headers
+    const videoSize = video.length;
+    const start = Number(range.replace(/\D/g, ''));
+    const end = videoSize - 1;
+    const contentLength = end - start + 1;
+    const headers = {
+      'Content-Range': `bytes ${start}-${end}/${videoSize}`,
+      'Accept-Ranges': 'bytes',
+      'Content-Length': contentLength,
+      'Content-Type': 'video/mp4',
+    };
+
+    // HTTP Status 206 for Partial Content
+    res.writeHead(206, headers);
+
+    // Stream the video data to the response
+    // You'll need to implement the logic to stream the video data here
+
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json(error);
+  }
+});
 
 
 module.exports = router;

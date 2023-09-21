@@ -1,10 +1,10 @@
-import {useState, useEffect, useContext, useRef} from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
-import {useParams} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import FormGroup from 'react-bootstrap/esm/FormGroup';
-import {VideoContext} from '../../App';
+import { VideoContext } from '../../App';
 
 import EditVideoChild from './EditVideoChild';
 
@@ -12,24 +12,24 @@ import '../../../src/App.css';
 
 import VideoPlayer from './VideoPlayer';
 
-const EditVideo = ({match}) => {
-  console.log ('line:1', match);
+const EditVideo = ({ match }) => {
+  console.log('line:1', match);
 
-  const [videoUrl, setVideoUrl] = useState ('');
-  console.log ('line:1.1', videoUrl);
+  const [videoUrl, setVideoUrl] = useState('');
+  console.log('line:1.1', videoUrl);
 
-  const [video, setVideo] = useState ([]);
-  console.log ('line:2', video);
+  const [video, setVideo] = useState([]);
+  console.log('line:2', video);
   // console.log ('line:3', video.data);
 
   // ######
-  const base64Data = btoa (video.data);
+  const base64Data = btoa(video.data);
   // console.log ('line:4', base64Data);
 
-  console.log ('line:5', video.imgpath);
+  console.log('line:5', video.imgpath);
   // console.log ('line:6', video.data);
 
-  const [videoData, setVideoData] = useState (null);
+  const [videoData, setVideoData] = useState(null);
   // console.log ('line:7', videoData);
 
   // const blob = new Blob ([video.data], {type: 'video/mp4'});
@@ -37,19 +37,19 @@ const EditVideo = ({match}) => {
   // console.log ('line:5', videoUrl);
 
   // ### useParams
-  const userid = useParams ();
+  const userid = useParams();
   const id = userid.userid;
 
-  const videos = useContext (VideoContext);
-  console.log ('line:5', videos);
+  const videos = useContext(VideoContext);
+  console.log('line:5', videos);
 
-  useEffect (
+  useEffect(
     () => {
       if (videos.length == 0) {
-        console.log ('no videos found');
+        console.log('no videos found');
       } else {
         // setTotalUsers (videos);
-        setVideo (videos.find (o => o._id == userid.userid));
+        setVideo(videos.find(o => o._id == userid.userid));
         // console.log('line:500', user);
       }
     },
@@ -103,7 +103,7 @@ const EditVideo = ({match}) => {
   return (
     <div>
 
-      <div style={{margin: '15px 0px 0px 15px', display: 'flex'}}>
+      <div style={{ margin: '15px 0px 0px 15px', display: 'flex' }}>
         <a href="/video">Go Back</a>
       </div>
 
@@ -119,6 +119,10 @@ const EditVideo = ({match}) => {
           {/* <EditVideoChild props={videoUrl} /> */}
 
         </Form>
+
+        <video id="videoPlayer" width="650" controls muted="muted" autoplay>
+          <source src={`/mongo-video}`} type="video/mp4" />
+        </video>
 
         {/* <video controls width="640" height="360">
           <source src={videoUrl} type="video/mp4" />

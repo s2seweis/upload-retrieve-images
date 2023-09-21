@@ -109,6 +109,8 @@ db.once('open', () => {
 
 module.exports = mongoose;
 
+// needs its own schema /init-video for define the folder 
+
 
 
 

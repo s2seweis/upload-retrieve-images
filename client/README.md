@@ -1,7 +1,7 @@
 # File Handler for React with Node and MongoDB
 -Project: Add images, image collections, pdf & videos to the database or the server
 
-## Covered Topics:
+# Covered Topics:
 
 - Lifting State to the next ancestor component in the state tree for avoiding async behaviour
 - Using local storage instead of a redux store & useSelector
@@ -10,7 +10,7 @@
 - Add Loader from Ant Design
 - Axios requests, configuration of the header | 'Content-Type': 'application/json' versus 'Content-Type': 'multipart/form-data' 
 
-### Important: 
+# Important: 
 - You can place multiple defined objects in the body of an Axios POST request. 
 - To do this, you can create an object that contains these two objects and then send that wrapper object in the request body. 
 

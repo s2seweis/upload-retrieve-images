@@ -1,12 +1,16 @@
 # Next:
 - Scond Part for Streaming from Mongo DB
+- Need to add a schema for /init-video,for define the folder?
+- For streaming the video i need a specific folder structure in Mongo DB: 
+- like folder videos -> fs.chunks/fs.files
 
 ![Alt text](<Secont Part.png>)
 
-## Comment:
+# Comment:
 - Storing the Video Files into Mongo DB not the best practise, better using a provider like aws s3 buckt, and get from there a video url
+-use const mongodb = require('mongodb'); for the connection instead of const mongoose = require('mongoose');
 
-### Packages:
+# Packages:
 - nodemon
 - script stand in package.json file 
 - npm run watch
@@ -16,7 +20,7 @@
 - Using Base64 Encoding 
 - Better to store the image File on the server, otherwise the payload can be to big?
 
-#### New Snippet for VC 
+# New Snippet for VC 
 - Jump to line : strg/ctrl + g
 - inside visual studio console + touch[filename] = build a new file 
 

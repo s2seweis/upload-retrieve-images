@@ -177,12 +177,12 @@ const Home = () => {
                           {/* <Button variant="danger" classNamecol-lg-6 text-center' onClick={() => dltUser(el._id)}>Edit</Button> */}
                           {/* <Button variant="danger" className="col-lg-6 text-center">Edit */}
 
-                          <Link
+                          {/* <Link
                             // to={`/editusernew/${el._id}`}
                             to={`/edituser/${el._id}`}
                           >
                             Edit
-                          </Link>
+                          </Link> */}
 
                           {/* </Button> */}
                         </div>
