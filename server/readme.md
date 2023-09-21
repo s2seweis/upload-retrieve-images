@@ -5,6 +5,7 @@
 - like folder videos -> fs.chunks/fs.files
 - GridFS is a way to store and retrieve files in MongoDB, and each GridFSBucket is associated with a specific collection (bucket) where files are stored.
 - Use Grid FS with an open Connection is something you not do
+- with mongoose i need to close the open connection first, in MongoClient, the client.db(databaseName) its not needed,  the MongoDB Node.js driver requires manual management of connections.
 
 ![Alt text](<Secont Part.png>)
 
