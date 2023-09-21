@@ -74,24 +74,41 @@
 
 // module.exports = { mongoose1, gfs };
 
+// ### working but store BinData
+
+// const mongoose1 = require('mongoose');
+// const Grid = require('gridfs-stream');
+
+// const dbURL = 'mongodb+srv://weissenborn24seb:BMHxCDtYBSAYChJK@sw-mangodb.hltjnmb.mongodb.net/auth-protected-routes'; // Update with your MongoDB URL
+
+// mongoose1.connect(dbURL, { useNewUrlParser: true, useUnifiedTopology: true });
+
+// const conn = mongoose1.connection;
+// let gfs;
+
+// conn.once('open', () => {
+//   gfs = Grid(conn.db, mongoose1.mongo);
+//   gfs.collection('uploads');
+// });
+
+// module.exports = { mongoose1, gfs };
+
+
 // ###
 
-const mongoose1 = require('mongoose');
-const Grid = require('gridfs-stream');
+const mongoose = require('mongoose');
 
-const dbURL = 'mongodb+srv://weissenborn24seb:BMHxCDtYBSAYChJK@sw-mangodb.hltjnmb.mongodb.net/auth-protected-routes'; // Update with your MongoDB URL
+const mongoURI = 'mongodb+srv://weissenborn24seb:BMHxCDtYBSAYChJK@sw-mangodb.hltjnmb.mongodb.net/auth-protected-routes'; // Replace with your MongoDB URI
+mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-mongoose1.connect(dbURL, { useNewUrlParser: true, useUnifiedTopology: true });
-
-const conn = mongoose1.connection;
-let gfs;
-
-conn.once('open', () => {
-  gfs = Grid(conn.db, mongoose1.mongo);
-  gfs.collection('uploads');
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.once('open', () => {
+  console.log('Connected to MongoDB');
 });
 
-module.exports = { mongoose1, gfs };
+module.exports = mongoose;
+
 
 
 

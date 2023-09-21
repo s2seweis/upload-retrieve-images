@@ -15,7 +15,7 @@ const Grid = require('gridfs-stream');
 const url = 'mongodb+srv://weissenborn24seb:BMHxCDtYBSAYChJK@sw-mangodb.hltjnmb.mongodb.net/auth-protected-routes';
 
 
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 
 
 
@@ -426,38 +426,38 @@ router.post('/api/upload', upload1.single('video'), async (req, res) => {
 
 // ################################################################################## New Route: Store image in the database with Grid FS
 
-// const storageDb = multer.memoryStorage();
-// const uploadnew = multer({ storageDb });
+const storageDb = multer.memoryStorage();
+const uploadnew = multer({ storageDb });
 
-// router.post('/uploadvideodb', uploadnew.single('file'), (req, res) => {
-//   if (!req.file) {
-//     return res.status(400).json({ message: 'No file uploaded' });
-//   }
+router.post('/uploadvideodb', uploadnew.single('file'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ message: 'No file uploaded' });
+  }
 
-//   const gfs = getGFS(); // Obtain the GridFS bucket
+  const gfs = getGFS(); // Obtain the GridFS bucket
 
-//   if (!gfs) {
-//     return res.status(500).json({ message: 'GridFS bucket is not initialized' });
-//   }
+  if (!gfs) {
+    return res.status(500).json({ message: 'GridFS bucket is not initialized' });
+  }
 
-//   const writeStream = gfs.openUploadStream(req.file.originalname);
+  const writeStream = gfs.openUploadStream(req.file.originalname);
 
-//   writeStream.on('error', (err) => {
-//     console.error('Error uploading file:', err);
-//     res.status(500).json({ message: 'Error uploading file' });
-//   });
+  writeStream.on('error', (err) => {
+    console.error('Error uploading file:', err);
+    res.status(500).json({ message: 'Error uploading file' });
+  });
 
-//   writeStream.on('finish', (file) => {
-//     res.json({ fileId: file._id });
-//   });
+  writeStream.on('finish', (file) => {
+    res.json({ fileId: file._id });
+  });
 
-//   writeStream.write(req.file.buffer);
-//   writeStream.end();
-// });
+  writeStream.write(req.file.buffer);
+  writeStream.end();
+});
 
 // ################################################################################## New Route: Store image in the database with Grid FS
 
-
+// working###
 const storage3 = multer.memoryStorage();
 const upload3 = multer({ storage: storage3 });
 
@@ -473,7 +473,7 @@ router.post('/uploadvideo', upload3.single('video'), async (req, res) => {
       data: req.file.buffer,
     });
 
-    console.log("line:200", video);
+    // console.log("line:200", video);
 
     await video.save();
 
@@ -580,44 +580,60 @@ router.get('/api/videos/:id', async (req, res) => {
 
 // #####
 
-const { createReadStream } = require('fs')
+const mongoose = require('../db/conn'); // Import the Mongoose connection
 
-const { mongoose1, gfs } = require('../db/conn');
+// const port = process.env.PORT || 3000;
 
-const storage10 = multer.memoryStorage(); // Store the video file in memory
-// const upload10 = multer({ storage10 });
-// Initialize multer middleware for handling file uploads
-const upload10 = multer({ dest: 'uploads/' }); // Set the destination folder for temporary storage
 
-router.post('/upload', upload10.single('video'), async (req, res) => {
-  try {
-    if (!req.file) {
-      return res.status(400).json({ error: 'No file uploaded' });
-    }
+// Connect to MongoDB using Mongoose
+// mongoose.connect('mongodb://localhost:27017/videos', {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// });
 
-    const { originalname, mimetype } = req.file;
-
-    // Create a writable stream for storing the video in GridFS
-    const writeStream = gfs.createWriteStream({
-      filename: originalname,
-      contentType: mimetype,
-    });
-
-    // Pipe the uploaded file into the write stream
-    const readStream = fs.createReadStream(req.file.path);
-    readStream.pipe(writeStream);
-
-    // Wait for the upload to finish
-    writeStream.on('close', () => {
-      // Remove the temporary file
-      fs.unlinkSync(req.file.path);
-      res.status(200).send('Video uploaded successfully');
-    });
-  } catch (error) {
-    console.error('Error uploading video:', error);
-    res.status(500).json({ error: 'Failed to upload video' });
-  }
+mongoose.connection.on('error', (error) => {
+  console.error('MongoDB connection error:', error);
 });
+
+const storage4 = multer.memoryStorage();
+const upload4 = multer({ storage: storage4 });
+
+mongoose.connection.once('open', () => {
+  console.log('Connected to MongoDB');
+
+  router.post('/init-video', upload4.single('video'), async (req, res) => {
+    console.log("line:100", req.file);
+
+    try {
+      const bucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db);
+      const videoUploadStream = bucket.openUploadStream('bigbuck');
+
+      const videoReadStream = fs.createReadStream('./bigbuck.mp4');
+
+      videoUploadStream.on('error', (error) => {
+        console.error('Error uploading video:', error);
+        res.status(500).json({ error: 'Error uploading video' });
+      });
+
+      videoUploadStream.on('finish', () => {
+        console.log('Video upload completed');
+        res.status(200).send('Done...');
+      });
+
+      videoReadStream.pipe(videoUploadStream);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json(error);
+    }
+  });
+
+  
+});
+
+
+// app.listen(port, () => {
+//   console.log(`Server is running on port ${port}`);
+// });
 
 
 

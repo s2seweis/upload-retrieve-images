@@ -22,4 +22,9 @@ mongodb and react
 - Jump to line : strg/ctrl + g
 - inside visual studio console + touch[filename] = build a new file 
 
-
+### Later:
+1. check the connect method, need to sperate it from the router
+2. make a new server, try out the /init-video setting like it is 
+3. store the buffer as BinData in the database, how can I get these data back to the video?
+4. Streaming from Mongo DB, wrong question?
+5. Is mongoose really neccesary ?

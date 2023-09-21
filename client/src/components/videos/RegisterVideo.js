@@ -72,7 +72,8 @@ const RegisterVideo = () => {
       // formData.append ('name', video1);
       
       try {
-        const response = await axios.post ('/api/upload', formData, {
+        const response = await axios.post ('/init-video', formData, {
+        // const response = await axios.post ('/uploadvideo', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -96,7 +97,7 @@ const RegisterVideo = () => {
     <div>
 
       <div style={{margin: '15px 0px 0px 15px', display: 'flex'}}>
-        <a href="/">Go Back</a>
+        <a href="/video">Go Back</a>
       </div>
 
       <div style={{backgroundColor: 'aliceblue'}} className="container mt-3">

@@ -20,17 +20,17 @@ const EditVideo = ({match}) => {
 
   const [video, setVideo] = useState ([]);
   console.log ('line:2', video);
-  console.log ('line:3', video.data);
+  // console.log ('line:3', video.data);
 
   // ######
   const base64Data = btoa (video.data);
-  console.log ('line:4', base64Data);
+  // console.log ('line:4', base64Data);
 
   console.log ('line:5', video.imgpath);
-  console.log ('line:6', video.data);
+  // console.log ('line:6', video.data);
 
   const [videoData, setVideoData] = useState (null);
-  console.log ('line:7', videoData);
+  // console.log ('line:7', videoData);
 
   // const blob = new Blob ([video.data], {type: 'video/mp4'});
   // const videoUrl = URL.createObjectURL (blob);
@@ -77,28 +77,28 @@ const EditVideo = ({match}) => {
   //   return <div>Loading...</div>;
   // }
 
-  useEffect (
-    () => {
-      async function fetchVideoUrl () {
-        try {
-          const response = await axios.get (`/api/videos/${userid.userid}`, {
-            responseType: 'arraybuffer', // Specify the response type as arraybuffer
-          });
+  // useEffect (
+  //   () => {
+  //     async function fetchVideoUrl () {
+  //       try {
+  //         const response = await axios.get (`/api/videos/${userid.userid}`, {
+  //           responseType: 'arraybuffer', // Specify the response type as arraybuffer
+  //         });
 
-          // Convert the binary data to a Blob and create a video URL
-          const blob = new Blob ([response.data], {type: 'video/mp4'});
-          const url = URL.createObjectURL (blob);
+  //         // Convert the binary data to a Blob and create a video URL
+  //         const blob = new Blob ([response.data], {type: 'video/mp4'});
+  //         const url = URL.createObjectURL (blob);
 
-          setVideoUrl (url);
-        } catch (error) {
-          console.error ('Error fetching video URL:', error);
-        }
-      }
+  //         setVideoUrl (url);
+  //       } catch (error) {
+  //         console.error ('Error fetching video URL:', error);
+  //       }
+  //     }
 
-      fetchVideoUrl ();
-    },
-    [userid.userid]
-  );
+  //     fetchVideoUrl ();
+  //   },
+  //   [userid.userid]
+  // );
 
   return (
     <div>
@@ -116,14 +116,14 @@ const EditVideo = ({match}) => {
 
           {/* <EditVideoChild props={base64Data} /> */}
 
-          <EditVideoChild props={videoUrl} />
+          {/* <EditVideoChild props={videoUrl} /> */}
 
         </Form>
 
-        <video controls width="640" height="360">
+        {/* <video controls width="640" height="360">
           <source src={videoUrl} type="video/mp4" />
           Your browser does not support the video tag.
-        </video>
+        </video> */}
 
       </div>
 
