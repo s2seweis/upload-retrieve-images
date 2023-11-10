@@ -1,0 +1,26 @@
+/* Register.module.css */
+
+.register-container {
+  max-width: 600px;
+  margin: auto;
+}
+
+.register-form-group {
+  margin-bottom: 20px;
+}
+
+.register-align-image {
+  text-align: center;
+}
+
+.register-button-container {
+  margin: 15px 0 0 15px;
+  display: flex;
+}
+
+.register-image-preview {
+  width: 300px;
+  margin-top: 50px;
+}
+
+/* Add any additional styling as needed */

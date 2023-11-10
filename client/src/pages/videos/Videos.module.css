@@ -1,0 +1,46 @@
+/* Video.module.css */
+
+.video-container {
+  max-width: 800px;
+  margin: auto;
+}
+
+.video-header {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.video-card {
+  width: 100%;
+  max-width: 400px;
+  margin: 20px auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.video-card{
+  display: block;
+  margin: auto;
+  text-align: center;
+}
+
+.video-card:hover {
+  transform: scale(1.05);
+}
+
+.video-card h4 {
+  margin: 10px 0;
+}
+
+.video-edit-link {
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.video-edit-link:hover {
+  text-decoration: underline;
+}

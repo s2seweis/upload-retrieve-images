@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import FormGroup from 'react-bootstrap/esm/FormGroup';
-import { VideoContext } from '../../App';
+import { VideoContext } from '../../AppRouter';
 
 import EditVideoChild from './EditVideoChild';
 

@@ -4,15 +4,12 @@ import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import FormGroup from 'react-bootstrap/esm/FormGroup';
-import { UserContext } from '../App';
+import { UserContext } from '../../App';
 import moment from 'moment';
-
-
-
-import '../../src/App.css';
+import '../../App.css';
 // import ImageCollection from '../components/imageCollection';
-import useFileHandler from '../components/hooks/useFileHandler';
-import ImageLoader from '../components/ImageLoader';
+import useFileHandler from '../../components/hooks/useFileHandler';
+import ImageLoader from '../../components/ImageLoader';
 
 import { v4 as uuidv4 } from 'uuid';
 
