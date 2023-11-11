@@ -2,7 +2,7 @@ const express = require('express');
 const router = new express.Router();
 const multer = require('multer');
 const users1 = require('../model/usersSchema');
-// const users2 = require('../model/usersSchema2');
+const users2 = require('../model/usersSchema2');
 
 const Video = require('../model/videoSchema2');
 const video = require('../model/videoSchema');
@@ -46,29 +46,13 @@ router.post('/register', upload.single('photo'), async (req, res) => {
   console.log("line:1", filename);
   console.log("line:1.1 ", path);
   console.log('line:2', req.file);
-  // console.log ('line:101', req.file.path);
-  // console.log ('line:103', filename);
-  // console.log ('line:104', path);
-
+  
   const { fname } = req.body;
   console.log('line:3', req.body);
   console.log('line:4', req.body.add);
-  // console.log ('line:201', fname);
-
-  // const {newImage} = req.body;
-  // console.log("line298", newImage);
-  // console.log("line:299", req.body);
-  // // console.log("line:300", req.body.image);
-  // // console.log("line:301", req.body.fname);
-
+ 
   const { imagenew } = req.body;
-  // console.log ('line:297', imagenew);
-  // console.log ('line298', req.file);
-  // console.log ('line:299', req.body.image);
-  // console.log ('line:300', req.imagenew);
-  // console.log("line:300", req.body.image);
-  // console.log("line:301", req.body.fname);
-
+  
   const test10 = req.body.image;
   console.log('line:5', test10);
 
@@ -77,8 +61,6 @@ router.post('/register', upload.single('photo'), async (req, res) => {
   }
 
   try {
-    // const date = moment (new Date ()).format ('YYYY-MM-DD');
-    // console.log ('line:333', date);
 
     let today = new Date(); // get the date
     let day = ('0' + today.getDate()).slice(-2); //get day with slice to have double digit day
@@ -352,59 +334,6 @@ router.post('/uploadvideodb', uploadnew.single('file'), (req, res) => {
 });
 
 // #################################################################################################
-// ### currently not in use !!! - Store image in the database with Grid FS
-// #################################################################################################
-
-// const storage3 = multer.memoryStorage();
-// const upload3 = multer({ storage: storage3 });
-
-// router.post('/uploadvideo', upload3.single('video'), async (req, res) => {
-//   console.log("line:100", req.file);
-//   try {
-//     if (!req.file) {
-//       return res.status(400).json({ error: 'No video file uploaded' });
-//     }
-
-//     const video = new Video({
-//       name: req.body.name,
-//       data: req.file.buffer,
-//     });
-
-//     // console.log("line:200", video);
-
-//     await video.save();
-
-//     res.json({ message: 'Video uploaded successfully' });
-//   } catch (error) {
-//     res.status(500).json({ error: 'Error uploading video' });
-//   }
-// });
-
-// #################################################################################################
-// ### currently not in use !!!
-// #################################################################################################
-
-// router.get('/api/videos/:id', async (req, res) => {
-//   try {
-//     const video1 = await Video.findById(req.params.id);
-//     console.log("line:1", video1);
-
-//     if (!video1) {
-//       return res.status(404).json({ error: 'Video not found' });
-//     }
-
-//     // Assuming video1.data is your BinData field
-//     const videoData = video1.data.buffer; // Convert BinData to Buffer
-
-//     res.set('Content-Type', 'video/mp4'); // Set the content type to video/mp4
-//     res.send(videoData); // Send the video data
-//   } catch (error) {
-//     console.error('Error retrieving video:', error);
-//     res.status(500).json({ error: 'Error retrieving video' });
-//   }
-// });
-
-// #################################################################################################
 // ### Push the video to the database and slice the data into smaller chunks - working so far !!!
 // #################################################################################################
 
@@ -437,11 +366,12 @@ mongoose.connection.once('open', () => {
 
       // add video schema to it for define the folder
 
-      const bucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {bucketName:folderName});
-      const videoUploadStream = bucket.openUploadStream('bigbuck',{
+      // const bucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db, { bucketName: folderName });
+      const bucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db);
+      const videoUploadStream = bucket.openUploadStream('bigbuck', {
         // contentType: mimetype,
         metadata: { folder: folderName }, // Store folder information in metadata
-      } );
+      });
 
       const videoReadStream = fs.createReadStream('./bigbuck.mp4');
 
@@ -467,48 +397,60 @@ mongoose.connection.once('open', () => {
 // ### Second Part for Streaming from Mongo DB !!!
 // #################################################################################################
 
-// const Video = require('../model/videoSchema3'); // Import your video model
+mongoose.connection.once('open', () => {
+  console.log('Connected to MongoDB500');
 
+  router.get("/mongo-video", async (req, res) => {
+    try {
+      const range = req.headers.range;
+      if (!range) {
+        return res.status(400).send("Requires Range header");
+      }
 
-// router.get('/mongo-video', async (req, res) => {
-//   try {
-//     const range = req.headers.range;
-//     console.log("line:1", range);
-//     if (!range) {
-//       res.status(400).send('Requires Range header');
-//       return;
-//     }
+      const db = mongoose.connection.db;
+      // GridFS Collection
+      const video = await db.collection('fs.files').findOne({});
+      
+      if (!video) {
+        return res.status(404).send("No video uploaded!");
+      }
 
-//     // Query the MongoDB collection to find your video
-//     const video = await Video.findOne({});
-//     if (!video) {
-//       res.status(404).send('No video uploaded!');
-//       return;
-//     }
+      // Create response headers
+      const videoSize = video.length;
+      console.log("line:300", videoSize);
+      const start = Number(range.replace(/\D/g, ""));
+      console.log("line:400", start);
+      const end = videoSize - 1;
+      console.log("line:500", end);
 
-//     // Create response headers
-//     const videoSize = video.length;
-//     const start = Number(range.replace(/\D/g, ''));
-//     const end = videoSize - 1;
-//     const contentLength = end - start + 1;
-//     const headers = {
-//       'Content-Range': `bytes ${start}-${end}/${videoSize}`,
-//       'Accept-Ranges': 'bytes',
-//       'Content-Length': contentLength,
-//       'Content-Type': 'video/mp4',
-//     };
+      // Ensure start position is valid
+      const correctedStart = start > end ? 0 : start;
+      console.log("line:700", correctedStart);
 
-//     // HTTP Status 206 for Partial Content
-//     res.writeHead(206, headers);
+      const contentLength = end - correctedStart + 1;
+      const headers = {
+        "Content-Range": `bytes ${correctedStart}-${end}/${videoSize}`,
+        "Accept-Ranges": "bytes",
+        "Content-Length": contentLength,
+        "Content-Type": "video/mp4",
+      };
 
-//     // Stream the video data to the response
-//     // You'll need to implement the logic to stream the video data here
+      // HTTP Status 206 for Partial Content
+      res.writeHead(206, headers);
 
-//   } catch (error) {
-//     console.error('Error:', error);
-//     res.status(500).json(error);
-//   }
-// });
+      const bucket = new mongoose.mongo.GridFSBucket(db);
+      const downloadStream = bucket.openDownloadStreamByName('bigbuck', { start: correctedStart, end: end });
+      console.log("line:600", downloadStream);
+
+      // Finally, pipe video to response
+      downloadStream.pipe(res);
+    } catch (error) {
+      console.error("Error:", error);a
+      res.status(500).send("Internal Server Error");
+    }
+  });
+});
+
 
 
 module.exports = router;

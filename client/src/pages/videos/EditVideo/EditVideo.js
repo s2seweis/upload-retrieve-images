@@ -9,9 +9,11 @@ import VideoPlayer from '../../../components/VideoPlayer/VideoPlayer';
 
 const EditVideo = () => {
 
-const [videoData, setVideoData] = useState(null);
-const userid = useParams();
-const id = userid.userid;
+  const [videoData, setVideoData] = useState(null);
+  const [data, setData] = useState();
+  console.log("line:1000",);
+  const userid = useParams();
+  const id = userid.userid;
 
   const [video, setVideo] = useState();
   console.log("500", video);
@@ -106,6 +108,36 @@ const id = userid.userid;
 
   // ####################################################################### Video:2 | In the Database with Grid FS
 
+  const [videoUrl, setVideoUrl] = useState('');
+
+  useEffect(() => {
+    const getVideoUrl = async () => {
+      try {
+        const response = await axios.get("/mongo-video", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          responseType: 'blob', // Set responseType to 'blob' for binary data
+        });
+
+        if (response.status === 200) {
+          // Create a Blob from the response data
+          const blob = new Blob([response.data], { type: 'video/mp4' });
+
+          // Generate a URL for the Blob
+          const url = URL.createObjectURL(blob);
+          setVideoUrl(url);
+        } else {
+          console.error('Error fetching video');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    getVideoUrl();
+  }, []);
+
   return (
     <div>
 
@@ -121,7 +153,7 @@ const id = userid.userid;
         <Form className="mt-3">
 
           <label style={{ marginBottom: '10px' }} htmlFor="videoInput">
-            Select a video file:
+            Select a video file2:
           </label>
           <br />
           <input
@@ -141,6 +173,14 @@ const id = userid.userid;
             className="video-container"
           /> */}
           <VideoPlayer videoUrl={`/Videos/${video?.imgpath}` || videoData} />
+
+          {videoUrl && (
+            <video controls width="600" height="400">
+              <source src={videoUrl} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          )}
+
         </div>
 
         <br />
@@ -159,7 +199,7 @@ const id = userid.userid;
         <Form className="mt-3">
 
           <label style={{ marginBottom: '10px' }} htmlFor="videoInput">
-            Select a video file:
+            Select a video file1:
           </label>
           <br />
           <input
@@ -173,11 +213,14 @@ const id = userid.userid;
         </Form>
 
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <video
+          {/* <video
             controls // Add the controls attribute to display video controls (play, pause, volume, etc.)
             src={selectedVideoUrlDb}
             className="video-container"
-          />
+          /> */}
+          <video id="videoPlayer" width="650" controls muted="muted" autoplay>
+            <source src="/mongo-video" type="video/mp4" />
+          </video>
         </div>
 
         <br />
