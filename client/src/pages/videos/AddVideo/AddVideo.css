@@ -1,0 +1,53 @@
+/* AddVideo.module.css */
+
+.container-addvideo {
+  max-width: 500px;
+  margin: 25px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.container-addvideo h3 {
+  text-align: center;
+}
+
+.mt-3 {
+  margin-top: 1.5rem;
+}
+
+.video-container {
+  width: 100%;
+  max-width: 100%;
+  min-height: 300px;
+}
+
+.btn-submit {
+  margin-top: 1rem;
+}
+
+/* Optional: Style the 'Go Back' link */
+.link-button {
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Optional: Style the input file */
+#videoInput {
+  margin-bottom: 10px;
+}
+
+/* Optional: Style the video controls */
+video {
+  display: block;
+  margin: 0 auto;
+}
+
+/* Optional: Style the submit buttons */
+Button {
+  margin-top: 20px;
+  display: block;
+  margin: 0 auto;
+}

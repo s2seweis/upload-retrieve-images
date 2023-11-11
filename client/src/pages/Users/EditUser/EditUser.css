@@ -1,0 +1,56 @@
+.goBack-link {
+    margin: 15px 0 0 15px;
+    display: inline-block;
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+  }
+
+  /* EditUserForm.css */
+
+.goBack-link {
+  margin: 15px 0 0 15px;
+  display: flex;
+}
+
+.element_1 {
+  border-radius: 20px;
+  height: 300px;
+  width: 300px;
+  margin-top: 20px;
+}
+
+.element_1 .image-preview-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.element_1 .image-preview-container img {
+  height: 170px;
+}
+
+.product-form-delete-image {
+  background-color: red;
+  padding: 5px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+}
+
+.image-collection-top {
+  background-color: aliceblue;
+}
+
+.red-label {
+  background-color: red;
+  padding: 5px;
+  border-radius: 15px;
+}
+
+.product-form-field {
+  margin-bottom: 20px;
+}
+
+.product-form-collection-image {
+  margin-bottom: 20px;
+}

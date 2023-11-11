@@ -1,33 +1,27 @@
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
 
-
-const userSchema = new mongoose.Schema({
-    fname:{
-        type:String,
-        // required:true
-    },
-    imgpath:{
-        type:String,
-        // required:true
-    },
-    image:{
-        type: String,
+// const userSchema = new mongoose.Schema({
+//     fname:{
+//         type:String,
+//     },
+//     imgpath:{
+//         type:String,
+//     },
+//     image:{
+//         type: String,
         
-    },
-    image2:{
-        type: String,
+//     },
+//     image2:{
+//         type: String,
         
-    },
-    date:{
-        type: String
-    },
-    imageCollection: []
-});
+//     },
+//     date:{
+//         type: String
+//     },
+//     imageCollection: []
+// });
 
+// const users2 = new mongoose.model("users2",userSchema);
 
-// create model
-
-const users2 = new mongoose.model("users2",userSchema);
-
-module.exports = users2;
+// module.exports = users2;
 

@@ -2,7 +2,7 @@ const express = require('express');
 const router = new express.Router();
 const multer = require('multer');
 const users1 = require('../model/usersSchema');
-const users2 = require('../model/usersSchema2');
+// const users2 = require('../model/usersSchema2');
 
 const Video = require('../model/videoSchema2');
 const video = require('../model/videoSchema');

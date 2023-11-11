@@ -24,13 +24,6 @@ const SkeletonItem = () => {
   );
 };
 
-const SkeletonCard = () => {
-  return (
-    <>
-      <SkeletonItem />
-      <SkeletonItem />
-    </>
-  );
-};
 
-export default SkeletonCard;
+
+export default SkeletonItem;

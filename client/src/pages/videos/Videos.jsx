@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { NavLink, Link } from 'react-router-dom';
 import axios from 'axios';
-import VideoPlayer from '../../components/videos/VideoPlayer';
+import VideoPlayer from '../../components/VideoPlayer/VideoPlayer';
 import { useNavigate } from 'react-router-dom';
 import styles from './Videos.module.css'; // Import the CSS module
 
@@ -34,15 +34,15 @@ const Video = () => {
     <div className={styles['video-container']}>
       <div className="container mt-2">
         <h3 className={styles['video-header']}>
-          MERN (Mongo, Express, React, Node) Video Upload Project
+        Video Upload
         </h3>
         <div className="text-end">
           <Button variant="primary">
             <NavLink
-              to="/register"
+              to="/addvideo"
               className="text-decoration-none text-light"
             >
-              Add User
+              Add Video
             </NavLink>
           </Button>
 
