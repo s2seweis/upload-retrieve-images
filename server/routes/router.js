@@ -46,13 +46,13 @@ router.post('/register', upload.single('photo'), async (req, res) => {
   console.log("line:1", filename);
   console.log("line:1.1 ", path);
   console.log('line:2', req.file);
-  
+
   const { fname } = req.body;
   console.log('line:3', req.body);
   console.log('line:4', req.body.add);
- 
+
   const { imagenew } = req.body;
-  
+
   const test10 = req.body.image;
   console.log('line:5', test10);
 
@@ -364,11 +364,11 @@ mongoose.connection.once('open', () => {
 
       const videoData = await newVideo.save();
 
-      // add video schema to it for define the folder
-
+      // ***each of the videos needs its own folder
       // const bucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db, { bucketName: folderName });
       const bucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db);
-      const videoUploadStream = bucket.openUploadStream('bigbuck', {
+      // ***the name can be the same
+      const videoUploadStream = bucket.openUploadStream('bigbuck500', {
         // contentType: mimetype,
         metadata: { folder: folderName }, // Store folder information in metadata
       });
@@ -409,8 +409,10 @@ mongoose.connection.once('open', () => {
 
       const db = mongoose.connection.db;
       // GridFS Collection
-      const video = await db.collection('fs.files').findOne({});
-      
+      // ***the folder like fs.files needs to be dynamic
+      const video = await db.collection('fs.files').findOne({ filename: 'bigbuck500' });
+      console.log("line:900", video);
+
       if (!video) {
         return res.status(404).send("No video uploaded!");
       }
@@ -439,13 +441,14 @@ mongoose.connection.once('open', () => {
       res.writeHead(206, headers);
 
       const bucket = new mongoose.mongo.GridFSBucket(db);
-      const downloadStream = bucket.openDownloadStreamByName('bigbuck', { start: correctedStart, end: end });
+      // const downloadStream = bucket.openDownloadStreamByName('bigbuck', { start: correctedStart, end: end });
+      const downloadStream = bucket.openDownloadStream(video._id, { start: correctedStart, end: end });
       console.log("line:600", downloadStream);
 
       // Finally, pipe video to response
       downloadStream.pipe(res);
     } catch (error) {
-      console.error("Error:", error);a
+      console.error("Error:", error); a
       res.status(500).send("Internal Server Error");
     }
   });
