@@ -3,13 +3,13 @@ import React, { useEffect, useState, useContext, createContext } from 'react';
 import Header from './components/Navigation/Header/Header';
 import OffCanvas from './components/Navigation/Header/OffCanvas/OffCanvas';
 import Home from './pages/Home/Home';
-import Users from './pages/Users/Users';
+import Files from './pages/Files/Files';
 import Video from './pages/Videos/Videos';
-import Register from './pages/Users/AddUser/AddUser';
+import AddFiles from './pages/Files/AddFiles/AddFiles';
 import AddVideo from './pages/Videos/AddVideo/AddVideo';
 import EditVideo from './pages/Videos/EditVideo/EditVideo';
 import { Routes, Route } from "react-router-dom"
-import Index from './pages/Users/EditUser/Index';
+import Index from './pages/Files/EditFiles/Index';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -24,7 +24,7 @@ function AppRouter() {
   console.log('line:11', data2);
 
   const getUserData = async () => {
-    const res = await axios.get('/getdata', {
+    const res = await axios.get('/getfiles', {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -59,7 +59,6 @@ function AppRouter() {
     getVideo();
   }, []);
 
-
   return (
     <div style={{  }} className='app-router' >
       <UserContext.Provider value={data}>
@@ -68,8 +67,8 @@ function AppRouter() {
           <OffCanvas />
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/users' element={<Users />} />
-            <Route path='/adduser' element={<Register />} />
+            <Route path='/files' element={<Files />} />
+            <Route path='/adduser' element={<AddFiles />} />
             <Route path='/videos' element={<Video />} />
             <Route path='/addvideo' element={<AddVideo />} />
             <Route element={<Index />} path="/edituser/:userid" />

@@ -4,7 +4,7 @@ import React, { lazy, Suspense, useEffect, useState, useContext } from 'react';
 import { UserContext } from '../../../AppRouter';
 import { useParams } from 'react-router-dom';
 
-const EditUserForm = lazy(() => import('./EditUserForm'));
+const EditUserForm = lazy(() => import('./EditFilesForm'));
 
 const Index = ({ match }) => {
 

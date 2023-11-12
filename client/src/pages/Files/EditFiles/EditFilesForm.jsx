@@ -6,11 +6,10 @@ import useFileHandler from "../../../components/hooks/useFileHandler";
 import ImageLoader from "../../../components/ImageLoader/ImageLoader";
 import convertToBase64 from "./Base64";
 import { Link } from "react-router-dom";
-
-import "./EditUser.css";
+import "./EditFiles.css";
 // import '../../../src/App.css';
 
-const EditUserForm = ({ product, isLoading }) => {
+const EditFilesForm = ({ product, isLoading }) => {
   const [user, setUser] = useState(product);
   console.log("line:1", user);
 
@@ -65,7 +64,7 @@ const EditUserForm = ({ product, isLoading }) => {
 
     console.log("line:300", tree);
 
-    const res = await axios.post("/playgroundedituser2", formData, config);
+    const res = await axios.post("/editfiles", formData, config);
 
     if (res.data.status === 401 || !res.data) {
       console.log("errror");
@@ -143,7 +142,7 @@ const EditUserForm = ({ product, isLoading }) => {
   return (
     <div>
       <div style={{margin:"15px"}} className="nav-link">
-        <Link to="/users">
+        <Link to="/files">
           <Button variant="primary">Go Back</Button>
         </Link>
       </div>
@@ -257,4 +256,4 @@ const EditUserForm = ({ product, isLoading }) => {
   );
 };
 
-export default EditUserForm;
+export default EditFilesForm;

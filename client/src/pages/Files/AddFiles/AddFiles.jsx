@@ -4,9 +4,9 @@ import Form from "react-bootstrap/Form";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import placeholder from "../../../assets/images/Placeholder.png";
-import styles from "./AddUser.module.css"; // Import the CSS module
+import styles from "./AddFiles.module.css"; // Import the CSS module
 
-const Register = () => {
+const AddFiles = () => {
   const [fname, setFName] = useState("");
   const [file, setFile] = useState("");
   const [image, setImage] = useState("");
@@ -40,19 +40,19 @@ const Register = () => {
       },
     };
 
-    const res = await axios.post("/register", formData, config);
+    const res = await axios.post("/addfiles", formData, config);
 
     if (res.data.status === 401 || !res.data) {
       console.log("error");
     } else {
-      history("/users");
+      history("/files");
     }
   };
 
   return (
     <div>
         <div className={styles["register-button-container"]}>
-          <Link to="/users">
+          <Link to="/files">
             <Button variant="primary">Go Back</Button>
           </Link>
         </div>
@@ -105,7 +105,7 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default AddFiles;
 
 function convertToBase64(file) {
   return new Promise((resolve, reject) => {

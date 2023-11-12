@@ -51,4 +51,14 @@
     display: block;
     margin: 0 auto;
   }
+
+  .video1{
+    width: -webkit-fill-available !important;
+    width: 300px;
+  }
   
+  #videoPlayer{
+    /* width: 200px !important; */
+    width: -webkit-fill-available !important;
+
+  }

@@ -24,7 +24,7 @@ const OffCanvas = () => {
                 <Offcanvas.Body>
                     <div className='grid' style={{ display: "grid", fontSize: "1.3rem" }}>
                         <NavLink to="/" className="">Home</NavLink>
-                        <NavLink to="/users" className="">Users</NavLink>
+                        <NavLink to="/files" className="">Users</NavLink>
                         <NavLink to="/adduser" className="">Add Users</NavLink>
                         <NavLink to="/videos" className="">Video</NavLink>
                         <NavLink to="/addvideo" className="">Add Video</NavLink>

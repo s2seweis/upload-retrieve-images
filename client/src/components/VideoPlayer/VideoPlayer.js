@@ -1,10 +1,11 @@
 import React from 'react';
+import './VideoPlayer.css';
 
 function VideoPlayer({ videoUrl }) {
   return (
-    <div>
+    <div className='video-container'>
       <h2>Video Player</h2>
-      <video controls width="400" src={videoUrl}></video>
+      <video className='video-classic' src={videoUrl}></video>
     </div>
   );
 }

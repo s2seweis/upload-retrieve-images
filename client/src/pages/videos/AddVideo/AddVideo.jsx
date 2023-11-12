@@ -29,7 +29,7 @@ const AddVideo = () => {
       formData.append('video', selectedVideo);
 
       try {
-        const response = await axios.post('/api/upload', formData, {
+        const response = await axios.post('/add-video-server', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -37,11 +37,13 @@ const AddVideo = () => {
 
         // Handle the response from the server as needed
         console.log('Server response:', response.data);
+        window.location.href = '/videos';
       } catch (error) {
         console.error('Error uploading video:', error);
       }
     } else {
       alert('Please select a video file.');
+      
     }
   };
   // ####################################################################### Stored in the Database with Grid FS
@@ -74,6 +76,7 @@ const AddVideo = () => {
 
         // Handle the response from the server as needed
         console.log('Server response:', response.data);
+        window.location.href = '/videos';
       } catch (error) {
         console.error('Error uploading video:', error);
       }

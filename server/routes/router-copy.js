@@ -205,7 +205,7 @@ mongoose.connection.once('open', () => {
 
        const folderName = "videos500"
 
-      const newVideo = new video1({
+      const newVideo = new video2({
         // filename: originalname,
         // contentType: mimetype,
         folder: folderName, // Set the folder property here

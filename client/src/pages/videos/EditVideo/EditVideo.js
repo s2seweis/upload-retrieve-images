@@ -5,39 +5,24 @@ import axios from 'axios';
 import { Link, useParams } from "react-router-dom";
 import './EditVideo.css';
 import { VideoContext } from '../../../AppRouter';
-import VideoPlayer from '../../../components/VideoPlayer/VideoPlayer';
+import { Calendar2Plus } from 'react-bootstrap-icons';
+// not in use at the moment but makes sense
+// import VideoPlayer from '../../../components/VideoPlayer/VideoPlayer';
 
 const EditVideo = () => {
 
   const [videoData, setVideoData] = useState(null);
   const [data, setData] = useState();
-  console.log("line:1000",);
   const userid = useParams();
   const id = userid.userid;
-
   const [video, setVideo] = useState();
-  console.log("500", video);
   const videos = useContext(VideoContext);
-  console.log('line:5', videos);
 
-  useEffect(
-    () => {
-      if (videos.length == 0) {
-        console.log('no videos found');
-      } else {
-        // setTotalUsers (videos);
-        setVideo(videos.find(o => o._id == id));
-        // console.log('line:500', user);
-      }
-    },
-    [videos]
-  );
-
-  // ####################################################################### Video:1 | On the Server, in the folder videos
+  // ####################################################################### Video:1 | Stores on the Server, in the folder videos
   const [selectedVideo, setSelectedVideo] = useState(null);
-  console.log('line:1', selectedVideo);
+  console.log('line:5', selectedVideo);
   const [selectedVideoUrl, setSelectedVideoUrl] = useState(null);
-  console.log('line:2', selectedVideoUrl);
+  console.log('line:6', selectedVideoUrl);
 
   const handleVideoChange = e => {
     const file = e.target.files[0]; // Get the first selected file
@@ -45,30 +30,16 @@ const EditVideo = () => {
     setSelectedVideoUrl(URL.createObjectURL(file));
   };
 
-  const handleSubmit = async e => {
-    e.preventDefault();
-
-    if (selectedVideo) {
-      const formData = new FormData();
-      formData.append('video', selectedVideo);
-
-      try {
-        const response = await axios.post('/api/upload', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-
-        // Handle the response from the server as needed
-        console.log('Server response:', response.data);
-      } catch (error) {
-        console.error('Error uploading video:', error);
+  useEffect(
+    () => {
+      if (videos.length == 0) {
+        console.log('no videos found');
+      } else {
+        setVideo(videos.find(o => o._id == id));
       }
-    } else {
-      alert('Please select a video file.');
-    }
-  };
-  // ####################################################################### Video:2 | In the Database with Grid FS
+    },
+    [videos]
+  );
 
   const [selectedVideoDb, setSelectedVideoDb] = useState(null);
   console.log('line:3', selectedVideoDb);
@@ -82,38 +53,12 @@ const EditVideo = () => {
     setSelectedVideoUrlDb(URL.createObjectURL(file));
   };
 
-  const handleSubmitDb = async e => {
-    e.preventDefault();
-
-    if (selectedVideoDb) {
-      const formData = new FormData();
-      formData.append('video', selectedVideoDb);
-
-      try {
-        const response = await axios.post('/init-video', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-
-        // Handle the response from the server as needed
-        console.log('Server response:', response.data);
-      } catch (error) {
-        console.error('Error uploading video:', error);
-      }
-    } else {
-      alert('Please select a video file.');
-    }
-  };
-
-  // ####################################################################### Video:2 | In the Database with Grid FS
-
   const [videoUrl, setVideoUrl] = useState('');
 
   useEffect(() => {
     const getVideoUrl = async () => {
       try {
-        const response = await axios.get("/mongo-video", {
+        const response = await axios.get("/video-stream", {
           headers: {
             "Content-Type": "application/json",
           },
@@ -140,20 +85,17 @@ const EditVideo = () => {
 
   return (
     <div>
-
       <div style={{ margin: "15px" }} className="nav-link">
         <Link to="/videos">
           <Button variant="primary">Go Back</Button>
         </Link>
       </div>
-
+      {/* ### Video:1 */}
       <div style={{}} className="container-addvideo">
         <h3>Edit & Store it on the Server</h3>
-
         <Form className="mt-3">
-
           <label style={{ marginBottom: '10px' }} htmlFor="videoInput">
-            Select a video file2:
+            Select a video file:1
           </label>
           <br />
           <input
@@ -163,43 +105,19 @@ const EditVideo = () => {
             onChange={handleVideoChange}
             style={{ marginBottom: "10px" }}
           />
-
         </Form>
-
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          {/* <video
-            controls // Add the controls attribute to display video controls (play, pause, volume, etc.)
-            src={selectedVideoUrl}
-            className="video-container"
-          /> */}
-          <VideoPlayer videoUrl={`/Videos/${video?.imgpath}` || videoData} />
-
-          {videoUrl && (
-            <video controls width="600" height="400">
-              <source src={videoUrl} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          )}
-
+         <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <video src={`/Videos/${video?.imgpath}` || videoData} id="videoPlayer" controls muted="muted" autoplay>
+          </video>
         </div>
-
         <br />
-
-        <Button variant="success" type="submit" onClick={handleSubmit}>
-          Submit1
-        </Button>
-
       </div>
-
-      {/* ############################################################################################### */}
-
+      {/* ### Video:2 */}
       <div style={{}} className="container-addvideo">
         <h3>Edit & Store it in the database.</h3>
-
         <Form className="mt-3">
-
           <label style={{ marginBottom: '10px' }} htmlFor="videoInput">
-            Select a video file1:
+            Select a video file:2
           </label>
           <br />
           <input
@@ -209,26 +127,13 @@ const EditVideo = () => {
             onChange={handleVideoChangeDb}
             style={{ marginBottom: "10px" }}
           />
-
         </Form>
-
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-          {/* <video
-            controls // Add the controls attribute to display video controls (play, pause, volume, etc.)
-            src={selectedVideoUrlDb}
-            className="video-container"
-          /> */}
-          <video id="videoPlayer" width="650" controls muted="muted" autoplay>
-            <source src="/mongo-video" type="video/mp4" />
+          <video id="videoPlayer" controls muted="muted" autoplay>
+            <source src="/video-stream" type="video/mp4" />
           </video>
         </div>
-
         <br />
-
-        <Button variant="success" type="submit" onClick={handleSubmitDb}>
-          Submit2
-        </Button>
-
       </div>
     </div>
   );

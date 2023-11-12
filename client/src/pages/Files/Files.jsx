@@ -7,9 +7,9 @@ import moment from "moment";
 import Alert from "react-bootstrap/Alert";
 import { useNavigate, withRouter } from "react-router-dom";
 import { UserContext } from "../../AppRouter";
-import "./Users.css";
+import "./Files.css";
 
-const Users = () => {
+const Files = () => {
   const history = useNavigate();
 
   const users = useContext(UserContext);
@@ -29,7 +29,7 @@ const Users = () => {
   const [show, setShow] = useState(false);
 
   const getUserData = async () => {
-    const res = await axios.get("/getdata", {
+    const res = await axios.get("/getfiles", {
       headers: {
         "Content-Type": "application/json",
       },
@@ -155,4 +155,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default Files;

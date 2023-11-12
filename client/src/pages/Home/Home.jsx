@@ -6,26 +6,30 @@ const Home = () => {
   return (
     <div>
       <div className="hero">
-        <h1>Welcome to Our App</h1>
-        <p>Explore and share amazing content!</p>
+        <h1>Welcome to my image/video App</h1>
+        <p>Handle images and videos with Mongo DB</p>
       </div>
       <div className="main-content">
         <div className="content">
           <h2>What You Can Do:</h2>
-          <ul>
-            <li>
-              <Link to="/adduser">Upload Images</Link>
-            </li>
-            <li>
-              <Link to="/users">View Images</Link>
-            </li>
-            <li>
-              <Link to="/addvideo">Upload Videos</Link>
-            </li>
-            <li>
-              <Link to="/videos">View Videos</Link>
-            </li>
-          </ul>
+          <div>
+            <div>
+              <Link to="/adduser">Upload Images on the server or the Mongo DB Database</Link>
+            </div>
+            <ol>
+              <li>Upload ...</li>
+              <li>Delete ...</li>
+              <li>Edit ...</li>
+              <li>View Images and Image Collections </li>
+            </ol>
+            <div>
+              <Link to="/addvideo">Upload Videos on the server or on the Mongo DB Database</Link>
+            </div>
+            <ol>
+              <li>Render ther videos from the server via Url</li>
+              <li>Allows you to Stram the Video Data from the Server with Grifd Fs</li>
+            </ol>
+          </div>
         </div>
       </div>
     </div>
