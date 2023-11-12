@@ -67,3 +67,7 @@ The styling for the home page is defined with Bootstrap and customized CSS files
 ## Additional Information
 
 Feel free to explore, modify, and enhance the application according to your needs! If you encounter any issues or have questions, please don't hesitate to reach out. Happy coding!
+
+## More: 
+- Jump to line : strg/ctrl + g
+- inside visual studio console + touch[filename] = build a new file 

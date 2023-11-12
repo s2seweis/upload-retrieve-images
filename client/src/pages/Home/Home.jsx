@@ -14,7 +14,7 @@ const Home = () => {
           <h2>What You Can Do:</h2>
           <div>
             <div>
-              <Link to="/adduser">Upload Images on the server or the Mongo DB Database</Link>
+              <Link to="/adduser">Upload Images/Image Collection on the server or to the Mongo DB </Link>
             </div>
             <ol>
               <li>Upload ...</li>
@@ -23,7 +23,7 @@ const Home = () => {
               <li>View Images and Image Collections </li>
             </ol>
             <div>
-              <Link to="/addvideo">Upload Videos on the server or on the Mongo DB Database</Link>
+              <Link to="/addvideo">Upload Videos on the server or to the Mongo DB via (FS Bucket) </Link>
             </div>
             <ol>
               <li>Render ther videos from the server via Url</li>
