@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'; // Import PropTypes
 import './VideoPlayer.css';
 
 function VideoPlayer({ videoUrl }) {
@@ -9,5 +10,9 @@ function VideoPlayer({ videoUrl }) {
     </div>
   );
 }
+
+VideoPlayer.propTypes = {
+  videoUrl: PropTypes.string.isRequired, // Make sure 'videoUrl' is a required string
+};
 
 export default VideoPlayer;

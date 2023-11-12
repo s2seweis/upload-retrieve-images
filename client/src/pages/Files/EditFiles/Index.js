@@ -1,17 +1,17 @@
 import { LoadingOutlined } from '@ant-design/icons';
 import useUserHook from '../../../components/hooks/useUserHook';
-import React, { lazy, Suspense, useEffect, useState, useContext } from 'react';
+import React, { lazy, Suspense, useContext } from 'react';
 import { UserContext } from '../../../AppRouter';
 import { useParams } from 'react-router-dom';
 
 const EditUserForm = lazy(() => import('./EditFilesForm'));
 
-const Index = ({ match }) => {
+const Index = () => {
 
   const storeProduct = useContext(UserContext);
   const userid = useParams();
   const id = userid.userid;
-  const { product, error, isLoading, newBuildProductInstance } = useUserHook(storeProduct, id);
+  const { product, isLoading, newBuildProductInstance } = useUserHook(storeProduct, id);
 
   return (
     <div className="product-form-container">

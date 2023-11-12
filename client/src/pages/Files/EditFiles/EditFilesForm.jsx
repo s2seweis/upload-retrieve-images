@@ -1,22 +1,22 @@
-import { useState, useEffect, useContext, useRef } from "react";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import axios from "axios";
-import useFileHandler from "../../../components/hooks/useFileHandler";
-import ImageLoader from "../../../components/ImageLoader/ImageLoader";
-import convertToBase64 from "./Base64";
-import { Link } from "react-router-dom";
-import "./EditFiles.css";
-// import '../../../src/App.css';
+import React, { useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import axios from 'axios';
+import useFileHandler from '../../../components/hooks/useFileHandler';
+import ImageLoader from '../../../components/ImageLoader/ImageLoader';
+import convertToBase64 from './Base64';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-const EditFilesForm = ({ product, isLoading }) => {
+import './EditFiles.css';
+
+const EditFilesForm = ({ product }) => {
   const [user, setUser] = useState(product);
-  console.log("line:1", user);
 
-  const { imageFile, isFileLoading, onFileChange, removeImage, setImageFile } =
+  const { imageFile, isFileLoading, onFileChange, removeImage } =
     useFileHandler({ imageCollection: user?.imageCollection || [] });
 
-  const [fname, setFName] = useState("");
+  const [fname, setFName] = useState('');
   const name = fname || user?.fname;
 
   const setData1 = (e) => {
@@ -37,17 +37,16 @@ const EditFilesForm = ({ product, isLoading }) => {
   const [file, setFile] = useState();
 
   const editUser = async (e) => {
-    console.log("line:11", e);
     e.preventDefault();
 
     var formData = new FormData();
-    formData.append("photo", file);
-    formData.append("id", user._id);
-    formData.append("name", name);
-    formData.append("image", user.image);
-    formData.append("image2", user.image2);
-    formData.append("imgpath", user.imgpath);
-    formData.append("date", user.date);
+    formData.append('photo', file);
+    formData.append('id', user._id);
+    formData.append('name', name);
+    formData.append('image', user.image);
+    formData.append('image2', user.image2);
+    formData.append('imgpath', user.imgpath);
+    formData.append('date', user.date);
 
     imageFile?.imageCollection.forEach((collection, index) => {
       const { id, url } = collection; // Destructure the object properties
@@ -57,50 +56,46 @@ const EditFilesForm = ({ product, isLoading }) => {
 
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         // 'Content-Type': 'multipart/form-data',
       },
     };
 
-    console.log("line:300", tree);
+    console.log('line:300', tree);
 
-    const res = await axios.post("/editfiles", formData, config);
-
+    const res = await axios.post('/editfiles', formData, config);
+    
     if (res.data.status === 401 || !res.data) {
-      console.log("errror");
+      console.log('errror');
     } else {
-      // history("/")
-      console.log("line:7, !success!", res);
+      // history("/files")
+      console.log('!success!', res);
+      window.location.href = '/files';
     }
   };
 
-  const img = user?.imgpath;
-  console.log("line:8", img);
+  // const img = user?.imgpath;
+  const [postImage1, setPostImage1] = useState({ myFile: '' });
+  // const [file1, setFile1] = useState('');
+  const [image1, setImage1] = useState();
 
-  const [postImage1, setPostImage1] = useState({ myFile: "" });
-  console.log("line:9", postImage1);
-
-  const setData4 = (e) => {
+  const setData4 = () => {
     setUser({
       _id: user._id,
       __v: user.__v,
       imgpath: user.imgpath,
-      image: "",
+      image: '',
       image2: user.image2,
       date: user.date,
       fname: user.fname,
     });
-    setImage1("");
+    setImage1('');
   };
 
-  const [file1, setFile1] = useState("");
-  const [image1, setImage1] = useState();
-
   const setimgfile1 = async (e) => {
-    setFile1(e.target.files[0]);
+    // setFile1(e.target.files[0]);
     const test1 = e.target.files[0];
     const base64 = await convertToBase64(test1);
-    console.log("line:12", base64);
     setPostImage1({ ...postImage1, myFile: base64 });
     setImage1(URL.createObjectURL(e.target.files[0]));
 
@@ -115,40 +110,40 @@ const EditFilesForm = ({ product, isLoading }) => {
     });
   };
 
-  const [postImage, setPostImage] = useState({ myFile: "" });
-  const [image, setImage] = useState("");
+  const [postImage, setPostImage] = useState({ myFile: '' });
+  // const [image, setImage] = useState('');
 
   const setimgfile = async (e) => {
     setFile(e.target.files[0]);
     const test = e.target.files[0];
     const base64 = await convertToBase64(test);
     setPostImage({ ...postImage, myFile: base64 });
-    setImage(URL.createObjectURL(e.target.files[0]));
+    // setImage(URL.createObjectURL(e.target.files[0]));
   };
 
-  const setData5 = (e) => {
+  const setData5 = () => {
     setUser({
       _id: user._id,
       __v: user.__v,
-      imgpath: "",
+      imgpath: '',
       image: user.image,
       image2: user.image2,
       date: user.date,
       fname: user.fname,
     });
-    setImage1("");
+    setImage1('');
   };
 
   return (
     <div>
-      <div style={{margin:"15px"}} className="nav-link">
+      <div style={{ margin: '15px' }} className="nav-link">
         <Link to="/files">
           <Button variant="primary">Go Back</Button>
         </Link>
       </div>
 
       <div className="container mt-3">
-        <h3>Edit User Form</h3>
+        <h3>Edit Files Form</h3>
         <Form className="mt-3">
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>File Name</Form.Label>
@@ -217,8 +212,8 @@ const EditFilesForm = ({ product, isLoading }) => {
                     multiple
                     onChange={(e) =>
                       onFileChange(e, {
-                        name: "imageCollection",
-                        type: "multiple",
+                        name: 'imageCollection',
+                        type: 'multiple',
                       })
                     }
                     type="file"
@@ -236,7 +231,7 @@ const EditFilesForm = ({ product, isLoading }) => {
                     <button
                       className="product-form-delete-image"
                       onClick={() =>
-                        removeImage({ id: image.id, name: "imageCollection" })
+                        removeImage({ id: image.id, name: 'imageCollection' })
                       }
                       title="Delete Image"
                       type="button"
@@ -254,6 +249,24 @@ const EditFilesForm = ({ product, isLoading }) => {
       </div>
     </div>
   );
+};
+
+EditFilesForm.propTypes = {
+  product: PropTypes.shape({
+    _id: PropTypes.string,
+    __v: PropTypes.number,
+    imgpath: PropTypes.string,
+    image: PropTypes.string,
+    image2: PropTypes.string,
+    date: PropTypes.string,
+    fname: PropTypes.string,
+    imageCollection: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        url: PropTypes.string,
+      }),
+    ),
+  }),
 };
 
 export default EditFilesForm;

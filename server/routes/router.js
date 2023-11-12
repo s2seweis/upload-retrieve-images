@@ -35,18 +35,9 @@ const upload = multer({
 // user register
 router.post('/addfiles', upload.single('photo'), async (req, res) => {
   const { filename, path } = req.file;
-  console.log("line:1", filename);
-  console.log("line:1.1 ", path);
-  console.log('line:2', req.file);
-
   const { fname } = req.body;
-  console.log('line:3', req.body);
-  console.log('line:4', req.body.add);
-
   const { imagenew } = req.body;
-
   const test10 = req.body.image;
-  console.log('line:5', test10);
 
   if (!fname || !filename) {
     res.status(401).json({ status: 401, message: 'fill all the data' });
@@ -59,7 +50,6 @@ router.post('/addfiles', upload.single('photo'), async (req, res) => {
     let month = ('0' + (today.getMonth() + 1)).slice(-2); //get your zero in front of single month digits so you have 2 digit months
     // let date = month + '-' + day + '-' + today.getFullYear ();
     let date = today.getFullYear() + '-' + month + '-' + day;
-    console.log('line:9', date);
 
     ('2023-08-25');
 
@@ -69,8 +59,6 @@ router.post('/addfiles', upload.single('photo'), async (req, res) => {
       date: date,
       image: test10,
     });
-
-    console.log("line:10", userdata);
 
     const finaldata = await userdata.save();
 

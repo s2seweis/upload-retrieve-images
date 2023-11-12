@@ -3,32 +3,18 @@ import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 const useFileHandler = (initState) => {
-  console.log("line:1", initState);
 
   const [imageFile, setImageFile] = useState(initState);
-
-  console.log("line:2", imageFile);
   const [isFileLoading, setFileLoading] = useState(false);
-
-  // const [imageFile, setImageFile] = useState(initState);
-  // const [isFileLoading, setFileLoading] = useState(false);
 
   const removeImage = ({ id, name }) => {
     const items = imageFile[name].filter((item) => item.id !== id);
 
     setImageFile({
       ...imageFile,
-      [name]: items
+      [name]: items,
     });
   };
-  // const removeImage = ({ id, name }) => {
-  //   const items2 = imageFile[name].filter((item) => item.id !== id);
-
-  //   setImageFile({
-  //     ...imageFile,
-  //     [name]: items2
-  //   });
-  // };
 
   const onFileChange = (event, { name, type }) => {
     const val = event.target.value;
@@ -49,7 +35,7 @@ const useFileHandler = (initState) => {
         reader.addEventListener('load', (e) => {
           setImageFile((oldFiles) => ({
             ...oldFiles,
-            [name]: [...oldFiles[name], { file, url: e.target.result, id: uuidv4() }]
+            [name]: [...oldFiles[name], { file, url: e.target.result, id: uuidv4() }],
           }));
         });
         reader.readAsDataURL(file);
@@ -62,7 +48,7 @@ const useFileHandler = (initState) => {
       reader.addEventListener('load', (e) => {
         setImageFile({
           ...imageFile,
-          [name]: { file: img, url: e.target.result }
+          [name]: { file: img, url: e.target.result },
         });
         setFileLoading(false);
       });

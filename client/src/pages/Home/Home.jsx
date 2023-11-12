@@ -1,6 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import "./Home.css"; // Import the styling
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './Home.css'; // Import the styling
 
 const Home = () => {
   return (
@@ -14,7 +14,9 @@ const Home = () => {
           <h2>What You Can Do:</h2>
           <div>
             <div>
-              <Link to="/adduser">Upload Images/Image Collection on the server or to the Mongo DB </Link>
+              <Link to="/addfiles">
+                Upload Images/Image Collection on the server or to the Mongo DB
+              </Link>
             </div>
             <ol>
               <li>Upload ...</li>
@@ -23,11 +25,15 @@ const Home = () => {
               <li>View Images and Image Collections </li>
             </ol>
             <div>
-              <Link to="/addvideo">Upload Videos on the server or to the Mongo DB via (FS Bucket) </Link>
+              <Link to="/addvideo">
+                Upload Videos on the server or to the Mongo DB via (FS Bucket)
+              </Link>
             </div>
             <ol>
               <li>Render ther videos from the server via Url</li>
-              <li>Allows you to Stram the Video Data from the Server with Grifd Fs</li>
+              <li>
+                Allows you to Stram the Video Data from the Server with Grifd Fs
+              </li>
             </ol>
           </div>
         </div>

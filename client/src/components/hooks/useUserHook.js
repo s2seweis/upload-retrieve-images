@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import useDidMount from './useDidMount';
 
 const useUserHook = (storeProduct, id) => {
@@ -6,7 +6,7 @@ const useUserHook = (storeProduct, id) => {
   const storedArrayOfObjects = JSON.parse(localStorage.getItem('users'));
   const [product, setProduct] = useState(storedArrayOfObjects);
   const newBuildProductInstance = product.find(o => o._id == id);
-  const storeProduct1 = storeProduct.find(o => o._id == id)
+  const storeProduct1 = storeProduct.find(o => o._id == id);
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const didMount = useDidMount(true);

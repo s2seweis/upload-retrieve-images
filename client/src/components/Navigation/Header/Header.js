@@ -26,7 +26,7 @@ const Header = () => {
               Menu
             </Dropdown.Toggle>
 
-            <Dropdown.Menu style={{marginRight:"15px"}}>
+            <Dropdown.Menu style={{marginRight:'15px'}}>
               <Dropdown.Item> <Link to="/files">Files</Link> </Dropdown.Item>
               <Dropdown.Item> <Link to="/videos">Videos</Link> </Dropdown.Item>
             </Dropdown.Menu>

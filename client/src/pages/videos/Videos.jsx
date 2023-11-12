@@ -1,26 +1,24 @@
 // Video.js
-import React, { useEffect, useState } from "react";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
-import { NavLink, Link } from "react-router-dom";
-import axios from "axios";
-import VideoPlayer from "../../components/VideoPlayer/VideoPlayer";
-import { useNavigate } from "react-router-dom";
-import styles from "./Videos.css"; // Import the CSS module
+import React, { useEffect, useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import { NavLink, Link } from 'react-router-dom';
+import axios from 'axios';
+// import VideoPlayer from "../../components/VideoPlayer/VideoPlayer";
+import styles from './Videos.css'; // Import the CSS module
 
 const Video = () => {
-  const history = useNavigate();
   const [data, setData] = useState([]);
 
   const getUserData = async () => {
-    const res = await axios.get("/getvideo", {
+    const res = await axios.get('/getvideo', {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     });
 
     if (res.data.status === 401 || !res.data) {
-      console.log("error");
+      console.log('error');
     } else {
       setData(res.data.getVideo);
     }
@@ -44,14 +42,14 @@ const Video = () => {
 
         <div className="row d-flex justify-content-between align-iteams-center mt-5">
           {data.length > 0
-            ? data.map((el, i) => {
+            ? data.map((el) => {
                 return (
                   <>
                     <Card
                       style={{
-                        width: "22rem",
-                        height: "auto",
-                        margin: "20px auto",
+                        width: '22rem',
+                        height: 'auto',
+                        margin: '20px auto',
                       }}
                       className="mb-3"
                     >
@@ -62,37 +60,23 @@ const Video = () => {
                         <h4>{el.imgpath}</h4>
                         <div
                           style={{
-                            display: "flex",
-                            justifyContent: "space-around",
+                            display: 'flex',
+                            justifyContent: 'space-around',
                           }}
                         >
                           <Link
                             to={`/editvideo/${el._id}`}
-                            className={styles["video-edit-link"]}
+                            className={styles['video-edit-link']}
                           >
                             Edit
                           </Link>
-                          {/* <Button
-                            variant="danger"
-                            className=""
-                            onClick={() => dltUser(el._id)}
-                          >
-                            Delete1
-                          </Button> */}
-                          {/* <Button
-                            variant="danger"
-                            className="edit-button"
-                            onClick={() => onClickEdit(el._id)}
-                          >
-                            Edit1
-                          </Button> */}
                         </div>
                       </Card.Body>
                     </Card>
                   </>
                 );
               })
-            : ""}
+            : ''}
         </div>
       </div>
     </div>
