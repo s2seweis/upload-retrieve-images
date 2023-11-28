@@ -18,9 +18,9 @@ app.use("/videos", express.static("./videos"));
 // Serve static files from the current directory
 // app.use(express.static(path.join(__dirname, 'index.html')));
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
-});
+// app.get('/', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'index.html'));
+// });
 
 app.listen(port, () => {
   console.log(`Server started at port ${port}`);
