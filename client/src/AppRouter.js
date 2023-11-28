@@ -21,7 +21,7 @@ function AppRouter() {
   const [data2, setData2] = useState([]);
 
   const getUserData = async () => {
-    const res = await axios.get('/getfiles', {
+    const res = await axios.get('https://react-streaming-a78deec0a0d6.herokuapp.com/getfiles', {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -35,7 +35,7 @@ function AppRouter() {
   };
 
   const getVideo = async () => {
-    const res = await axios.get('/getvideo', {
+    const res = await axios.get('https://react-streaming-a78deec0a0d6.herokuapp.com/getvideo', {
       headers: {
         'Content-Type': 'application/json',
       },
