@@ -22,7 +22,7 @@ const Files = () => {
   const [show, setShow] = useState(false);
 
   const getUserData = async () => {
-    const res = await axios.get('/getfiles', {
+    const res = await axios.get('https://react-streaming-a78deec0a0d6.herokuapp.com/getfiles', {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -36,7 +36,7 @@ const Files = () => {
   };
 
   const dltUser = async (id) => {
-    const res = await axios.delete(`/${id}`, {
+    const res = await axios.delete(`https://react-streaming-a78deec0a0d6.herokuapp.com/${id}`, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -51,7 +51,7 @@ const Files = () => {
   };
 
   const onClickEdit = (id) => {
-    history(`/editfiles/${id}`);
+    history(`https://react-streaming-a78deec0a0d6.herokuapp.com/editfiles/${id}`);
   };
 
   useEffect(() => {
@@ -98,7 +98,7 @@ const Files = () => {
                       <div style={{ margin: 'auto' }}>
                         <img
                           style={{ width: '100px', margin: '20px auto' }}
-                          src={`/uploads/${el.imgpath}`}
+                          src={`https://react-streaming-a78deec0a0d6.herokuapp.com/uploads/${el.imgpath}`}
                         />
                         <img
                           style={{ width: '100px', margin: '20px auto' }}

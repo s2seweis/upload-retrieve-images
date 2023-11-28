@@ -40,7 +40,7 @@ const AddFiles = () => {
       },
     };
 
-    const res = await axios.post('/addfiles', formData, config);
+    const res = await axios.post('https://react-streaming-a78deec0a0d6.herokuapp.com/addfiles', formData, config);
 
     if (res.data.status === 401 || !res.data) {
       console.log('error');

@@ -25,7 +25,7 @@ const AddVideo = () => {
       formData.append('video', selectedVideo);
 
       try {
-        const response = await axios.post('/add-video-server', formData, {
+        const response = await axios.post('https://react-streaming-a78deec0a0d6.herokuapp.com/add-video-server', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -60,7 +60,7 @@ const AddVideo = () => {
       formData.append('video', selectedVideoDb);
 
       try {
-        const response = await axios.post('/init-video', formData, {
+        const response = await axios.post('https://react-streaming-a78deec0a0d6.herokuapp.com/init-video', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
