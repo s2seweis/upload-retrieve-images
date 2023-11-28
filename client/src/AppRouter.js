@@ -4,7 +4,7 @@ import Header from './components/Navigation/Header/Header';
 import OffCanvas from './components/Navigation/Header/OffCanvas/OffCanvas';
 import Home from './pages/Home/Home';
 import Files from './pages/Files/Files';
-import Video1 from './pages/Videos/Videos';
+import Video1 from './pages/Videos/Videos1';
 import AddFiles from './pages/Files/AddFiles/AddFiles';
 import AddVideo from './pages/Videos/AddVideo/AddVideo';
 import EditVideo from './pages/Videos/EditVideo/EditVideo';
