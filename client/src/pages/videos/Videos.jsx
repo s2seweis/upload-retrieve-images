@@ -7,7 +7,7 @@ import axios from 'axios';
 // import VideoPlayer from "../../components/VideoPlayer/VideoPlayer";
 import styles from './Videos.css'; // Import the CSS module
 
-const Video = () => {
+const Video1 = () => {
   const [data, setData] = useState([]);
 
   const getUserData = async () => {

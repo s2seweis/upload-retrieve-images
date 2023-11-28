@@ -4,7 +4,7 @@ import Header from './components/Navigation/Header/Header';
 import OffCanvas from './components/Navigation/Header/OffCanvas/OffCanvas';
 import Home from './pages/Home/Home';
 import Files from './pages/Files/Files';
-import Video from './pages/Videos/Videos';
+import Video1 from './pages/Videos/Videos';
 import AddFiles from './pages/Files/AddFiles/AddFiles';
 import AddVideo from './pages/Videos/AddVideo/AddVideo';
 import EditVideo from './pages/Videos/EditVideo/EditVideo';
@@ -66,7 +66,7 @@ function AppRouter() {
             <Route path='/' element={<Home />} />
             <Route path='/files' element={<Files />} />
             <Route path='/addfiles' element={<AddFiles />} />
-            <Route path='/videos' element={<Video />} />
+            <Route path='/videos' element={<Video1 />} />
             <Route path='/addvideo' element={<AddVideo />} />
             <Route element={<Index />} path="/editfiles/:userid" />
             <Route element={<EditVideo />} path="/editvideo/:userid" />
