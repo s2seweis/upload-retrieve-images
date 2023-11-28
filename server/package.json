@@ -2,12 +2,12 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "server": "nodemon server.js",
-    "watch": "nodemon app.js",
-    "client": "npm start --prefix client",
-    "start": "node app.js"
+    "watch": "nodemon server.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
